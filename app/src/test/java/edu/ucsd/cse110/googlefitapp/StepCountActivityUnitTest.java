@@ -50,6 +50,14 @@ public class StepCountActivityUnitTest {
         assertEquals("1337", textSteps.getText().toString());
     }
 
+    @Test
+    public void testShowEncouragement() {
+        nextStepCount= 1000;
+        btnUpdateSteps.performClick();
+        assertEquals("10000", textSteps.getText().toString());
+        assertEquals("10000", textSteps.getText().toString());
+    }
+
     private class TestFitnessService implements FitnessService {
         private static final String TAG = "[TestFitnessService]: ";
         private StepCountActivity stepCountActivity;
