@@ -1,3 +1,5 @@
+package edu.ucsd.cse110.googlefitapp.stepupdaters;
+
 public class Steps {
     private int stepCount;
     Steps(int stepCount){

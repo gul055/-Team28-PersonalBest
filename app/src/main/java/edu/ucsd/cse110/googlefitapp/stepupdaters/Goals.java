@@ -1,3 +1,5 @@
+package edu.ucsd.cse110.googlefitapp.stepupdaters;
+
 public class Goals{
     private final static int PRESETINCREASE = 500;
     private int stepGoal;
@@ -5,7 +7,7 @@ public class Goals{
         this.stepGoal = goal;
     }
 
-    public int setGoal(int goalAmt){
+    public void setGoal(int goalAmt){
         this.stepGoal = goalAmt;
     }
 

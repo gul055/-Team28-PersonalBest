@@ -1,14 +1,17 @@
+//import Goals.java;
+//import Steps.java;
+package edu.ucsd.cse110.googlefitapp.stepupdaters;
+
 public class StepProgress{
     Steps totalSteps;
     Steps dailySteps;
     Goals dailyGoal;
-
-    boolean onDaily;
-    StepProgress(){
+    boolean isOnDaily;
+    public StepProgress(){
         totalSteps = new Steps(0);
         dailySteps = new Steps(0);
-        dailyGoal = new Goal(5000);
-        onDaily = false;
+        dailyGoal = new Goals(5000);
+        isOnDaily = false;
     }
 
     public int getTotalSteps(){
@@ -29,7 +32,7 @@ public class StepProgress{
     }
 
     public boolean getOnDaily(){
-        return this.onDaily;
+        return this.isOnDaily;
     }
 
     public void setDaily(boolean isOnDaily){
