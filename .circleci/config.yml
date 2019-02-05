@@ -10,6 +10,9 @@ jobs:
       - checkout
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - run:
+         name: Fix for "Some licenses have not been accepted" error
+         command: yes | sdkmanager --update || exit 0
 #     Uncomment the following run block, if permissions for gradlew fail on CircleCI:
       - run:
          name: Chmod permissions
