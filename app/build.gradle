@@ -21,6 +21,10 @@ android {
             includeAndroidResources = true
         }
     }
+    /*Added due to lint bug on circleci*/
+    lintOptions{
+        abortOnError false
+    }
 }
 
 dependencies {
