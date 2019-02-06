@@ -1,20 +1,20 @@
 package edu.ucsd.cse110.googlefitapp.stepupdaters;
 
 public class Steps {
-    private int stepCount;
-    Steps(int stepCount){
+    private long stepCount;
+    Steps(long stepCount){
         this.stepCount = stepCount;
     }
 
-    public int getSteps(){
+    public long getSteps(){
         return this.stepCount;
     }
 
-    public void addSteps(int steps){
+    public void addSteps(long steps){
         this.stepCount += steps;
     }
 
-    public void setSteps(int steps){
+    public void setSteps(long steps){
         this.stepCount = steps;
     }
 }

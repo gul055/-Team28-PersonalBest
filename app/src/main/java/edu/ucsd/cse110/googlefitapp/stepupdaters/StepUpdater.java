@@ -2,33 +2,34 @@
 //import Steps.java;
 package edu.ucsd.cse110.googlefitapp.stepupdaters;
 
-public class StepProgress{
+public class StepUpdater {
     Steps totalSteps;
     Steps dailySteps;
     Goals dailyGoal;
     boolean isOnDaily;
-    public StepProgress(){
+    public StepUpdater(){
         totalSteps = new Steps(0);
         dailySteps = new Steps(0);
         dailyGoal = new Goals(5000);
         isOnDaily = false;
     }
 
-    public int getTotalSteps(){
+    public void setOnDaily(boolean isOnDaily){ this.isOnDaily = isOnDaily; }
+    public long getTotalSteps(){
         return this.totalSteps.getSteps();
     }
 
-    public int getDailySteps(){
+    public long getDailySteps(){
         return this.dailySteps.getSteps();
     }
 
-    public int getDailyGoal(){
+    public long getDailyGoal(){
         return this.dailyGoal.getGoal();
     }
 
     /*Grabs the total goal progress*/
-    public int getGoalProgress(){
-        return this.dailySteps.getSteps() - this.getDailyGoal();
+    public long getGoalProgress(){
+        return this.getDailyGoal() - this.dailySteps.getSteps();
     }
 
     public boolean getOnDaily(){
@@ -40,12 +41,12 @@ public class StepProgress{
     }
 
     /*Updates total step progress*/
-    public void updateProgress(int steps){
+    public void updateProgress(long steps){
         this.totalSteps.addSteps(steps);
     }
 
     /*Returns true if daily goal is reached, false otherwise*/
-    public boolean updateDaily(boolean reset, int steps){
+    public boolean updateDaily(boolean reset, long steps){
         /*Checks if we reset our steps*/
         if(reset){
             this.dailySteps.setSteps(0);
