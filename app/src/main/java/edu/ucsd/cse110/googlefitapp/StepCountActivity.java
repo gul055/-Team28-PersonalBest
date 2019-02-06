@@ -42,7 +42,7 @@ public class StepCountActivity extends AppCompatActivity {
         fitnessService.setup();
 
         TextView textSteps = (TextView) findViewById(R.id.textSteps);
-        TextView textGoal = (TextView) findViewById(R.id.textGoal);
+        final TextView textGoal = (TextView) findViewById(R.id.textGoal);
 
         textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
         textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
@@ -122,8 +122,11 @@ public class StepCountActivity extends AppCompatActivity {
         long dailySteps = stepLogger.readDaily();
         long totalSteps = stepLogger.readTotal();
         long lastSteps = stepLogger.readLastStep();
+        long dailyGoal = stepLogger.readGoal();
         boolean isOnDaily = stepLogger.readOnDaily();
         long stepDifference = stepCount - lastSteps;
+
+        stepProgress.setDailyGoal(dailyGoal);
 
         /*Updates daily*/
         if(isOnDaily){
@@ -138,7 +141,7 @@ public class StepCountActivity extends AppCompatActivity {
             stepProgress.setOnDaily(isOnDaily);
 
         /*After all updates have finished, write to logger*/
-        stepLogger.writeSteps(stepProgress.getDailySteps(),stepCount,totalSteps);
+        stepLogger.writeSteps(stepProgress.getDailySteps(),stepCount,totalSteps, stepProgress.getDailyGoal());
 
     }
 

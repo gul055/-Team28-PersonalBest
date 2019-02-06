@@ -15,11 +15,12 @@ public class StepLogger {
     }
 
     /*Writes all step data to logger*/
-    public void writeSteps(long dailySteps, long totalSteps, long lastStepUpdate){
+    public void writeSteps(long dailySteps, long totalSteps, long lastStepUpdate, long goal){
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putLong("daily_steps", dailySteps);
         editor.putLong("total_steps", totalSteps);
         editor.putLong("last_update", lastStepUpdate);
+        editor.putLong("goal", goal);
         editor.apply();
     }
 
@@ -39,6 +40,8 @@ public class StepLogger {
     public long readLastStep(){
         return sharedPref.getLong("last_update", 0);
     }
+
+    public long readGoal(){ return sharedPref.getLong("goal", 0); }
 
     public boolean readOnDaily(){ return sharedPref.getBoolean("on_daily", false); }
 }

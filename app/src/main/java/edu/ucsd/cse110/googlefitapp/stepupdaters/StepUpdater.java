@@ -15,6 +15,9 @@ public class StepUpdater {
     }
 
     public void setOnDaily(boolean isOnDaily){ this.isOnDaily = isOnDaily; }
+
+    public void setDailyGoal(long goal){ this.dailyGoal.setGoal(goal); }
+
     public long getTotalSteps(){
         return this.totalSteps.getSteps();
     }
@@ -34,10 +37,6 @@ public class StepUpdater {
 
     public boolean getOnDaily(){
         return this.isOnDaily;
-    }
-
-    public void setDaily(boolean isOnDaily){
-        this.isOnDaily = isOnDaily;
     }
 
     /*Updates total step progress*/
