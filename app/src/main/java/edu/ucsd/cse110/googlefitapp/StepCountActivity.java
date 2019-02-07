@@ -54,13 +54,13 @@ public class StepCountActivity extends AppCompatActivity {
 
         if(stepLogger.readOnDaily() == false) {
             stepLogger.writeOnDaily(false);
-            startStopBtn.setBackgroundColor(Color.RED);
-            startStopBtn.setText("Stop Walk/Run");
+            startStopBtn.setBackgroundColor(Color.GREEN);
+            startStopBtn.setText("Start Walk/Run");
         }
         else {
             stepLogger.writeOnDaily(true);
-            startStopBtn.setBackgroundColor(Color.GREEN);
-            startStopBtn.setText("Start Walk/Run");
+            startStopBtn.setBackgroundColor(Color.RED);
+            startStopBtn.setText("Stop Walk/Run");
         }
 
         startStopBtn.setOnClickListener(new View.OnClickListener() {
