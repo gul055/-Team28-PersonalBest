@@ -62,19 +62,16 @@ public class StepCountActivity extends AppCompatActivity {
 
     public void setStepCount(long stepCount) {
         textSteps.setText(String.valueOf(stepCount));
+        showEncouragement();
     }
 
     // Code for part 3 of the lab
     public void showEncouragement() {
-        Context context = getApplicationContext();
-        int steps = Integer.parseInt(textSteps.toString());
-        int percentSteps = (int)  (steps / 100);
-        CharSequence text = "Good job! You're already at" +  percentSteps + "% of the daily recommended number of steps.";
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, text, duration);
+        int steps = Integer.valueOf(textSteps.getText().toString());
 
-        // Determine if the toast should be shown
-        if( steps >= 1000) {
+        if(steps > 1000) {
+            double percent = steps/100;
+            Toast toast = Toast.makeText(this, "Good job! You're already at " + percent + "% of the daily recommended number of steps.", Toast.LENGTH_LONG);
             toast.show();
         }
     }

@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.shadows.ShadowToast;
 
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
@@ -52,10 +53,14 @@ public class StepCountActivityUnitTest {
 
     @Test
     public void testShowEncouragement() {
-        nextStepCount= 1000;
+        assertEquals("steps will be shown here", textSteps.getText().toString());
         btnUpdateSteps.performClick();
-        assertEquals("10000", textSteps.getText().toString());
-        assertEquals("10000", textSteps.getText().toString());
+        assertEquals("1337", textSteps.getText().toString());
+
+        ShadowToast sToast = new ShadowToast();
+        String response = sToast.getTextOfLatestToast();
+
+        assertEquals("Good job! You're already at 13.0% of the daily recommended number of steps.", response);
     }
 
     private class TestFitnessService implements FitnessService {
