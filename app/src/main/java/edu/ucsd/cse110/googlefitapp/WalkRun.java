@@ -18,23 +18,43 @@ public class WalkRun {
 
     int height;
 
+    boolean started = false;
+
     /* Initialize a walk/run */
-    public WalkRun(int userHeight) {
-        height = userHeight;
+    public WalkRun(int userHeight) throws Exception {
+        if(userHeight > 0) {
+            height = userHeight;
+        }
+        else {
+            throw new Exception("Invalid height");
+        }
     }
 
     /* Start the walk/run */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void startWalkRun(int initSteps) {
-        startTime = LocalDateTime.now();
-        startSteps = initSteps;
+    public void startWalkRun(int initSteps) throws Exception {
+        if(!started) {
+            startTime = LocalDateTime.now();
+            startSteps = initSteps;
+
+            started = true;
+        }
+        else {
+            throw new Exception("Invalid: this WalkRun has already started");
+        }
     }
 
     /* End the walk/run */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void endWalkRun(int finalSteps) {
-        endTime = LocalDateTime.now();
-        endSteps = finalSteps;
+    public void endWalkRun(int finalSteps) throws Exception {
+        if(started) {
+            endTime = LocalDateTime.now();
+            endSteps = finalSteps;
+            started = false;
+        }
+        else {
+            throw new Exception("Invalid: attempt to end WalkRun before starting");
+        }
     }
 
     /* Return the number of steps taken on this walk/run */
@@ -48,5 +68,13 @@ public class WalkRun {
         double distanceFeet = (stride * getNumSteps()) / inchesToFeet;
         double distanceMiles = distanceFeet / feetToMiles;
         return distanceMiles;
+    }
+
+    public double getSpeed() {
+        return 0.0;
+    }
+
+    public int minutesWalked() {
+        return 0;
     }
 }
