@@ -3,27 +3,33 @@ package edu.ucsd.cse110.googlefitapp;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class WalkRun {
     //variables used to make conversions and calculate distance
     private final static double strideMultiplier = .413;
-    private final static int inchesToFeet = 12;
-    private final static int feetToMiles = 5280;
+    private final static int inchesInFeet = 12;
+    private final static int feetInMile = 5280;
+    private final static int secondsInHour = 3600;
+
+    //boolean checks for valid WalkRun method calls
+    private boolean started = false;
+    private boolean ok = false;
 
     LocalDateTime startTime;
     LocalDateTime endTime;
+
+    long walkRunTime;
 
     int startSteps;
     int endSteps;
 
     int height;
 
-    boolean started = false;
-    boolean ok = false;
-
     /* Initialize a walk/run */
     public WalkRun(int userHeight) throws Exception {
+        //negative or 0 height does not make sense
         if(userHeight > 0) {
             height = userHeight;
         }
@@ -75,7 +81,7 @@ public class WalkRun {
             return endSteps - startSteps;
         }
         else {
-            throw new Exception("Invalid: WalkRun has not been completed");
+            throw new Exception("Invalid: cannot get number of steps of incomplete WalkRun");
         }
     }
 
@@ -83,20 +89,43 @@ public class WalkRun {
     public double getDistance() throws Exception {
         if(ok) {
             double stride = height * strideMultiplier;
-            double distanceFeet = (stride * getNumSteps()) / inchesToFeet;
-            double distanceMiles = distanceFeet / feetToMiles;
+            double distanceFeet = stride * getNumSteps() / inchesInFeet;
+            double distanceMiles = distanceFeet / feetInMile;
             return distanceMiles;
         }
         else {
-            throw new Exception("Invalid: WalkRun has not been completed");
+            throw new Exception("Invalid: cannot get distance of incomplete WalkRun");
         }
     }
 
-    public double getSpeed() {
-        return 0.0;
+    /* Get speed of WalkRun in miles per hour */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public double getSpeed() throws Exception {
+        if(ok) {
+            double hours = secondsWalked() / secondsInHour;
+            double mph = getDistance() / hours;
+            return mph;
+        }
+        else {
+            throw new Exception("Invalid: cannot get duration of incomplete WalkRun");
+        }
     }
 
-    public int minutesWalked() {
-        return 0;
+    /* Get duration of WalkRun in seconds */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public long secondsWalked() throws Exception {
+        if(ok) {
+            walkRunTime = Duration.between(startTime, endTime).getSeconds();
+
+            if(walkRunTime > 0) {
+                return walkRunTime;
+            }
+            else {
+                throw new Exception("Invalid: WalkRun end time before WalkRun start time");
+            }
+        }
+        else {
+            throw new Exception("Invalid: cannot get duration of incomplete WalkRun");
+        }
     }
 }
