@@ -1,13 +1,16 @@
 package edu.ucsd.cse110.googlefitapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,8 +46,40 @@ public class StepCountActivity extends AppCompatActivity {
             }
         });
 
+        Button setGoalButton = findViewById(R.id.setGoal);
+        setGoalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setGoalDialog(StepCountActivity.this);
+            }
+        });
+
         fitnessService.setup();
 
+    }
+
+    protected void setGoalDialog(Context c) {
+        final EditText setGoal = new EditText(c);
+        setGoal.setHint(R.string.goal_hint);
+        AlertDialog goalDialog = new AlertDialog.Builder(c)
+                .setTitle(R.string.set_goal)
+                .setMessage(R.string.goal_dialog)
+                .setView(setGoal)
+                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        try{
+                            int newGoal = Integer.parseInt(setGoal.getText().toString());
+                            // Insert code to change goals here
+                        }
+                        catch(Exception e){
+
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .create();
+        goalDialog.show();
     }
 
 
