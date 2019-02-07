@@ -10,28 +10,38 @@ public class StepLogger {
 
     SharedPreferences sharedPref;
 
-    StepLogger(Context context){
+    public StepLogger(Context context){
         sharedPref = context.getSharedPreferences("step_data", MODE_PRIVATE);
     }
 
     /*Writes all step data to logger*/
-    public void writeSteps(int dailySteps, int totalSteps, int lastStepUpdate){
+    public void writeSteps(long dailySteps, long totalSteps, long lastStepUpdate, long goal){
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("daily_steps", dailySteps);
-        editor.putInt("total_steps", totalSteps);
-        editor.putInt("last_update", lastStepUpdate);
+        editor.putLong("daily_steps", dailySteps);
+        editor.putLong("total_steps", totalSteps);
+        editor.putLong("last_update", lastStepUpdate);
+        editor.putLong("goal", goal);
         editor.apply();
     }
 
-    public int readDaily(){
-        return sharedPref.getInt("daily_steps", 0);
+    public void writeOnDaily(boolean onDaily){
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean("on_daily", onDaily);
+        editor.apply();
+    }
+    public long readDaily(){
+        return sharedPref.getLong("daily_steps", 0);
     }
 
-    public int readTotal(){
-        return sharedPref.getInt("total_steps", 0);
+    public long readTotal(){
+        return sharedPref.getLong("total_steps", 0);
     }
 
-    public int readLastStep(){
-        return sharedPref.getInt("last_update", 0);
+    public long readLastStep(){
+        return sharedPref.getLong("last_update", 0);
     }
+
+    public long readGoal(){ return sharedPref.getLong("goal", 0); }
+
+    public boolean readOnDaily(){ return sharedPref.getBoolean("on_daily", false); }
 }
