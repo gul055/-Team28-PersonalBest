@@ -46,14 +46,14 @@ public class StepCountActivityUnitTest {
 
     @Test
     public void testUpdateStepsButton() {
-        assertEquals("Steps will be shown here", textSteps.getText().toString());
+        assertEquals("steps will be shown here", textSteps.getText().toString());
         btnUpdateSteps.performClick();
         assertEquals("1337", textSteps.getText().toString());
     }
 
     @Test
     public void testShowEncouragement() {
-        assertEquals("Steps will be shown here", textSteps.getText().toString());
+        assertEquals("steps will be shown here", textSteps.getText().toString());
         btnUpdateSteps.performClick();
         assertEquals("1337", textSteps.getText().toString());
 
