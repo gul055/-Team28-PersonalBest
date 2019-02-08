@@ -1,5 +1,8 @@
 package edu.ucsd.cse110.googlefitapp;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
@@ -12,6 +15,7 @@ public class WalkRun {
     private final static int inchesInFeet = 12;
     private final static int feetInMile = 5280;
     private final static int secondsInHour = 3600;
+    private final static int secondsInMinute = 60;
 
     //boolean checks for valid WalkRun method calls
     private boolean started = false;
@@ -127,5 +131,46 @@ public class WalkRun {
         else {
             throw new Exception("Invalid: cannot get duration of incomplete WalkRun");
         }
+    }
+
+    /* Return an AlertDialog containing the steps, duration, speed, and distance of this WalkRun */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public AlertDialog getStats(Context context) throws Exception {
+        //duration
+        long seconds = secondsWalked();
+
+        int hours = (int) seconds / secondsInHour;
+        seconds = seconds - (hours * secondsInHour);
+
+        int minutes = (int) seconds / secondsInMinute;
+
+        seconds = seconds - (minutes * secondsInMinute);
+
+        //number of steps
+        int steps = getNumSteps();
+
+        //speed
+        double mph = getSpeed();
+
+        //distance
+        double distance = getDistance();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage("Duration: " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds\n"
+        + "Number of steps: " + steps
+        + "Speed: " + mph + " mph\n"
+        + "Distance: " + distance + " miles");
+        builder.setCancelable(true);
+
+        builder.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        return alert;
     }
 }
