@@ -71,7 +71,7 @@ public class WalkRun {
                 ok = true;
             }
             else {
-                throw new Exception("Invalid: number of steps DECREASED on walk/run");
+                throw new Exception("Invalid: number of steps DECREASED on WalkRun");
             }
         }
         else {
@@ -79,98 +79,83 @@ public class WalkRun {
         }
     }
 
-    /* Return the number of steps taken on this walk/run */
-    public int getNumSteps() throws Exception {
+    /* Return an AlertDialog containing the steps, duration, speed, and distance of this WalkRun */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public AlertDialog getStats(Context context) throws Exception {
         if(ok) {
-            return endSteps - startSteps;
+            //duration
+            long seconds = secondsWalked();
+
+            int hours = (int) seconds / secondsInHour;
+            seconds = seconds - (hours * secondsInHour);
+
+            int minutes = (int) seconds / secondsInMinute;
+
+            seconds = seconds - (minutes * secondsInMinute);
+
+            //number of steps
+            int steps = getNumSteps();
+
+            //speed
+            double mph = getSpeed();
+
+            //distance
+            double distance = getDistance();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Duration: " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds\n"
+                    + "Number of steps: " + steps
+                    + "Speed: " + mph + " mph\n"
+                    + "Distance: " + distance + " miles");
+            builder.setCancelable(true);
+
+            builder.setPositiveButton(
+                    "Yes",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert = builder.create();
+            return alert;
         }
         else {
-            throw new Exception("Invalid: cannot get number of steps of incomplete WalkRun");
+            throw new Exception("Invalid: This instance of WalkRun has started but not stopped.");
         }
+    }
+
+    /* Return the number of steps taken on this walk/run */
+    public int getNumSteps() throws Exception {
+        return endSteps - startSteps;
     }
 
     /* Return the distance walked in miles */
     public double getDistance() throws Exception {
-        if(ok) {
-            double stride = height * strideMultiplier;
-            double distanceFeet = stride * getNumSteps() / inchesInFeet;
-            double distanceMiles = distanceFeet / feetInMile;
-            return distanceMiles;
-        }
-        else {
-            throw new Exception("Invalid: cannot get distance of incomplete WalkRun");
-        }
+        double stride = height * strideMultiplier;
+        double distanceFeet = stride * getNumSteps() / inchesInFeet;
+        double distanceMiles = distanceFeet / feetInMile;
+        return distanceMiles;
     }
 
     /* Get speed of WalkRun in miles per hour */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public double getSpeed() throws Exception {
-        if(ok) {
-            double hours = secondsWalked() / secondsInHour;
-            double mph = getDistance() / hours;
-            return mph;
-        }
-        else {
-            throw new Exception("Invalid: cannot get duration of incomplete WalkRun");
-        }
+        double hours = secondsWalked() / secondsInHour;
+        double mph = getDistance() / hours;
+        return mph;
     }
 
     /* Get duration of WalkRun in seconds */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public long secondsWalked() throws Exception {
-        if(ok) {
-            walkRunTime = Duration.between(startTime, endTime).getSeconds();
+        walkRunTime = Duration.between(startTime, endTime).getSeconds();
 
-            if(walkRunTime > 0) {
-                return walkRunTime;
-            }
-            else {
-                throw new Exception("Invalid: WalkRun end time before WalkRun start time");
-            }
+        if(walkRunTime > 0) {
+            return walkRunTime;
         }
         else {
-            throw new Exception("Invalid: cannot get duration of incomplete WalkRun");
+            throw new Exception("Invalid: WalkRun end time before WalkRun start time");
         }
-    }
-
-    /* Return an AlertDialog containing the steps, duration, speed, and distance of this WalkRun */
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public AlertDialog getStats(Context context) throws Exception {
-        //duration
-        long seconds = secondsWalked();
-
-        int hours = (int) seconds / secondsInHour;
-        seconds = seconds - (hours * secondsInHour);
-
-        int minutes = (int) seconds / secondsInMinute;
-
-        seconds = seconds - (minutes * secondsInMinute);
-
-        //number of steps
-        int steps = getNumSteps();
-
-        //speed
-        double mph = getSpeed();
-
-        //distance
-        double distance = getDistance();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage("Duration: " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds\n"
-        + "Number of steps: " + steps
-        + "Speed: " + mph + " mph\n"
-        + "Distance: " + distance + " miles");
-        builder.setCancelable(true);
-
-        builder.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-        AlertDialog alert = builder.create();
-        return alert;
     }
 }
