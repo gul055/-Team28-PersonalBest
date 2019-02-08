@@ -53,12 +53,12 @@ public class StepCountActivity extends AppCompatActivity {
         Button showStepsBtn = (Button) findViewById(R.id.showStepsBtn);
 
         if(stepLogger.readOnDaily() == false) {
-            stepLogger.writeOnDaily(false);
+            stepProgress.setOnDaily(false);
             startStopBtn.setBackgroundColor(Color.GREEN);
             startStopBtn.setText("Start Walk/Run");
         }
         else {
-            stepLogger.writeOnDaily(true);
+            stepProgress.setOnDaily(true);
             startStopBtn.setBackgroundColor(Color.RED);
             startStopBtn.setText("Stop Walk/Run");
         }
@@ -66,15 +66,18 @@ public class StepCountActivity extends AppCompatActivity {
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(stepLogger.readOnDaily() == true) {
+                if(stepProgress.getOnDaily() == true) {
                     stepLogger.writeOnDaily(false);
-                    startStopBtn.setBackgroundColor(Color.RED);
-                    startStopBtn.setText("Stop Walk/Run");
+                    stepProgress.setOnDaily(false);
+                    startStopBtn.setBackgroundColor(Color.GREEN);
+                    startStopBtn.setText("Start Walk/Run");
                 }
                 else {
                     stepLogger.writeOnDaily(true);
-                    startStopBtn.setBackgroundColor(Color.GREEN);
-                    startStopBtn.setText("Start Walk/Run");
+                    stepProgress.setOnDaily(true);
+                    startStopBtn.setBackgroundColor(Color.RED);
+                    startStopBtn.setText("Stop Walk/Run");
+
                 }
 
             }
@@ -117,14 +120,19 @@ public class StepCountActivity extends AppCompatActivity {
         }
     }
 
+    public void setDailyStatus(){
+        boolean isOnDaily = stepLogger.readOnDaily();
+        stepLogger.writeOnDaily(isOnDaily);
+    }
+
     public void setStepCount(long stepCount) {
         /*Grabs all relevant values from local file*/
         long dailySteps = stepLogger.readDaily();
         long totalSteps = stepLogger.readTotal();
         long lastSteps = stepLogger.readLastStep();
         long dailyGoal = stepLogger.readGoal();
-        boolean isOnDaily = stepLogger.readOnDaily();
         long stepDifference = stepCount - lastSteps;
+        boolean isOnDaily = stepProgress.getOnDaily();
 
         stepProgress.setDailyGoal(dailyGoal);
 
