@@ -41,7 +41,7 @@ public class StepLogger {
         return sharedPref.getLong("last_update", 0);
     }
 
-    public long readGoal(){ return sharedPref.getLong("goal", 0); }
+    public long readGoal(){ return sharedPref.getLong("goal", 5000); }
 
     public boolean readOnDaily(){ return sharedPref.getBoolean("on_daily", false); }
 }

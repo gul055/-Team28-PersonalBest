@@ -18,6 +18,10 @@ public class StepUpdater {
 
     public void setDailyGoal(long goal){ this.dailyGoal.setGoal(goal); }
 
+    public void setTotalSteps(long totalSteps){ this.totalSteps.setSteps(totalSteps);}
+
+    public void setDailySteps(long dailySteps) { this.dailySteps.setSteps(dailySteps); }
+
     public long getTotalSteps(){
         return this.totalSteps.getSteps();
     }
@@ -46,11 +50,13 @@ public class StepUpdater {
 
     /*Returns true if daily goal is reached, false otherwise*/
     public boolean updateDaily(boolean reset, long steps){
+
         /*Checks if we reset our steps*/
         if(reset){
             this.dailySteps.setSteps(0);
             return false;
         }
+
         this.dailySteps.addSteps(steps);
         /*Checks if goal was met*/
         if(this.getGoalProgress() <= 0) {

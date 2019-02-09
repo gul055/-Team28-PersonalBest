@@ -28,24 +28,23 @@ public class StepCountActivity extends AppCompatActivity {
 
     private FitnessService fitnessService;
 
-    // Code for lab 3
+    private TextView textSteps, textGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
 
-        String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
+        textSteps = findViewById(R.id.textSteps);
+        textGoal = findViewById(R.id.textGoal);
+        final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
 
         fitnessService.setup();
 
-        TextView textSteps = (TextView) findViewById(R.id.textSteps);
-        final TextView textGoal = (TextView) findViewById(R.id.textGoal);
-
-        textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
-        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
+        //textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
+        //textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
 
         // Create all buttons
         final Button startStopBtn = (Button) findViewById(R.id.startStopBtn);
@@ -93,14 +92,15 @@ public class StepCountActivity extends AppCompatActivity {
         showStepsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //fitnessService.updateStepCount();
+                /*//fitnessService.updateStepCount();
                 TextView textSteps = (TextView) findViewById(R.id.textSteps);
                 TextView textGoal = (TextView) findViewById(R.id.textGoal);
                 //textSteps.setText((String.valueOf(stepProgress.getTotalSteps())));
                 //textGoal.setText((String.valueOf(stepProgress.getGoalProgress())));
                 textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
                 textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
-                //showEncouragement();
+                //showEncouragement();*/
+                fitnessService.updateStepCount();
             }
         });
 
@@ -127,19 +127,26 @@ public class StepCountActivity extends AppCompatActivity {
 
     public void setStepCount(long stepCount) {
         /*Grabs all relevant values from local file*/
-        long dailySteps = stepLogger.readDaily();
-        long totalSteps = stepLogger.readTotal();
         long lastSteps = stepLogger.readLastStep();
         long dailyGoal = stepLogger.readGoal();
+        long dailyProgress = stepLogger.readDaily();
+
+        Log.d("CURRENT", String.valueOf(stepCount));
+        Log.d("LAST", String.valueOf(lastSteps));
         long stepDifference = stepCount - lastSteps;
+
+        stepProgress.setTotalSteps(stepLogger.readTotal());
+
         boolean isOnDaily = stepProgress.getOnDaily();
+        Log.d("ON_DAILY", String.valueOf(isOnDaily));
 
         stepProgress.setDailyGoal(dailyGoal);
+        stepProgress.setDailySteps(dailyProgress);
 
         /*Updates daily*/
         if(isOnDaily){
             stepProgress.updateDaily(false, stepDifference);
-        }
+    }
 
         /*Updates total step progress*/
         stepProgress.updateProgress(stepDifference);
@@ -148,8 +155,14 @@ public class StepCountActivity extends AppCompatActivity {
         if(stepProgress.getOnDaily() != isOnDaily)
             stepProgress.setOnDaily(isOnDaily);
 
+        //.setText(String.valueOf(stepCount));
+        Log.d("TOTAL_STEPS", String.valueOf(stepProgress.getTotalSteps()));
+        Log.d("GOAL_PROGRESS", String.valueOf(stepProgress.getGoalProgress()));
+        textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
+        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
+
         /*After all updates have finished, write to logger*/
-        stepLogger.writeSteps(stepProgress.getDailySteps(),stepCount,totalSteps, stepProgress.getDailyGoal());
+        stepLogger.writeSteps(stepProgress.getDailySteps(), stepProgress.getTotalSteps(), stepCount, stepProgress.getDailyGoal());
 
     }
 
