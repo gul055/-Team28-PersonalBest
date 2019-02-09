@@ -7,4 +7,6 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="goal_hint">Please enter a number >= 1.</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

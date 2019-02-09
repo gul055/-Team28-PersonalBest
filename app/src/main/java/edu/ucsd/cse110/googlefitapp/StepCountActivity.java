@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.util.SharedPreferencesUtils;
 
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
@@ -50,38 +53,18 @@ public class StepCountActivity extends AppCompatActivity {
         setGoalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setGoalDialog(StepCountActivity.this);
+                Dialog setGoal = new GoalDialog(StepCountActivity.this, R.string.set_goal, R.string.goal_dialog, R.string.goal_hint, R.string.confirm, R.string.cancel);
+                setGoal.show();
+                int result = setGoal.getIntResult();
+                if (result >= Constants.MINIMUM_VALID_GOAL) {
+                    SharedPreferencesUtil.saveInt(StepCountActivity.this, Constants.GOAL, result);
+                }
             }
         });
 
         fitnessService.setup();
 
     }
-
-    protected void setGoalDialog(Context c) {
-        final EditText setGoal = new EditText(c);
-        setGoal.setHint(R.string.goal_hint);
-        AlertDialog goalDialog = new AlertDialog.Builder(c)
-                .setTitle(R.string.set_goal)
-                .setMessage(R.string.goal_dialog)
-                .setView(setGoal)
-                .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        try{
-                            int newGoal = Integer.parseInt(setGoal.getText().toString());
-                            // Insert code to change goals here
-                        }
-                        catch(Exception e){
-
-                        }
-                    }
-                })
-                .setNegativeButton(R.string.cancel, null)
-                .create();
-        goalDialog.show();
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -104,8 +87,8 @@ public class StepCountActivity extends AppCompatActivity {
     public void showEncouragement() {
         int steps = Integer.valueOf(textSteps.getText().toString());
 
-        if(steps > 1000) {
-            double percent = steps/100;
+        if (steps > 1000) {
+            double percent = steps / 100;
             Toast toast = Toast.makeText(this, "Good job! You're already at " + percent + "% of the daily recommended number of steps.", Toast.LENGTH_LONG);
             toast.show();
         }
