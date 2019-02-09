@@ -146,7 +146,7 @@ public class StepCountActivity extends AppCompatActivity {
         /*Updates daily*/
         if(isOnDaily){
             stepProgress.updateDaily(false, stepDifference);
-    }
+        }
 
         /*Updates total step progress*/
         stepProgress.updateProgress(stepDifference);
