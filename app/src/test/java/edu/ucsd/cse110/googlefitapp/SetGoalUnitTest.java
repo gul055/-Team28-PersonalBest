@@ -24,6 +24,7 @@ public class SetGoalUnitTest {
 
     private StepCountActivity activity;
     private Button setGoalButton;
+    private long nextStepCount;
 
     @Before
     public void setUp() throws Exception {
@@ -39,6 +40,7 @@ public class SetGoalUnitTest {
         activity = Robolectric.buildActivity(StepCountActivity.class, intent).create().get();
 
         setGoalButton = activity.findViewById(R.id.setGoal);
+        nextStepCount = 1337;
     }
 
     @Test
