@@ -18,8 +18,8 @@ public class WalkRun {
     private final static int secondsInMinute = 60;
 
     //boolean checks for valid WalkRun method calls
-    private boolean started = false;
-    private boolean ok = false;
+    boolean started = false;
+    boolean ok = false;
 
     LocalDateTime startTime;
     LocalDateTime endTime;
@@ -47,9 +47,14 @@ public class WalkRun {
     public void startWalkRun(int initSteps) throws Exception {
         //every start must be met with an end
         if(!started) {
-            startTime = LocalDateTime.now();
-            startSteps = initSteps;
+            if(initSteps >= 0) {
+                startSteps = initSteps;
+            }
+            else {
+                throw new Exception("Invalid: negative initial step count");
+            }
 
+            startTime = LocalDateTime.now();
             started = true;
             ok = false;
         }
@@ -63,15 +68,19 @@ public class WalkRun {
     public void endWalkRun(int finalSteps) throws Exception {
         //can only end WalkRun that has already started
         if(started) {
+            if(finalSteps < 0) {
+                throw new Exception("Invalid: negative final step count");
+            }
             //cannot decrease the amount of steps taken on a walk
-            if(endSteps > startSteps) {
+            if(finalSteps >= startSteps) {
                 endTime = LocalDateTime.now();
                 endSteps = finalSteps;
                 started = false;
                 ok = true;
             }
             else {
-                throw new Exception("Invalid: number of steps DECREASED on WalkRun");
+                throw new Exception("Invalid: Steps DECREASED on WalkRun.\n" +
+                        "Start steps: " + startSteps + ". End steps: " + endSteps);
             }
         }
         else {
@@ -79,9 +88,23 @@ public class WalkRun {
         }
     }
 
-    /* Return an AlertDialog containing the steps, duration, speed, and distance of this WalkRun */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public AlertDialog getStats(Context context) throws Exception {
+    public String checkProgress(Context context) throws Exception {
+        if(started) {
+            ok = true;
+            endTime = LocalDateTime.now();
+            String progress = getStats(context);
+            ok = false;
+            return progress;
+        }
+        else {
+            throw new Exception("Cannot check progress on a run that hasn't started");
+        }
+    }
+
+    /* Return an String containing the steps, duration, speed, and distance of this WalkRun */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String getStats(Context context) throws Exception {
         if(ok) {
             //duration
             long seconds = secondsWalked();
@@ -102,23 +125,10 @@ public class WalkRun {
             //distance
             double distance = getDistance();
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("Duration: " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds\n"
+            return("Duration: " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds\n"
                     + "Number of steps: " + steps
                     + "Speed: " + mph + " mph\n"
                     + "Distance: " + distance + " miles");
-            builder.setCancelable(true);
-
-            builder.setPositiveButton(
-                    "Yes",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-
-            AlertDialog alert = builder.create();
-            return alert;
         }
         else {
             throw new Exception("Invalid: This instance of WalkRun has started but not stopped.");
