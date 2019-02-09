@@ -1,21 +1,14 @@
 package edu.ucsd.cse110.googlefitapp;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.common.util.SharedPreferencesUtils;
 
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
@@ -56,8 +49,12 @@ public class StepCountActivity extends AppCompatActivity {
                 Dialog setGoal = new GoalDialog(StepCountActivity.this, R.string.set_goal, R.string.goal_dialog, R.string.goal_hint, R.string.confirm, R.string.cancel);
                 setGoal.show();
                 int result = setGoal.getIntResult();
+                int oldGoal = SharedPreferencesUtil.loadInt(StepCountActivity.this, Constants.GOAL);
                 if (result >= Constants.MINIMUM_VALID_GOAL) {
                     SharedPreferencesUtil.saveInt(StepCountActivity.this, Constants.GOAL, result);
+                    Toast.makeText(StepCountActivity.this, R.string.newgoal, Toast.LENGTH_LONG);
+                } else if (oldGoal != result) {
+                    Toast.makeText(StepCountActivity.this, R.string.invalid_goal_warning, Toast.LENGTH_LONG);
                 }
             }
         });

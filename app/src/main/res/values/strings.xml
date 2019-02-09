@@ -9,4 +9,6 @@
     <string name="goal_hint">Please enter a number >= 1.</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="invalid_goal_warning">Invalid goal. Please try again.</string>
+    <string name="newgoal">New goal set.</string>
 </resources>

@@ -41,7 +41,7 @@ public class GoalDialog implements Dialog {
                         try {
                             result = Integer.parseInt(setGoal.getText().toString());
                         } catch (NumberFormatException e) {
-                            result = -1;
+                            result = 0;
                         }
                     }
                 })
