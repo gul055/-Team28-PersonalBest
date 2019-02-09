@@ -21,19 +21,19 @@ public class SharedPreferencesUtil {
         return s;
     }
 
-    public static void saveInt(Context c, String name, int value) {
+    public static void saveLong(Context c, String name, long value) {
 
         // TODO: Remove the hardcoded string
         SharedPreferences sharedPreferences = c.getSharedPreferences("step_count", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(name, value);
+        editor.putLong(name, value);
         editor.apply();
     }
 
-    public static int loadInt(Context c, String name) {
+    public static long loadLong(Context c, String name) {
         // TODO: Remove the hardcoded string
         SharedPreferences sharedPreferences = c.getSharedPreferences("step_count", Context.MODE_PRIVATE);
-        int i = sharedPreferences.getInt(name, 0);
+        long i = sharedPreferences.getLong(name, 0);
         return i;
     }
 }

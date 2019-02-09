@@ -3,6 +3,7 @@ package edu.ucsd.cse110.googlefitapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.RenderScript;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -46,16 +47,8 @@ public class StepCountActivity extends AppCompatActivity {
         setGoalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog setGoal = new GoalDialog(StepCountActivity.this, R.string.set_goal, R.string.goal_dialog, R.string.goal_hint, R.string.confirm, R.string.cancel);
-                setGoal.show();
-                int result = setGoal.getIntResult();
-                int oldGoal = SharedPreferencesUtil.loadInt(StepCountActivity.this, Constants.GOAL);
-                if (result >= Constants.MINIMUM_VALID_GOAL) {
-                    SharedPreferencesUtil.saveInt(StepCountActivity.this, Constants.GOAL, result);
-                    Toast.makeText(StepCountActivity.this, R.string.newgoal, Toast.LENGTH_LONG);
-                } else if (oldGoal != result) {
-                    Toast.makeText(StepCountActivity.this, R.string.invalid_goal_warning, Toast.LENGTH_LONG);
-                }
+                Intent intent = new Intent();
+                int reqCode = 1;
             }
         });
 

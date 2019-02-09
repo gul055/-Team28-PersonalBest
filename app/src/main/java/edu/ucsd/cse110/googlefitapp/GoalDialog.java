@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.util.Log;
 import android.widget.EditText;
 
 public class GoalDialog implements Dialog {
@@ -40,8 +41,10 @@ public class GoalDialog implements Dialog {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         try {
                             result = Integer.parseInt(setGoal.getText().toString());
+                            System.out.println("Mariya Takeuchi result: " + result);
                         } catch (NumberFormatException e) {
                             result = 0;
+                            System.out.println("The Pope error");
                         }
                     }
                 })
