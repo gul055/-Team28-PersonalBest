@@ -13,12 +13,12 @@ public class SetGoal {
         return goalCandidate >= Constants.MINIMUM_VALID_GOAL;
     }
 
-    public long set(int goalCandidate) {
+    public boolean set(long goalCandidate) {
         if (isValidGoal(goalCandidate)) {
             SharedPreferencesUtil.saveLong(context, Constants.GOAL, goalCandidate);
-            return goalCandidate;
+            return true;
         } else {
-            return 0;
+            return false;
         }
     }
 }

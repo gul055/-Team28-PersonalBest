@@ -23,8 +23,6 @@ public class StepCountActivity extends AppCompatActivity {
     private TextView textSteps;
     private FitnessService fitnessService;
 
-    // Code for lab 3
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +45,8 @@ public class StepCountActivity extends AppCompatActivity {
         setGoalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                int reqCode = 1;
+                Intent intent = new Intent(getApplicationContext(), SetGoalActivity.class);
+                startActivity(intent);
             }
         });
 
