@@ -22,7 +22,7 @@ public class SetGoalActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 long goalNum = 0;
-                SetGoal setGoal = new SetGoal(getApplicationContext());
+                Goal setGoal = new SetGoal(getApplicationContext());
                 try {
                     goalNum = Long.parseLong(goal.getText().toString());
                 } catch (NumberFormatException e) {

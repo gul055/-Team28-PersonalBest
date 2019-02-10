@@ -2,7 +2,7 @@ package edu.ucsd.cse110.googlefitapp;
 
 import android.content.Context;
 
-public class SetGoal {
+public class SetGoal implements Goal {
     Context context;
 
     public SetGoal(Context c) {

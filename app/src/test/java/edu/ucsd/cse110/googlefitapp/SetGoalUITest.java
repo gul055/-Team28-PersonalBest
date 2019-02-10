@@ -1,6 +1,5 @@
 package edu.ucsd.cse110.googlefitapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,46 +10,34 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.robolectric.shadows.ShadowToast;
 
 @RunWith(RobolectricTestRunner.class)
-public class SetGoalUnitTest {
+public class SetGoalUITest {
 
-    private Goal setGoal;
     private SetGoalActivity activity;
-    private Context fakeContext;
     private EditText goalField;
+    private Button confirm;
 
     @Before
     public void setUp() {
         Intent intent = new Intent(RuntimeEnvironment.application, SetGoalActivity.class);
         activity = Robolectric.buildActivity(SetGoalActivity.class, intent).create().get();
-        fakeContext = activity.getApplicationContext();
-        setGoal = new SetGoal(fakeContext);
         goalField = activity.findViewById(R.id.goalInput);
-    }
-
-    @Test
-    public void testValidInput() {
-        boolean result = setGoal.set(1000);
-        assertTrue(result);
-        assertEquals(1000, SharedPreferencesUtil.loadLong(fakeContext, Constants.GOAL));
-    }
-
-    @Test
-    public void testInvalidInput() {
-        boolean result = setGoal.set(0);
-        assertFalse(result);
+        confirm = activity.findViewById(R.id.buttonConfirm);
     }
 
     @Test
     public void testValidInputUI() {
         goalField.setText("1000");
-
+        confirm.performClick();
+        ShadowToast.getTextOfLatestToast().equals("New goal set.");
     }
 
-
+    @Test
+    public void testInvalidInputUI() {
+        goalField.setText("0");
+        confirm.performClick();
+        ShadowToast.getTextOfLatestToast().equals("Invalid goal. Please try again.");
+    }
 }
