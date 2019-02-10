@@ -1,7 +1,6 @@
 package edu.ucsd.cse110.googlefitapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,6 +30,7 @@ public class StepCountActivity extends AppCompatActivity {
     private TextView textSteps, textGoal;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
@@ -51,12 +51,11 @@ public class StepCountActivity extends AppCompatActivity {
         Button setGoalBtn = (Button) findViewById(R.id.setGoalBtn);
         Button showStepsBtn = (Button) findViewById(R.id.showStepsBtn);
 
-        if(stepLogger.readOnDaily() == false) {
+        if (stepLogger.readOnDaily() == false) {
             stepProgress.setOnDaily(false);
             startStopBtn.setBackgroundColor(Color.GREEN);
             startStopBtn.setText("Start Walk/Run");
-        }
-        else {
+        } else {
             stepProgress.setOnDaily(true);
             startStopBtn.setBackgroundColor(Color.RED);
             startStopBtn.setText("Stop Walk/Run");
@@ -65,13 +64,12 @@ public class StepCountActivity extends AppCompatActivity {
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(stepProgress.getOnDaily() == true) {
+                if (stepProgress.getOnDaily() == true) {
                     stepLogger.writeOnDaily(false);
                     stepProgress.setOnDaily(false);
                     startStopBtn.setBackgroundColor(Color.GREEN);
                     startStopBtn.setText("Start Walk/Run");
-                }
-                else {
+                } else {
                     stepLogger.writeOnDaily(true);
                     stepProgress.setOnDaily(true);
                     startStopBtn.setBackgroundColor(Color.RED);
@@ -104,9 +102,18 @@ public class StepCountActivity extends AppCompatActivity {
             }
         });
 
+        Button setGoalButton = findViewById(R.id.setGoal);
+        setGoalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SetGoalActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        fitnessService.setup();
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -120,7 +127,7 @@ public class StepCountActivity extends AppCompatActivity {
         }
     }
 
-    public void setDailyStatus(){
+    public void setDailyStatus() {
         boolean isOnDaily = stepLogger.readOnDaily();
         stepLogger.writeOnDaily(isOnDaily);
     }
@@ -144,7 +151,7 @@ public class StepCountActivity extends AppCompatActivity {
         stepProgress.setDailySteps(dailyProgress);
 
         /*Updates daily*/
-        if(isOnDaily){
+        if (isOnDaily) {
             stepProgress.updateDaily(false, stepDifference);
         }
 
@@ -152,7 +159,7 @@ public class StepCountActivity extends AppCompatActivity {
         stepProgress.updateProgress(stepDifference);
 
         /*Updates step progress to determine if on daily or not*/
-        if(stepProgress.getOnDaily() != isOnDaily)
+        if (stepProgress.getOnDaily() != isOnDaily)
             stepProgress.setOnDaily(isOnDaily);
 
         //.setText(String.valueOf(stepCount));
@@ -165,20 +172,5 @@ public class StepCountActivity extends AppCompatActivity {
         stepLogger.writeSteps(stepProgress.getDailySteps(), stepProgress.getTotalSteps(), stepCount, stepProgress.getDailyGoal());
 
     }
-
-    // Code for part 3 of the lab
-   /* public void showEncouragement() {
-        Context context = getApplicationContext();
-        int steps = Integer.parseInt(textSteps.toString());
-        int percentSteps = (int)  (steps / 100);
-        CharSequence text = "Good job! You're already at" +  percentSteps + "% of the daily recommended number of steps.";
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, text, duration);
-
-        // Determine if the toast should be shown
-        if( steps >= 1000) {
-            toast.show();
-        }
-    }*/
 
 }
