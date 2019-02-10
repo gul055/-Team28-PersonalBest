@@ -47,7 +47,7 @@ public class MainActivityEspressoTest {
         mActivityTestRule.getActivity().setFitnessServiceKey(TEST_SERVICE);
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.buttonGoToSteps),
+                allOf(withId(R.id.goStepActBtn),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -57,7 +57,7 @@ public class MainActivityEspressoTest {
         button.check(matches(isDisplayed()));
 
         ViewInteraction appCompatButton = onView(
-                allOf(withId(R.id.buttonGoToSteps), withText("go to step counter"),
+                allOf(withId(R.id.goStepActBtn), withText("go to step counter"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -77,7 +77,7 @@ public class MainActivityEspressoTest {
         textView.check(matches(withText("steps will be shown here")));
 
         ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.buttonUpdateSteps), withText("update steps"),
+                allOf(withId(R.id.goStepActBtn), withText("update steps"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
