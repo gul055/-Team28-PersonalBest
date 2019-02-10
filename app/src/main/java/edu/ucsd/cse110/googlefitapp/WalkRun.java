@@ -74,6 +74,9 @@ public class WalkRun {
             //cannot decrease the amount of steps taken on a walk
             if(finalSteps >= startSteps) {
                 endTime = LocalDateTime.now();
+                if(Duration.between(startTime, endTime).getSeconds() < 0) {
+                    throw new Exception("Invalid: End time < start time");
+                }
                 endSteps = finalSteps;
                 started = false;
                 ok = true;
@@ -88,23 +91,30 @@ public class WalkRun {
         }
     }
 
+    /* Check the statistics so far of this WalkRun */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public String checkProgress(Context context) throws Exception {
+    public String checkProgress(int pSteps) throws Exception {
         if(started) {
-            ok = true;
-            endTime = LocalDateTime.now();
-            String progress = getStats(context);
-            ok = false;
-            return progress;
+            if(!ok) {
+                ok = true;
+                endTime = LocalDateTime.now();
+                endSteps = pSteps;
+                String progress = getStats();
+                ok = false;
+                return progress;
+            }
+            else {
+                throw new Exception("No WalkRun in progress");
+            }
         }
         else {
-            throw new Exception("Cannot check progress on a run that hasn't started");
+            throw new Exception("No WalkRun in progress");
         }
     }
 
     /* Return an String containing the steps, duration, speed, and distance of this WalkRun */
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public String getStats(Context context) throws Exception {
+    public String getStats() throws Exception {
         if(ok) {
             //duration
             long seconds = secondsWalked();
@@ -140,20 +150,20 @@ public class WalkRun {
         return endSteps - startSteps;
     }
 
-    /* Return the distance walked in miles */
+    /* Return the distance walked in miles, rounded to one decimal place */
     public double getDistance() throws Exception {
         double stride = height * strideMultiplier;
         double distanceFeet = stride * getNumSteps() / inchesInFeet;
         double distanceMiles = distanceFeet / feetInMile;
-        return distanceMiles;
+        return Math.round(distanceMiles * 10) / 10.0;
     }
 
-    /* Get speed of WalkRun in miles per hour */
+    /* Get speed of WalkRun in miles per hour, rounded to one decimal place */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public double getSpeed() throws Exception {
-        double hours = secondsWalked() / secondsInHour;
+        double hours = (double) secondsWalked() / secondsInHour;
         double mph = getDistance() / hours;
-        return mph;
+        return Math.round(mph * 10) / 10.0;
     }
 
     /* Get duration of WalkRun in seconds */

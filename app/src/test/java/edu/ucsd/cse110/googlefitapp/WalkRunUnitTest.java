@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 
@@ -40,6 +42,12 @@ public class WalkRunUnitTest {
 
         //check speed
         assertEquals(3.0, run.getSpeed(), .001);
+
+        //check stats statement
+        assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
+                            + "Number of steps: 7305"
+                            + "Speed: 3.0 mph\n"
+                            + "Distance: 3.0 miles", run.getStats());
     }
 
     @Test
@@ -133,6 +141,12 @@ public class WalkRunUnitTest {
         //check speed
         assertEquals(3.0, run.getSpeed(), .001);
 
+        //check stats statement
+        assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
+                + "Number of steps: 7305"
+                + "Speed: 3.0 mph\n"
+                + "Distance: 3.0 miles", run.getStats());
+
 
         LocalDateTime start2 = LocalDateTime.of(2019, Month.JANUARY,2,0,0,0);
         LocalDateTime end2 = LocalDateTime.of(2019, Month.JANUARY,2,2,0,0);
@@ -150,6 +164,137 @@ public class WalkRunUnitTest {
 
         //check speed
         assertEquals(0.5, run.getSpeed(), .001);
+
+        //check stats statement
+        assertEquals("Duration: 2 hours, 0 minutes, 0 seconds\n"
+                + "Number of steps: 2435"
+                + "Speed: 0.5 mph\n"
+                + "Distance: 1.0 miles", run.getStats());
+    }
+
+    @Test
+    public void timeTravel() {
+        try {
+            TestWalkRun run;
+            run = new TestWalkRun(63);
+            LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 2, 0, 0, 0);
+            run.startWalkRun(0, start);
+
+            LocalDateTime end = LocalDateTime.of(2019, Month.JANUARY, 1, 1, 0, 0);
+            run.endWalkRun(7305, end);
+            fail("End time should not be before start time");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void decreaseSteps() {
+        try {
+            TestWalkRun run;
+            run = new TestWalkRun(63);
+            LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
+            run.startWalkRun(7305, start);
+
+            LocalDateTime end = LocalDateTime.of(2019, Month.JANUARY, 1, 1, 0, 0);
+            run.endWalkRun(0, end);
+            fail("End steps should not be less than start steps");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void startProgressEnd() throws Exception {
+        TestWalkRun run;
+        run = new TestWalkRun(63);
+        LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
+        run.startWalkRun(0, start);
+
+        LocalDateTime mid = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 30, 0);
+
+        //check progress statement
+        assertEquals("Duration: 0 hours, 30 minutes, 0 seconds\n"
+                + "Number of steps: 3653"
+                + "Speed: 3.0 mph\n"
+                + "Distance: 1.5 miles", run.checkProgress(3653, mid));
+
+        LocalDateTime end = LocalDateTime.of(2019, Month.JANUARY, 1, 1, 0, 0);
+        run.endWalkRun(7305, end);
+
+        //check stats statement
+        assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
+                + "Number of steps: 7305"
+                + "Speed: 3.0 mph\n"
+                + "Distance: 3.0 miles", run.getStats());
+
+    }
+
+    @Test
+    public void startProgressx2End() throws Exception {
+        TestWalkRun run;
+        run = new TestWalkRun(63);
+        LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
+        run.startWalkRun(0, start);
+
+        LocalDateTime mid = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 30, 0);
+
+        //check progress statement
+        assertEquals("Duration: 0 hours, 30 minutes, 0 seconds\n"
+                + "Number of steps: 3653"
+                + "Speed: 3.0 mph\n"
+                + "Distance: 1.5 miles", run.checkProgress(3653, mid));
+
+        LocalDateTime mid2 = LocalDateTime.of(2019, Month.JANUARY, 1, 2, 0, 0);
+
+        //check stats statement
+        assertEquals("Duration: 2 hours, 0 minutes, 0 seconds\n"
+                + "Number of steps: 7305"
+                + "Speed: 1.5 mph\n"
+                + "Distance: 3.0 miles", run.checkProgress(7305, mid2));
+
+        LocalDateTime end = LocalDateTime.of(2019, Month.JANUARY, 1, 3, 0, 0);
+        run.endWalkRun(24350, end);
+
+        //check stats statement
+        assertEquals("Duration: 3 hours, 0 minutes, 0 seconds\n"
+                + "Number of steps: 24350"
+                + "Speed: 3.3 mph\n"
+                + "Distance: 10.0 miles", run.getStats());
+    }
+
+    @Test
+    public void startEndProgress() throws Exception{
+        TestWalkRun run;
+        run = new TestWalkRun(63);
+        LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
+        run.startWalkRun(0, start);
+
+        LocalDateTime end = LocalDateTime.of(2019, Month.JANUARY, 1, 1, 0, 0);
+        run.endWalkRun(7305, end);
+
+        //check stats statement
+        assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
+                + "Number of steps: 7305"
+                + "Speed: 3.0 mph\n"
+                + "Distance: 3.0 miles", run.getStats());
+
+        try {
+            LocalDateTime mid = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 30, 0);
+
+            //check progress statement
+            assertEquals("Duration: 0 hours, 30 minutes, 0 seconds\n"
+                    + "Number of steps: 3653"
+                    + "Speed: 3.0 mph\n"
+                    + "Distance: 1.5 miles", run.checkProgress(3653, mid));
+
+            fail("Should not be able to check progress on a WalkRun that has ended");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private class TestWalkRun extends WalkRun {
@@ -187,6 +332,9 @@ public class WalkRunUnitTest {
                 if(finalSteps >= startSteps) {
                     endTime = e;
                     endSteps = finalSteps;
+                    if(Duration.between(startTime, endTime).getSeconds() < 0) {
+                        throw new Exception("Invalid: End time < start time");
+                    }
                     started = false;
                     ok = true;
                 }
@@ -197,6 +345,26 @@ public class WalkRunUnitTest {
             }
             else {
                 throw new Exception("Invalid: attempt to end WalkRun before starting");
+            }
+        }
+
+        /* Check the statistics so far of this WalkRun */
+        public String checkProgress(int pSteps, LocalDateTime pTime) throws Exception {
+            if(started) {
+                if(!ok) {
+                    ok = true;
+                    endTime = pTime;
+                    endSteps = pSteps;
+                    String progress = getStats();
+                    ok = false;
+                    return progress;
+                }
+                else {
+                    throw new Exception("Cannot check progress on a run that has been completed");
+                }
+            }
+            else {
+                throw new Exception("Cannot check progress on a run that hasn't started");
             }
         }
 
