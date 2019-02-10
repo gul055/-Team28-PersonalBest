@@ -13,12 +13,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="update steps" />
+        android:text="@string/update_steps" />
 
     <TextView
         android:id="@+id/textSteps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="steps will be shown here" />
+        android:text="@string/step_placeholder" />
+
+    <Button
+        android:id="@+id/setGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_goal" />
 
 </LinearLayout>

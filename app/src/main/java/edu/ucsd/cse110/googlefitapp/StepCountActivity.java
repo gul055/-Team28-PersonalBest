@@ -1,7 +1,6 @@
 package edu.ucsd.cse110.googlefitapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +22,6 @@ public class StepCountActivity extends AppCompatActivity {
     private TextView textSteps;
     private FitnessService fitnessService;
 
-    // Code for lab 3
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,10 +40,18 @@ public class StepCountActivity extends AppCompatActivity {
             }
         });
 
+        Button setGoalButton = findViewById(R.id.setGoal);
+        setGoalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SetGoalActivity.class);
+                startActivity(intent);
+            }
+        });
+
         fitnessService.setup();
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -69,8 +74,8 @@ public class StepCountActivity extends AppCompatActivity {
     public void showEncouragement() {
         int steps = Integer.valueOf(textSteps.getText().toString());
 
-        if(steps > 1000) {
-            double percent = steps/100;
+        if (steps > 1000) {
+            double percent = steps / 100;
             Toast toast = Toast.makeText(this, "Good job! You're already at " + percent + "% of the daily recommended number of steps.", Toast.LENGTH_LONG);
             toast.show();
         }
