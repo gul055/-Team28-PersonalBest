@@ -2,7 +2,6 @@ package edu.ucsd.cse110.googlefitapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Button;
 import android.widget.EditText;
 
 import org.junit.Before;
