@@ -40,7 +40,7 @@ public class StepCountActivityUnitTest {
         activity = Robolectric.buildActivity(StepCountActivity.class, intent).create().get();
 
         textSteps = activity.findViewById(R.id.textSteps);
-        btnUpdateSteps = activity.findViewById(R.id.buttonUpdateSteps);
+        btnUpdateSteps = activity.findViewById(R.id.showStepsBtn);
         nextStepCount = 1337;
     }
 
