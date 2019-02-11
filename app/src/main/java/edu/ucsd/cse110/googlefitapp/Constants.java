@@ -6,6 +6,8 @@ public final class Constants {
     public static final String SET_SUCCESS = "New goal set!";
     public static final String SET_FAIL = "Invalid goal. Please try again.";
     public static final String NO_GOAL = "No goal inputted!";
+    public static final String START_WALK = "Start Walk/Run";
+    public static final String STOP_WALK = "Stop Walk/Run";
 
     // Specific requestor code for setting goal
     public static final int GOAL_ACTIVITY_CODE = 1;
