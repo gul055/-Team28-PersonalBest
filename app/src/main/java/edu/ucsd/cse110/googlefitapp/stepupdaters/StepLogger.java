@@ -8,6 +8,8 @@ import static android.content.Context.*;
 
 public class StepLogger {
 
+    //TODO: Remove all hardcoded strings, refactor.
+
     SharedPreferences sharedPref;
 
     public StepLogger(Context context) {

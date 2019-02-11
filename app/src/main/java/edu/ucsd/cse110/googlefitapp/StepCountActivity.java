@@ -43,9 +43,6 @@ public class StepCountActivity extends AppCompatActivity {
 
         fitnessService.setup();
 
-        //textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
-        //textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
-
         // Create all buttons
         final Button startStopBtn = (Button) findViewById(R.id.startStopBtn);
         Button setGoalBtn = (Button) findViewById(R.id.setGoalBtn);
@@ -54,11 +51,11 @@ public class StepCountActivity extends AppCompatActivity {
         if (stepLogger.readOnDaily() == false) {
             stepProgress.setOnDaily(false);
             startStopBtn.setBackgroundColor(Color.GREEN);
-            startStopBtn.setText("Start Walk/Run");
+            startStopBtn.setText(Constants.START_WALK);
         } else {
             stepProgress.setOnDaily(true);
             startStopBtn.setBackgroundColor(Color.RED);
-            startStopBtn.setText("Stop Walk/Run");
+            startStopBtn.setText(Constants.STOP_WALK);
         }
 
         startStopBtn.setOnClickListener(new View.OnClickListener() {
@@ -68,12 +65,12 @@ public class StepCountActivity extends AppCompatActivity {
                     stepLogger.writeOnDaily(false);
                     stepProgress.setOnDaily(false);
                     startStopBtn.setBackgroundColor(Color.GREEN);
-                    startStopBtn.setText("Start Walk/Run");
+                    startStopBtn.setText(Constants.START_WALK);
                 } else {
                     stepLogger.writeOnDaily(true);
                     stepProgress.setOnDaily(true);
                     startStopBtn.setBackgroundColor(Color.RED);
-                    startStopBtn.setText("Stop Walk/Run");
+                    startStopBtn.setText(Constants.STOP_WALK);
 
                 }
 
@@ -90,14 +87,6 @@ public class StepCountActivity extends AppCompatActivity {
         showStepsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*//fitnessService.updateStepCount();
-                TextView textSteps = (TextView) findViewById(R.id.textSteps);
-                TextView textGoal = (TextView) findViewById(R.id.textGoal);
-                //textSteps.setText((String.valueOf(stepProgress.getTotalSteps())));
-                //textGoal.setText((String.valueOf(stepProgress.getGoalProgress())));
-                textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
-                textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
-                //showEncouragement();*/
                 fitnessService.updateStepCount();
             }
         });
