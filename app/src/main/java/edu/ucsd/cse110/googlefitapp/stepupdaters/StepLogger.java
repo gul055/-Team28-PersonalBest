@@ -8,14 +8,16 @@ import static android.content.Context.*;
 
 public class StepLogger {
 
+    //TODO: Remove all hardcoded strings, refactor.
+
     SharedPreferences sharedPref;
 
-    public StepLogger(Context context){
+    public StepLogger(Context context) {
         sharedPref = context.getSharedPreferences("step_data", MODE_PRIVATE);
     }
 
     /*Writes all step data to logger*/
-    public void writeSteps(long dailySteps, long totalSteps, long lastStepUpdate, long goal){
+    public void writeSteps(long dailySteps, long totalSteps, long lastStepUpdate, long goal) {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putLong("daily_steps", dailySteps);
         editor.putLong("total_steps", totalSteps);
@@ -24,24 +26,29 @@ public class StepLogger {
         editor.apply();
     }
 
-    public void writeOnDaily(boolean onDaily){
+    public void writeOnDaily(boolean onDaily) {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("on_daily", onDaily);
         editor.apply();
     }
-    public long readDaily(){
+
+    public long readDaily() {
         return sharedPref.getLong("daily_steps", 0);
     }
 
-    public long readTotal(){
+    public long readTotal() {
         return sharedPref.getLong("total_steps", 0);
     }
 
-    public long readLastStep(){
+    public long readLastStep() {
         return sharedPref.getLong("last_update", 0);
     }
 
-    public long readGoal(){ return sharedPref.getLong("goal", 0); }
+    public long readGoal() {
+        return sharedPref.getLong("goal", 5000);
+    }
 
-    public boolean readOnDaily(){ return sharedPref.getBoolean("on_daily", false); }
+    public boolean readOnDaily() {
+        return sharedPref.getBoolean("on_daily", false);
+    }
 }

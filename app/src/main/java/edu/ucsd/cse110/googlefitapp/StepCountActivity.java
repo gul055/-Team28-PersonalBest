@@ -1,7 +1,6 @@
 package edu.ucsd.cse110.googlefitapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,55 +27,50 @@ public class StepCountActivity extends AppCompatActivity {
 
     private FitnessService fitnessService;
 
-    // Code for lab 3
+    private TextView textSteps, textGoal;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
 
-        String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
+        textSteps = findViewById(R.id.textSteps);
+        textGoal = findViewById(R.id.textGoal);
+        final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
 
         fitnessService.setup();
-
-        TextView textSteps = (TextView) findViewById(R.id.textSteps);
-        final TextView textGoal = (TextView) findViewById(R.id.textGoal);
-
-        textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
-        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
 
         // Create all buttons
         final Button startStopBtn = (Button) findViewById(R.id.startStopBtn);
         Button setGoalBtn = (Button) findViewById(R.id.setGoalBtn);
         Button showStepsBtn = (Button) findViewById(R.id.showStepsBtn);
 
-        if(stepLogger.readOnDaily() == false) {
+        if (stepLogger.readOnDaily() == false) {
             stepProgress.setOnDaily(false);
             startStopBtn.setBackgroundColor(Color.GREEN);
-            startStopBtn.setText("Start Walk/Run");
-        }
-        else {
+            startStopBtn.setText(Constants.START_WALK);
+        } else {
             stepProgress.setOnDaily(true);
             startStopBtn.setBackgroundColor(Color.RED);
-            startStopBtn.setText("Stop Walk/Run");
+            startStopBtn.setText(Constants.STOP_WALK);
         }
 
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(stepProgress.getOnDaily() == true) {
+                if (stepProgress.getOnDaily() == true) {
                     stepLogger.writeOnDaily(false);
                     stepProgress.setOnDaily(false);
                     startStopBtn.setBackgroundColor(Color.GREEN);
-                    startStopBtn.setText("Start Walk/Run");
-                }
-                else {
+                    startStopBtn.setText(Constants.START_WALK);
+                } else {
                     stepLogger.writeOnDaily(true);
                     stepProgress.setOnDaily(true);
                     startStopBtn.setBackgroundColor(Color.RED);
-                    startStopBtn.setText("Stop Walk/Run");
+                    startStopBtn.setText(Constants.STOP_WALK);
 
                 }
 
@@ -93,20 +87,22 @@ public class StepCountActivity extends AppCompatActivity {
         showStepsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //fitnessService.updateStepCount();
-                TextView textSteps = (TextView) findViewById(R.id.textSteps);
-                TextView textGoal = (TextView) findViewById(R.id.textGoal);
-                //textSteps.setText((String.valueOf(stepProgress.getTotalSteps())));
-                //textGoal.setText((String.valueOf(stepProgress.getGoalProgress())));
-                textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
-                textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
-                //showEncouragement();
+                fitnessService.updateStepCount();
             }
         });
 
+        Button setGoalButton = findViewById(R.id.setGoal);
+        setGoalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SetGoalActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        fitnessService.setup();
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -120,24 +116,31 @@ public class StepCountActivity extends AppCompatActivity {
         }
     }
 
-    public void setDailyStatus(){
+    public void setDailyStatus() {
         boolean isOnDaily = stepLogger.readOnDaily();
         stepLogger.writeOnDaily(isOnDaily);
     }
 
     public void setStepCount(long stepCount) {
         /*Grabs all relevant values from local file*/
-        long dailySteps = stepLogger.readDaily();
-        long totalSteps = stepLogger.readTotal();
         long lastSteps = stepLogger.readLastStep();
         long dailyGoal = stepLogger.readGoal();
+        long dailyProgress = stepLogger.readDaily();
+
+        Log.d("CURRENT", String.valueOf(stepCount));
+        Log.d("LAST", String.valueOf(lastSteps));
         long stepDifference = stepCount - lastSteps;
+
+        stepProgress.setTotalSteps(stepLogger.readTotal());
+
         boolean isOnDaily = stepProgress.getOnDaily();
+        Log.d("ON_DAILY", String.valueOf(isOnDaily));
 
         stepProgress.setDailyGoal(dailyGoal);
+        stepProgress.setDailySteps(dailyProgress);
 
         /*Updates daily*/
-        if(isOnDaily){
+        if (isOnDaily) {
             stepProgress.updateDaily(false, stepDifference);
         }
 
@@ -145,27 +148,18 @@ public class StepCountActivity extends AppCompatActivity {
         stepProgress.updateProgress(stepDifference);
 
         /*Updates step progress to determine if on daily or not*/
-        if(stepProgress.getOnDaily() != isOnDaily)
+        if (stepProgress.getOnDaily() != isOnDaily)
             stepProgress.setOnDaily(isOnDaily);
 
+        //.setText(String.valueOf(stepCount));
+        Log.d("TOTAL_STEPS", String.valueOf(stepProgress.getTotalSteps()));
+        Log.d("GOAL_PROGRESS", String.valueOf(stepProgress.getGoalProgress()));
+        textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
+        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
+
         /*After all updates have finished, write to logger*/
-        stepLogger.writeSteps(stepProgress.getDailySteps(),stepCount,totalSteps, stepProgress.getDailyGoal());
+        stepLogger.writeSteps(stepProgress.getDailySteps(), stepProgress.getTotalSteps(), stepCount, stepProgress.getDailyGoal());
 
     }
-
-    // Code for part 3 of the lab
-   /* public void showEncouragement() {
-        Context context = getApplicationContext();
-        int steps = Integer.parseInt(textSteps.toString());
-        int percentSteps = (int)  (steps / 100);
-        CharSequence text = "Good job! You're already at" +  percentSteps + "% of the daily recommended number of steps.";
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, text, duration);
-
-        // Determine if the toast should be shown
-        if( steps >= 1000) {
-            toast.show();
-        }
-    }*/
 
 }

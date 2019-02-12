@@ -37,13 +37,14 @@
         android:id="@+id/showStepsBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Steps"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647" />
+        app:layout_constraintVertical_bias="0.647"
+        android:layout_marginTop="50dp"
+        android:text="@string/update_steps" />
 
     <TextView
         android:id="@+id/textSteps"
@@ -71,13 +72,19 @@
         android:id="@+id/textGoal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.273" />
+        app:layout_constraintVertical_bias="0.273"
+        android:text="@string/step_placeholder" />
+
+    <Button
+        android:id="@+id/setGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_goal" />
 
 </android.support.constraint.ConstraintLayout>
