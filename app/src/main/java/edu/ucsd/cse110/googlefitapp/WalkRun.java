@@ -34,10 +34,9 @@ public class WalkRun {
     /* Initialize a walk/run */
     public WalkRun(int userHeight) throws Exception {
         //negative or 0 height does not make sense
-        if(userHeight > 0) {
+        if (userHeight > 0) {
             height = userHeight;
-        }
-        else {
+        } else {
             throw new Exception("Invalid height");
         }
     }
@@ -46,19 +45,17 @@ public class WalkRun {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void startWalkRun(int initSteps) throws Exception {
         //every start must be met with an end
-        if(!started) {
-            if(initSteps >= 0) {
+        if (!started) {
+            if (initSteps >= 0) {
                 startSteps = initSteps;
-            }
-            else {
+            } else {
                 throw new Exception("Invalid: negative initial step count");
             }
 
             startTime = LocalDateTime.now();
             started = true;
             ok = false;
-        }
-        else {
+        } else {
             throw new Exception("Invalid: this WalkRun has already started");
         }
     }
@@ -67,26 +64,24 @@ public class WalkRun {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void endWalkRun(int finalSteps) throws Exception {
         //can only end WalkRun that has already started
-        if(started) {
-            if(finalSteps < 0) {
+        if (started) {
+            if (finalSteps < 0) {
                 throw new Exception("Invalid: negative final step count");
             }
             //cannot decrease the amount of steps taken on a walk
-            if(finalSteps >= startSteps) {
+            if (finalSteps >= startSteps) {
                 endTime = LocalDateTime.now();
-                if(Duration.between(startTime, endTime).getSeconds() < 0) {
+                if (Duration.between(startTime, endTime).getSeconds() < 0) {
                     throw new Exception("Invalid: End time < start time");
                 }
                 endSteps = finalSteps;
                 started = false;
                 ok = true;
-            }
-            else {
+            } else {
                 throw new Exception("Invalid: Steps DECREASED on WalkRun.\n" +
                         "Start steps: " + startSteps + ". End steps: " + endSteps);
             }
-        }
-        else {
+        } else {
             throw new Exception("Invalid: attempt to end WalkRun before starting");
         }
     }
@@ -94,20 +89,19 @@ public class WalkRun {
     /* Check the statistics so far of this WalkRun */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String checkProgress(int pSteps) throws Exception {
-        if(started) {
-            if(!ok) {
+        if (started) {
+            if (!ok) {
                 ok = true;
                 endTime = LocalDateTime.now();
                 endSteps = pSteps;
                 String progress = getStats();
                 ok = false;
-                return progress;
-            }
-            else {
+                String progressHeader = "Walk/Run progress:\n";
+                return progressHeader + progress;
+            } else {
                 throw new Exception("No WalkRun in progress");
             }
-        }
-        else {
+        } else {
             throw new Exception("No WalkRun in progress");
         }
     }
@@ -115,7 +109,7 @@ public class WalkRun {
     /* Return an String containing the steps, duration, speed, and distance of this WalkRun */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getStats() throws Exception {
-        if(ok) {
+        if (ok) {
             //duration
             long seconds = secondsWalked();
 
@@ -135,12 +129,11 @@ public class WalkRun {
             //distance
             double distance = getDistance();
 
-            return("Duration: " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds\n"
+            return ("Duration: " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds\n"
                     + "Number of steps: " + steps
                     + "Speed: " + mph + " mph\n"
                     + "Distance: " + distance + " miles");
-        }
-        else {
+        } else {
             throw new Exception("Invalid: This instance of WalkRun has started but not stopped.");
         }
     }
@@ -171,10 +164,9 @@ public class WalkRun {
     public long secondsWalked() throws Exception {
         walkRunTime = Duration.between(startTime, endTime).getSeconds();
 
-        if(walkRunTime > 0) {
+        if (walkRunTime > 0) {
             return walkRunTime;
-        }
-        else {
+        } else {
             throw new Exception("Invalid: WalkRun end time before WalkRun start time");
         }
     }

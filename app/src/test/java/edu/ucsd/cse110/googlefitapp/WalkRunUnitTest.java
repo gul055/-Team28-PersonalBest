@@ -297,6 +297,55 @@ public class WalkRunUnitTest {
         }
     }
 
+    @Test
+    public void progressEndNoStart() throws Exception{
+        TestWalkRun run;
+        run = new TestWalkRun(63);
+
+        try {
+            LocalDateTime end = LocalDateTime.of(2019, Month.JANUARY, 1, 1, 0, 0);
+            run.endWalkRun(7305, end);
+            //check stats statement
+            assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
+                    + "Number of steps: 7305"
+                    + "Speed: 3.0 mph\n"
+                    + "Distance: 3.0 miles", run.getStats());
+            fail("Can't end a WalkRun that hasn't started");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            LocalDateTime mid = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 30, 0);
+
+            //check progress statement
+            assertEquals("Duration: 0 hours, 30 minutes, 0 seconds\n"
+                    + "Number of steps: 3653"
+                    + "Speed: 3.0 mph\n"
+                    + "Distance: 1.5 miles", run.checkProgress(3653, mid));
+
+            fail("Should not be able to check progress on a WalkRun that has not started");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            LocalDateTime end = LocalDateTime.of(2019, Month.JANUARY, 1, 1, 0, 0);
+            run.endWalkRun(7305, end);
+            //check stats statement
+            assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
+                    + "Number of steps: 7305"
+                    + "Speed: 3.0 mph\n"
+                    + "Distance: 3.0 miles", run.getStats());
+            fail("Can't end a WalkRun that hasn't started");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private class TestWalkRun extends WalkRun {
         public TestWalkRun(int userHeight) throws Exception {
             super(userHeight);

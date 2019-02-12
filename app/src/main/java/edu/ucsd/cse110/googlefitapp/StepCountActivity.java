@@ -69,8 +69,8 @@ public class StepCountActivity extends AppCompatActivity {
     public void showEncouragement() {
         int steps = Integer.valueOf(textSteps.getText().toString());
 
-        if(steps > 1000) {
-            double percent = steps/100;
+        if (steps > 1000) {
+            double percent = steps / 100;
             Toast toast = Toast.makeText(this, "Good job! You're already at " + percent + "% of the daily recommended number of steps.", Toast.LENGTH_LONG);
             toast.show();
         }
