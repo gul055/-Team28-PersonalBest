@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import edu.ucsd.cse110.googlefitapp.R;
+import edu.ucsd.cse110.googlefitapp.StepCountActivity;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.fitness.GoogleFitAdapter;
@@ -18,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnGoToSteps = findViewById(R.id.buttonGoToSteps);
+        Button btnGoToSteps = (Button) findViewById(R.id.goStepActBtn);
+
         btnGoToSteps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
