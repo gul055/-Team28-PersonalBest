@@ -11,4 +11,8 @@
     <string name="no">No</string>
     <string name="invalid_goal_warning">Invalid goal. Please try again.</string>
     <string name="newgoal">New goal set.</string>
+    <string name="height_prompt">Please input your height:</string>
+    <string name="feet">Feet</string>
+    <string name="inches">Inches</string>
+    <string name="ok">OK</string>
 </resources>

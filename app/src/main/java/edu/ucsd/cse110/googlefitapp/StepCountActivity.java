@@ -2,6 +2,7 @@ package edu.ucsd.cse110.googlefitapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +27,9 @@ public class StepCountActivity extends AppCompatActivity {
 
     private FitnessService fitnessService;
 
-    private TextView textSteps, textGoal;
+    private TextView textSteps, textGoal, textHeight;
+
+    SharedPreferences sharedPref;
 
     @Override
 
@@ -34,8 +37,12 @@ public class StepCountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
 
+        sharedPref = getApplicationContext().getSharedPreferences("height_data", MODE_PRIVATE);
+        long height = sharedPref.getLong("height", 0);
         textSteps = findViewById(R.id.textSteps);
         textGoal = findViewById(R.id.textGoal);
+        textHeight = findViewById(R.id.textHeight);
+        textHeight.setText(Long.toString(height));
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
@@ -98,6 +105,7 @@ public class StepCountActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
         fitnessService.setup();
 

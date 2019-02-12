@@ -87,4 +87,13 @@
         android:layout_height="wrap_content"
         android:text="@string/set_goal" />
 
+    <TextView
+        android:id="@+id/textHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="451dp" />
+
 </android.support.constraint.ConstraintLayout>
