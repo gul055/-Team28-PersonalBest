@@ -27,8 +27,6 @@ import edu.ucsd.cse110.googlefitapp.fitness.GoogleFitAdapter;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Google Sign In Error";
     private String fitnessServiceKey = "GOOGLE_FIT";
-    private String hasHeightInput = "";
-    private SharedPreferences sharedPref;
 
     int RC_SIGN_IN = 9001;
     SignInButton signInButton;
@@ -38,8 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        sharedPref = this.getSharedPreferences("edu.ucsd.cse110.googlefitapp", Context.MODE_PRIVATE);
 
         signInButton = findViewById(R.id.sign_in_button);
 
@@ -90,14 +86,7 @@ public class MainActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
-            if(firstTimeSignIn()) {
-                Intent intent = new Intent(MainActivity.this, HeightPrompt.class);
-                startActivity(intent);
-            }
-            else {
-                launchStepCountActivity();
-            }
-
+            launchStepCountActivity();
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -119,24 +108,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, StepCountActivity.class);
         intent.putExtra(StepCountActivity.FITNESS_SERVICE_KEY, fitnessServiceKey);
         startActivity(intent);
-    }
-
-    private boolean firstTimeSignIn() {
-        hasHeightInput = sharedPref.getString("hasHeightInput", "NullHeightInput");
-        Log.d(TAG, "Share Pref read: [hasHeightInput: " + hasHeightInput + "]" );
-
-        if(hasHeightInput.contains("NullHeightInput")) {
-            saveKey("hasHeightInput", "PROMPTED");
-            return true;
-        }
-        return false;
-    }
-
-    private void saveKey(String key, String value) {
-        SharedPreferences.Editor editor = sharedPref.edit();
-        Log.d(TAG, "Share Prefs Write [" + key + ":" + value + "]");
-        editor.putString(key, value);
-        editor.commit();
     }
 
     public void setFitnessServiceKey(String fitnessServiceKey) {
