@@ -19,6 +19,7 @@ import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
+    public HeightLogger heightLogger;
     public StepUpdater stepProgress = new StepUpdater();
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
@@ -36,6 +37,15 @@ public class StepCountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
+        
+        // request height for first sign in
+        heightLogger = new HeightLogger(this);
+        if (heightLogger.readHeight() == 0) {
+            Toast.makeText(StepCountActivity.this, "You Have Not Assign Height Yet", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
+            startActivity(intent);
+            return;
+        }
 
         sharedPref = getApplicationContext().getSharedPreferences("height_data", MODE_PRIVATE);
         long height = sharedPref.getLong("height", 0);
