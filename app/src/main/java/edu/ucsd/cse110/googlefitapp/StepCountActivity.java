@@ -20,13 +20,14 @@ import static edu.ucsd.cse110.googlefitapp.Constants.DAILY_STEPS_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.GOAL;
 import static edu.ucsd.cse110.googlefitapp.Constants.GOAL_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.LAST_UPDATE_TAG;
+import static edu.ucsd.cse110.googlefitapp.Constants.PRESET_INCREMENT;
 import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
 
 public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
     public SharedPreferencesUtil prefUtil;
-    public StepUpdater stepProgress = new StepUpdater();
+    public static StepUpdater stepProgress = new StepUpdater();
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
 
@@ -53,7 +54,6 @@ public class StepCountActivity extends AppCompatActivity {
         // Create all buttons
         final Button startStopBtn = (Button) findViewById(R.id.startStopBtn);
         Button setGoalBtn = (Button) findViewById(R.id.setGoalBtn);
-        Button showStepsBtn = (Button) findViewById(R.id.showStepsBtn);
 
         if (stepLogger.readOnDaily() == false) {
             stepProgress.setOnDaily(false);
@@ -92,22 +92,6 @@ public class StepCountActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        showStepsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fitnessService.updateStepCount();
-            }
-        });
-
-
-        Button setGoalButton = findViewById(R.id.setGoal);
-        setGoalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-        */
         fitnessService.setup();
 
     }
@@ -115,6 +99,9 @@ public class StepCountActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        long goalSet = prefUtil.loadLong(this, Constants.GOAL_TAG);
+        stepProgress.setDailyGoal(goalSet);
+        Log.d("GOAL ON RESUME", String.valueOf(stepProgress.getDailyGoal()));
         fitnessService.updateStepCount();
     }
 
@@ -138,14 +125,12 @@ public class StepCountActivity extends AppCompatActivity {
         long dailyGoal = stepLogger.readGoal();
         long dailyProgress = stepLogger.readDaily();
         */
-        long lastSteps = 0;
-        long dailyProgress = 0;
-        long dailyGoal = 0;
-        prefUtil.saveLong(this, LAST_UPDATE_TAG, lastSteps);
-        prefUtil.saveLong(this, DAILY_STEPS_TAG, dailyProgress);
-        prefUtil.saveLong(this, GOAL_TAG, dailyGoal);
+        long lastSteps = prefUtil.loadLong(this, LAST_UPDATE_TAG);
+        long dailyProgress = prefUtil.loadLong(this, DAILY_STEPS_TAG);
+        long dailyGoal = prefUtil.loadLong(this, GOAL_TAG);
         Log.d("CURRENT", String.valueOf(stepCount));
         Log.d("LAST", String.valueOf(lastSteps));
+        Log.d("DAILY GOAL", String.valueOf(dailyGoal));
 
         long stepDifference = stepCount - lastSteps;
 
@@ -159,7 +144,17 @@ public class StepCountActivity extends AppCompatActivity {
 
         /*Updates daily*/
         if (isOnDaily) {
-            stepProgress.updateDaily(false, stepDifference);
+            if(stepProgress.updateDaily(stepDifference)){
+                //Add prompt here to assign new goal or to continue with preset.
+                stepProgress.setDailyGoal(stepProgress.getDailyGoal() + Constants.PRESET_INCREMENT);
+            }
+            else {
+                int timesGoalMet = SharedPreferencesUtil.loadInt(this, Constants.GOAL_MET_TAG);
+                SharedPreferencesUtil.saveInt(this, Constants.GOAL_MET_TAG, timesGoalMet + 1);
+                // TODO: ADD PROMPTS
+
+                stepProgress.resetDaily();
+            }
         }
 
         /*Updates total step progress*/
