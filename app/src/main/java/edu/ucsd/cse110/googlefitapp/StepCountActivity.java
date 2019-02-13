@@ -16,9 +16,16 @@ import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepLogger;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 
+import static edu.ucsd.cse110.googlefitapp.Constants.DAILY_STEPS_TAG;
+import static edu.ucsd.cse110.googlefitapp.Constants.GOAL;
+import static edu.ucsd.cse110.googlefitapp.Constants.GOAL_TAG;
+import static edu.ucsd.cse110.googlefitapp.Constants.LAST_UPDATE_TAG;
+import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
+
 public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
+    public SharedPreferencesUtil prefUtil;
     public StepUpdater stepProgress = new StepUpdater();
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
@@ -30,7 +37,6 @@ public class StepCountActivity extends AppCompatActivity {
     private TextView textSteps, textGoal;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
@@ -40,6 +46,7 @@ public class StepCountActivity extends AppCompatActivity {
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
+        prefUtil = new SharedPreferencesUtil();
 
         fitnessService.setup();
 
@@ -80,10 +87,12 @@ public class StepCountActivity extends AppCompatActivity {
         setGoalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Set the next goal steps
+                Intent intent = new Intent(getApplicationContext(), SetGoalActivity.class);
+                startActivity(intent);
             }
         });
 
+        /*
         showStepsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,17 +100,22 @@ public class StepCountActivity extends AppCompatActivity {
             }
         });
 
+
         Button setGoalButton = findViewById(R.id.setGoal);
         setGoalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SetGoalActivity.class);
-                startActivity(intent);
             }
         });
-
+        */
         fitnessService.setup();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fitnessService.updateStepCount();
     }
 
     @Override
@@ -116,22 +130,26 @@ public class StepCountActivity extends AppCompatActivity {
         }
     }
 
-    public void setDailyStatus() {
-        boolean isOnDaily = stepLogger.readOnDaily();
-        stepLogger.writeOnDaily(isOnDaily);
-    }
-
     public void setStepCount(long stepCount) {
         /*Grabs all relevant values from local file*/
+
+        /*
         long lastSteps = stepLogger.readLastStep();
         long dailyGoal = stepLogger.readGoal();
         long dailyProgress = stepLogger.readDaily();
-
+        */
+        long lastSteps = 0;
+        long dailyProgress = 0;
+        long dailyGoal = 0;
+        prefUtil.saveLong(this, LAST_UPDATE_TAG, lastSteps);
+        prefUtil.saveLong(this, DAILY_STEPS_TAG, dailyProgress);
+        prefUtil.saveLong(this, GOAL_TAG, dailyGoal);
         Log.d("CURRENT", String.valueOf(stepCount));
         Log.d("LAST", String.valueOf(lastSteps));
+
         long stepDifference = stepCount - lastSteps;
 
-        stepProgress.setTotalSteps(stepLogger.readTotal());
+        stepProgress.setTotalSteps(prefUtil.loadLong(this, TOTAL_STEPS_TAG));
 
         boolean isOnDaily = stepProgress.getOnDaily();
         Log.d("ON_DAILY", String.valueOf(isOnDaily));
@@ -151,15 +169,18 @@ public class StepCountActivity extends AppCompatActivity {
         if (stepProgress.getOnDaily() != isOnDaily)
             stepProgress.setOnDaily(isOnDaily);
 
-        //.setText(String.valueOf(stepCount));
+        //Set text of strings.
         Log.d("TOTAL_STEPS", String.valueOf(stepProgress.getTotalSteps()));
         Log.d("GOAL_PROGRESS", String.valueOf(stepProgress.getGoalProgress()));
         textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
         textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
 
         /*After all updates have finished, write to logger*/
-        stepLogger.writeSteps(stepProgress.getDailySteps(), stepProgress.getTotalSteps(), stepCount, stepProgress.getDailyGoal());
-
+        //stepLogger.writeSteps(stepProgress.getDailySteps(), stepProgress.getTotalSteps(), stepCount, stepProgress.getDailyGoal());
+        prefUtil.saveLong(this, DAILY_STEPS_TAG, stepProgress.getDailySteps());
+        prefUtil.saveLong(this, TOTAL_STEPS_TAG, stepProgress.getTotalSteps());
+        prefUtil.saveLong(this, LAST_UPDATE_TAG, stepCount);
+        prefUtil.saveLong(this, GOAL_TAG, stepProgress.getDailyGoal());
     }
 
 }

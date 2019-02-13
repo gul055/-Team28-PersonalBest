@@ -8,6 +8,10 @@ public final class Constants {
     public static final String NO_GOAL = "No goal inputted!";
     public static final String START_WALK = "Start Walk/Run";
     public static final String STOP_WALK = "Stop Walk/Run";
+    public static final String DAILY_STEPS_TAG = "daily_steps";
+    public static final String TOTAL_STEPS_TAG = "total_steps";
+    public static final String LAST_UPDATE_TAG = "last_update";
+    public static final String GOAL_TAG = "goal";
 
     // Specific requestor code for setting goal
     public static final int GOAL_ACTIVITY_CODE = 1;
