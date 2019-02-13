@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +42,8 @@ public class StepCountActivity extends AppCompatActivity {
 
     SharedPreferences sharedPref;
 
+    WalkRun myWalkRun;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,19 +51,10 @@ public class StepCountActivity extends AppCompatActivity {
         
         // request height for first sign in
         heightLogger = new HeightLogger(this);
-        if (heightLogger.readHeight() == 0) {
-            Toast.makeText(StepCountActivity.this, "You Have Not Assign Height Yet", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
-            startActivity(intent);
-            return;
-        }
-
         sharedPref = getApplicationContext().getSharedPreferences("height_data", MODE_PRIVATE);
-        long height = sharedPref.getLong("height", 0);
         textSteps = findViewById(R.id.textSteps);
         textGoal = findViewById(R.id.textGoal);
         textHeight = findViewById(R.id.textHeight);
-        textHeight.setText(Long.toString(height));
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
@@ -129,9 +124,28 @@ public class StepCountActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onResume() {
         super.onResume();
+        if (heightLogger.readHeight() == 0) {
+            Toast.makeText(StepCountActivity.this, "You Have Not Assign Height Yet", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
+            startActivity(intent);
+            return;
+        }
+        long height = sharedPref.getLong("height", 0);
+        textHeight.setText(Long.toString(height));
+
+        if(myWalkRun == null) {
+            try {
+                myWalkRun = new WalkRun(Math.toIntExact(height));
+            } catch (Exception e) {
+                Log.e("BAD WALKRUN HEIGHT", Long.toString(height));
+                e.printStackTrace();
+            }
+        }
+
         fitnessService.updateStepCount();
     }
 
