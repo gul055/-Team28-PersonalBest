@@ -1,8 +1,9 @@
 package edu.ucsd.cse110.googlefitapp;
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import edu.ucsd.cse110.googlefitapp.stepupdaters.*;
+import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -10,14 +11,15 @@ import static org.junit.Assert.assertFalse;
 
 public class StepUpdaterUnitTest {
     StepUpdater updater;
+
     @Before
-    public void setup(){
+    public void setup() {
         updater = new StepUpdater();
     }
 
     /*Basic constructor test*/
     @Test
-    public void testConstructor(){
+    public void testConstructor() {
         assertEquals(5000, updater.getDailyGoal());
         assertEquals(0, updater.getTotalSteps());
         assertFalse(updater.getOnDaily());
@@ -26,7 +28,7 @@ public class StepUpdaterUnitTest {
 
     /*Test goal progress logic*/
     @Test
-    public void testGoalProgress(){
+    public void testGoalProgress() {
         /*Basic use case, person walks 50 steps*/
         assertFalse(updater.updateDaily(false, 50));
         assertEquals(4950, updater.getGoalProgress());
@@ -48,7 +50,7 @@ public class StepUpdaterUnitTest {
 
     /*Test total steps update*/
     @Test
-    public void testTotalSteps(){
+    public void testTotalSteps() {
         /*Normal small case*/
         updater.updateProgress(50);
         assertEquals(50, updater.getTotalSteps());
