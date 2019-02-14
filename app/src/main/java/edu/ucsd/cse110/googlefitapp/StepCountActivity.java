@@ -40,12 +40,7 @@ public class StepCountActivity extends AppCompatActivity {
 
     private TextView textSteps, textGoal, textHeight;
 
-    SharedPreferences heightSharedPref;
-    SharedPreferences walkRunSharedPref;
-
-    Button startStopBtn;
-    Button setGoalBtn;
-    Button showStepsBtn;
+    SharedPreferences sharedPref;
 
     WalkRun myWalkRun;
 
@@ -56,8 +51,7 @@ public class StepCountActivity extends AppCompatActivity {
         
         // request height for first sign in
         heightLogger = new HeightLogger(this);
-        heightSharedPref = getApplicationContext().getSharedPreferences("height_data", MODE_PRIVATE);
-        walkRunSharedPref = getApplicationContext().getSharedPreferences("walk_run", MODE_PRIVATE);
+        sharedPref = getApplicationContext().getSharedPreferences("height_data", MODE_PRIVATE);
         textSteps = findViewById(R.id.textSteps);
         textGoal = findViewById(R.id.textGoal);
         textHeight = findViewById(R.id.textHeight);
@@ -69,9 +63,9 @@ public class StepCountActivity extends AppCompatActivity {
         fitnessService.setup();
 
         // Create all buttons
-        startStopBtn = (Button) findViewById(R.id.startStopBtn);
-        setGoalBtn = (Button) findViewById(R.id.setGoalBtn);
-        showStepsBtn = (Button) findViewById(R.id.showStepsBtn);
+        final Button startStopBtn = (Button) findViewById(R.id.startStopBtn);
+        Button setGoalBtn = (Button) findViewById(R.id.setGoalBtn);
+        Button showStepsBtn = (Button) findViewById(R.id.showStepsBtn);
 
         if (stepLogger.readOnDaily() == false) {
             stepProgress.setOnDaily(false);
@@ -134,27 +128,23 @@ public class StepCountActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         if (heightLogger.readHeight() == 0) {
             Toast.makeText(StepCountActivity.this, "You Have Not Assign Height Yet", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
             startActivity(intent);
             return;
         }
-
-        long height = heightSharedPref.getLong("height", 0);
-        textHeight.setText(String.valueOf(height));
+        long height = sharedPref.getLong("height", 0);
+        textHeight.setText(Long.toString(height));
 
         if(myWalkRun == null) {
             try {
-                myWalkRun = new WalkRun(this, Math.toIntExact(height));
+                myWalkRun = new WalkRun(Math.toIntExact(height));
             } catch (Exception e) {
-                Log.e("BAD WALKRUN HEIGHT", String.valueOf(height));
+                Log.e("BAD WALKRUN HEIGHT", Long.toString(height));
                 e.printStackTrace();
             }
         }
-
-
 
         fitnessService.updateStepCount();
     }

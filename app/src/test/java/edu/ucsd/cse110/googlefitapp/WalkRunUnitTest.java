@@ -1,12 +1,6 @@
 package edu.ucsd.cse110.googlefitapp;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
 import org.apache.tools.ant.taskdefs.Local;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -15,8 +9,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-
-import androidx.test.InstrumentationRegistry;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
@@ -29,17 +21,10 @@ public class WalkRunUnitTest {
     private final static int secondsInHour = 3600;
     private final static int secondsInMinute = 60;
 
-    private Context ctx;
-
-    @Before
-    public void setup() {
-        ctx = InstrumentationRegistry.getContext();
-    }
-
     @Test
     public void testGoodStartStop() throws Exception {
         TestWalkRun run;
-        run = new TestWalkRun(ctx,63);
+        run = new TestWalkRun(63);
         LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
         run.startWalkRun(0, start);
 
@@ -68,14 +53,14 @@ public class WalkRunUnitTest {
     @Test
     public void testBadInit() {
         try {
-            TestWalkRun run = new TestWalkRun(ctx,0);
+            TestWalkRun run = new TestWalkRun(0);
             fail("Should not be able to input height <= 0");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         try {
-            TestWalkRun run = new TestWalkRun(ctx,-1);
+            TestWalkRun run = new TestWalkRun(-1);
             fail("Should not be able to input height <= 0");
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,7 +70,7 @@ public class WalkRunUnitTest {
     @Test
     public void testStart2xNoEnd() {
         try {
-            TestWalkRun run = new TestWalkRun(ctx,1);
+            TestWalkRun run = new TestWalkRun(1);
             run.startWalkRun(0,LocalDateTime.of(2019, Month.JANUARY,1,0,0, 0));
             run.startWalkRun(0,LocalDateTime.of(2019, Month.JANUARY,1,0,0, 3));
             fail("Should not be able to start twice without ending");
@@ -97,7 +82,7 @@ public class WalkRunUnitTest {
     @Test
     public void testStart3xNoEnd() {
         try {
-            TestWalkRun run = new TestWalkRun(ctx,1);
+            TestWalkRun run = new TestWalkRun(1);
             run.startWalkRun(0,LocalDateTime.of(2019, Month.JANUARY,1,0,0, 0));
             run.startWalkRun(0,LocalDateTime.of(2019, Month.JANUARY,1,0,0, 3));
             run.startWalkRun(0,LocalDateTime.of(2019, Month.JANUARY,1,0,0, 10));
@@ -110,7 +95,7 @@ public class WalkRunUnitTest {
     @Test
     public void testEndNoStart() {
         try {
-            TestWalkRun run = new TestWalkRun(ctx,1);
+            TestWalkRun run = new TestWalkRun(1);
             run.endWalkRun(1000, LocalDateTime.of(2019, Month.JANUARY,1,0,0,0));
             fail("Should not be able to end without starting");
         } catch (Exception e) {
@@ -121,7 +106,7 @@ public class WalkRunUnitTest {
     @Test
     public void testStartEndEnd() {
         try {
-            TestWalkRun run = new TestWalkRun(ctx,1);
+            TestWalkRun run = new TestWalkRun(1);
             LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
             run.startWalkRun(0, start);
 
@@ -137,7 +122,7 @@ public class WalkRunUnitTest {
     @Test
     public void useSameInstanceTwice() throws Exception{
         TestWalkRun run;
-        run = new TestWalkRun(ctx,63);
+        run = new TestWalkRun(63);
         LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
         run.startWalkRun(0, start);
 
@@ -191,7 +176,7 @@ public class WalkRunUnitTest {
     public void timeTravel() {
         try {
             TestWalkRun run;
-            run = new TestWalkRun(ctx,63);
+            run = new TestWalkRun(63);
             LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 2, 0, 0, 0);
             run.startWalkRun(0, start);
 
@@ -208,7 +193,7 @@ public class WalkRunUnitTest {
     public void decreaseSteps() {
         try {
             TestWalkRun run;
-            run = new TestWalkRun(ctx,63);
+            run = new TestWalkRun(63);
             LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
             run.startWalkRun(7305, start);
 
@@ -224,7 +209,7 @@ public class WalkRunUnitTest {
     @Test
     public void startProgressEnd() throws Exception {
         TestWalkRun run;
-        run = new TestWalkRun(ctx,63);
+        run = new TestWalkRun(63);
         LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
         run.startWalkRun(0, start);
 
@@ -250,7 +235,7 @@ public class WalkRunUnitTest {
     @Test
     public void startProgressx2End() throws Exception {
         TestWalkRun run;
-        run = new TestWalkRun(ctx,63);
+        run = new TestWalkRun(63);
         LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
         run.startWalkRun(0, start);
 
@@ -283,7 +268,7 @@ public class WalkRunUnitTest {
     @Test
     public void startEndProgress() throws Exception{
         TestWalkRun run;
-        run = new TestWalkRun(ctx,63);
+        run = new TestWalkRun(63);
         LocalDateTime start = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 0, 0);
         run.startWalkRun(0, start);
 
@@ -315,7 +300,7 @@ public class WalkRunUnitTest {
     @Test
     public void progressEndNoStart() throws Exception{
         TestWalkRun run;
-        run = new TestWalkRun(ctx,63);
+        run = new TestWalkRun(63);
 
         try {
             LocalDateTime end = LocalDateTime.of(2019, Month.JANUARY, 1, 1, 0, 0);
@@ -362,97 +347,73 @@ public class WalkRunUnitTest {
     }
 
     private class TestWalkRun extends WalkRun {
-
-        public TestWalkRun(Context ctx, int userHeight) throws Exception {
-            super(ctx, userHeight);
+        public TestWalkRun(int userHeight) throws Exception {
+            super(userHeight);
         }
 
         public void startWalkRun(int initSteps, LocalDateTime s) throws Exception {
             //every start must be met with an end
-            if (!sharedPref.getBoolean("started", false)) {
-                SharedPreferences.Editor editor = sharedPref.edit();
-
-                //initial step count must be valid
-                if (initSteps >= 0) {
-                    editor.putInt("startSteps", initSteps);
-                    editor.putLong("startTime", Duration.between(refTime, s).getSeconds());
-                    editor.putBoolean("started", true);
-                    editor.putBoolean("ok", false);
-                    editor.apply();
-                } else {
+            if(!started) {
+                if(initSteps >= 0) {
+                    startSteps = initSteps;
+                }
+                else {
                     throw new Exception("Invalid: negative initial step count");
                 }
-            } else {
+
+                startTime = s;
+                started = true;
+                ok = false;
+            }
+            else {
                 throw new Exception("Invalid: this WalkRun has already started");
             }
         }
 
-        /* End the walk/run */
-        @RequiresApi(api = Build.VERSION_CODES.O)
         public void endWalkRun(int finalSteps, LocalDateTime e) throws Exception {
             //can only end WalkRun that has already started
-            if (sharedPref.getBoolean("started", false)) {
-                if (finalSteps < 0) {
+            if(started) {
+                if(finalSteps < 0) {
                     throw new Exception("Invalid: negative final step count");
                 }
+
                 //cannot decrease the amount of steps taken on a walk
-                if (finalSteps >= sharedPref.getInt("startSteps", Integer.MAX_VALUE)) {
-
-                    long start = sharedPref.getLong("startTime", 0);
-                    long end = Duration.between(refTime,e).getSeconds();
-
-                    //cannot end walk at a time before it is started
-                    if (end - start < 0) {
+                if(finalSteps >= startSteps) {
+                    endTime = e;
+                    endSteps = finalSteps;
+                    if(Duration.between(startTime, endTime).getSeconds() < 0) {
                         throw new Exception("Invalid: End time < start time");
                     }
-                    else {
-                        SharedPreferences.Editor editor = sharedPref.edit();
-
-                        //update the WalkRun
-                        editor.putInt("endSteps", finalSteps);
-                        editor.putLong("endTime", end);
-                        editor.putBoolean("ok", true);
-
-                        editor.apply();
-
-                        reset();
-                    }
-                } else {
-                    throw new Exception("Invalid: Steps DECREASED on WalkRun.\n");
+                    started = false;
+                    ok = true;
                 }
-            } else {
-                throw new Exception("Invalid: attempt to end WalkRun before starting: sharedPref boolean is " + sharedPref.getBoolean("started", false));
+                else {
+                    throw new Exception("Invalid: Steps DECREASED on WalkRun.\n" +
+                            "Start steps: " + startSteps + ". End steps: " + endSteps);
+                }
+            }
+            else {
+                throw new Exception("Invalid: attempt to end WalkRun before starting");
             }
         }
 
-        public String checkProgress(int pSteps, LocalDateTime ptime) throws Exception {
-            if (sharedPref.getBoolean("started", false)) {
-                if (!sharedPref.getBoolean("ok", false)) {
-                    SharedPreferences.Editor editor = sharedPref.edit();
-
-                    //temporarily make it ok to get stats
-                    editor.putBoolean("ok", true);
-                    long end = Duration.between(refTime, ptime).getSeconds();
-
-                    //update WalkRun prefs with the progress time and steps
-                    editor.putLong("endTime", end);
-                    editor.putInt("endSteps", pSteps);
-                    editor.apply();
-
+        /* Check the statistics so far of this WalkRun */
+        public String checkProgress(int pSteps, LocalDateTime pTime) throws Exception {
+            if(started) {
+                if(!ok) {
+                    ok = true;
+                    endTime = pTime;
+                    endSteps = pSteps;
                     String progress = getStats();
-
-                    //WalkRun is still incomplete
-                    editor.putBoolean("ok", false);
-                    editor.putBoolean("started", true);
-                    editor.apply();
-
-                    //Progress return string with stats
+                    ok = false;
                     return progress;
-                } else {
-                    throw new Exception("No WalkRun in progress");
                 }
-            } else {
-                throw new Exception("No WalkRun in progress");
+                else {
+                    throw new Exception("Cannot check progress on a run that has been completed");
+                }
+            }
+            else {
+                throw new Exception("Cannot check progress on a run that hasn't started");
             }
         }
 
