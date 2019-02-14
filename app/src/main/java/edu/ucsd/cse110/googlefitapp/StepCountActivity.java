@@ -73,22 +73,14 @@ public class StepCountActivity extends AppCompatActivity {
         startStopBtn = (Button) findViewById(R.id.startStopBtn);
         setGoalBtn = (Button) findViewById(R.id.setGoalBtn);
 
-        if (stepLogger.readOnDaily() == false) {
-            stepProgress.setOnDaily(false);
-            startStopBtn.setBackgroundColor(Color.GREEN);
-            startStopBtn.setText(Constants.START_WALK);
-        } else {
-            stepProgress.setOnDaily(true);
-            startStopBtn.setBackgroundColor(Color.RED);
-            startStopBtn.setText(Constants.STOP_WALK);
-        }
-
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                /*if(startStopBtn.getText() == Constants.STOP_WALK) {
+                Log.i("IN_WALK_BUTTON","Clicked Walk/Run Button!");
+                if(startStopBtn.getText() == Constants.STOP_WALK) {
                     //Stop walk/run
+                    Log.i("IN_STOP_BUTTON","Clicked stop button!");
                     try {
                         myWalkRun.endWalkRun(Math.toIntExact(stepProgress.getTotalSteps()));
                         Toast.makeText(StepCountActivity.this, "Walk/Run stopped", Toast.LENGTH_LONG).show();
@@ -96,13 +88,15 @@ public class StepCountActivity extends AppCompatActivity {
                     {
                         Log.e(TAG, "FAIL TO END WALK/RUN. Walk/Run started?: " + walkRunSharedPref.getBoolean("started", false));
                     }
-                    startStopBtn.setBackgroundColor(Color.RED);
-                    startStopBtn.setText(Constants.STOP_WALK);
+                    startStopBtn.setBackgroundColor(Color.GREEN);
+                    startStopBtn.setText(Constants.START_WALK);
                     startStopBtn.invalidate();
+                    SharedPreferencesUtil.saveBoolean(StepCountActivity.this, Constants.ON_WALK_TAG, false);
                 }
                 else {
                     //Start walk/run
                     try {
+                        Log.i("IN_START_BUTTON","Clicked start button!");
                         myWalkRun.startWalkRun(Math.toIntExact(stepProgress.getTotalSteps()));
                         Toast.makeText(StepCountActivity.this, "Walk/Run started", Toast.LENGTH_LONG).show();
 
@@ -110,11 +104,14 @@ public class StepCountActivity extends AppCompatActivity {
                     {
                         Log.e(TAG, "FAIL TO START WALK/RUN. Walk/Run started?: " + walkRunSharedPref.getBoolean("started", true));
                     }
-                    startStopBtn.setBackgroundColor(Color.GREEN);
-                    startStopBtn.setText(Constants.START_WALK);
+                    startStopBtn.setBackgroundColor(Color.RED);
+                    startStopBtn.setText(Constants.STOP_WALK);
                     startStopBtn.invalidate();
-                }*/
+                    SharedPreferencesUtil.saveBoolean(StepCountActivity.this, Constants.ON_WALK_TAG, true);
 
+                }
+
+                /*
                 if (stepProgress.getOnDaily() == true) {
                     stepLogger.writeOnDaily(false);
                     stepProgress.setOnDaily(false);
@@ -129,7 +126,7 @@ public class StepCountActivity extends AppCompatActivity {
                     startStopBtn.setText(Constants.STOP_WALK);
                     Toast.makeText(StepCountActivity.this, "Walk/Run started", Toast.LENGTH_LONG).show();
                 }
-
+                */
             }
         });
 
@@ -168,6 +165,16 @@ public class StepCountActivity extends AppCompatActivity {
                 Log.e("BAD WALKRUN HEIGHT", String.valueOf(height));
                 e.printStackTrace();
             }
+        }
+
+        /*Initialize Walk/Run button with appropriate color and text*/
+        boolean onWalkRun = SharedPreferencesUtil.loadBoolean(this, Constants.ON_WALK_TAG);
+        if (!onWalkRun) {
+            startStopBtn.setBackgroundColor(Color.GREEN);
+            startStopBtn.setText(Constants.START_WALK);
+        } else {
+            startStopBtn.setBackgroundColor(Color.RED);
+            startStopBtn.setText(Constants.STOP_WALK);
         }
 
         long goalSet = prefUtil.loadLong(this, Constants.GOAL_TAG);
