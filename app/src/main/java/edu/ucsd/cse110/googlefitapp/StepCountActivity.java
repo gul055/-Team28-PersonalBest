@@ -47,7 +47,6 @@ public class StepCountActivity extends AppCompatActivity {
 
     Button startStopBtn;
     Button setGoalBtn;
-    Button showStepsBtn;
 
     WalkRun myWalkRun;
 
@@ -132,14 +131,12 @@ public class StepCountActivity extends AppCompatActivity {
 
         /*if(myWalkRun == null) {
             try {
-                myWalkRun = new WalkRun(this, Math.toIntExact(height));
+                myWalkRun = new WalkRun(height);
             } catch (Exception e) {
                 Log.e("BAD WALKRUN HEIGHT", String.valueOf(height));
                 e.printStackTrace();
             }
         }*/
-
-        //fitnessService.updateStepCount();
 
         long goalSet = prefUtil.loadLong(this, Constants.GOAL_TAG);
         stepProgress.setDailyGoal(goalSet);
