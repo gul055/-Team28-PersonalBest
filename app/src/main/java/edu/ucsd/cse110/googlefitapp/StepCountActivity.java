@@ -84,19 +84,50 @@ public class StepCountActivity extends AppCompatActivity {
         }
 
         startStopBtn.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
+                /*if(startStopBtn.getText() == Constants.STOP_WALK) {
+                    //Stop walk/run
+                    try {
+                        myWalkRun.endWalkRun(Math.toIntExact(stepProgress.getTotalSteps()));
+                        Toast.makeText(StepCountActivity.this, "Walk/Run stopped", Toast.LENGTH_LONG).show();
+                    } catch (Exception e)
+                    {
+                        Log.e(TAG, "FAIL TO END WALK/RUN. Walk/Run started?: " + walkRunSharedPref.getBoolean("started", false));
+                    }
+                    startStopBtn.setBackgroundColor(Color.RED);
+                    startStopBtn.setText(Constants.STOP_WALK);
+                    startStopBtn.invalidate();
+                }
+                else {
+                    //Start walk/run
+                    try {
+                        myWalkRun.startWalkRun(Math.toIntExact(stepProgress.getTotalSteps()));
+                        Toast.makeText(StepCountActivity.this, "Walk/Run started", Toast.LENGTH_LONG).show();
+
+                    } catch (Exception e)
+                    {
+                        Log.e(TAG, "FAIL TO START WALK/RUN. Walk/Run started?: " + walkRunSharedPref.getBoolean("started", true));
+                    }
+                    startStopBtn.setBackgroundColor(Color.GREEN);
+                    startStopBtn.setText(Constants.START_WALK);
+                    startStopBtn.invalidate();
+                }*/
+
                 if (stepProgress.getOnDaily() == true) {
                     stepLogger.writeOnDaily(false);
                     stepProgress.setOnDaily(false);
                     startStopBtn.setBackgroundColor(Color.GREEN);
                     startStopBtn.setText(Constants.START_WALK);
+                    Toast.makeText(StepCountActivity.this, "Walk/Run stopped", Toast.LENGTH_LONG).show();
+
                 } else {
                     stepLogger.writeOnDaily(true);
                     stepProgress.setOnDaily(true);
                     startStopBtn.setBackgroundColor(Color.RED);
                     startStopBtn.setText(Constants.STOP_WALK);
-
+                    Toast.makeText(StepCountActivity.this, "Walk/Run started", Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -129,14 +160,15 @@ public class StepCountActivity extends AppCompatActivity {
         long height = heightSharedPref.getLong("height", 0);
         textHeight.setText(String.valueOf(height));
 
-        /*if(myWalkRun == null) {
+        //instantiate a WalkRun instance using height
+        if(myWalkRun == null) {
             try {
-                myWalkRun = new WalkRun(height);
+                myWalkRun = new WalkRun(StepCountActivity.this, Math.toIntExact(height));
             } catch (Exception e) {
                 Log.e("BAD WALKRUN HEIGHT", String.valueOf(height));
                 e.printStackTrace();
             }
-        }*/
+        }
 
         long goalSet = prefUtil.loadLong(this, Constants.GOAL_TAG);
         stepProgress.setDailyGoal(goalSet);
