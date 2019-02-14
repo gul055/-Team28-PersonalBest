@@ -33,9 +33,6 @@ jobs:
       working_directory: ~/code
       docker:
         - image: circleci/android:api-27  # gcloud is baked into this image
-      filters:
-        branch:
-          only: master
       steps:
         - checkout
         - restore_cache:
@@ -83,4 +80,9 @@ workflows:
   build_and_android_test:
     jobs:
       - build
-      - android_test
+      - android_test:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
