@@ -1,6 +1,9 @@
 package edu.ucsd.cse110.googlefitapp;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -25,10 +28,12 @@ import static edu.ucsd.cse110.googlefitapp.Constants.GOAL_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.LAST_UPDATE_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
 
+
 public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
     public HeightLogger heightLogger;
+    long height;
     public SharedPreferencesUtil prefUtil;
     public StepUpdater stepProgress = new StepUpdater();
 
@@ -38,7 +43,7 @@ public class StepCountActivity extends AppCompatActivity {
 
     private FitnessService fitnessService;
 
-    private TextView textSteps, textGoal, textHeight;
+    private TextView textSteps, textGoal, textHeight, textProgress;
 
     SharedPreferences heightSharedPref;
     SharedPreferences walkRunSharedPref;
@@ -49,6 +54,7 @@ public class StepCountActivity extends AppCompatActivity {
 
     WalkRun myWalkRun;
 
+    @TargetApi(Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +62,13 @@ public class StepCountActivity extends AppCompatActivity {
         
         // request height for first sign in
         heightLogger = new HeightLogger(this);
+        height = heightSharedPref.getLong("height", 0);
         heightSharedPref = getApplicationContext().getSharedPreferences("height_data", MODE_PRIVATE);
         walkRunSharedPref = getApplicationContext().getSharedPreferences("walk_run", MODE_PRIVATE);
         textSteps = findViewById(R.id.textSteps);
         textGoal = findViewById(R.id.textGoal);
         textHeight = findViewById(R.id.textHeight);
+        textProgress = findViewById(R.id.textProgress);
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
@@ -84,6 +92,7 @@ public class StepCountActivity extends AppCompatActivity {
         }
 
         startStopBtn.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
                 if (stepProgress.getOnDaily() == true) {
@@ -91,12 +100,48 @@ public class StepCountActivity extends AppCompatActivity {
                     stepProgress.setOnDaily(false);
                     startStopBtn.setBackgroundColor(Color.GREEN);
                     startStopBtn.setText(Constants.START_WALK);
+
+                    //end the walk/run
+                    try {
+                        myWalkRun.endWalkRun(Math.toIntExact(stepProgress.getTotalSteps()));
+                        textProgress.setText("");
+                        String stats = myWalkRun.getStats();
+
+                        AlertDialog.Builder statsBuilder = new AlertDialog.Builder(getApplicationContext());
+                        statsBuilder.setMessage(stats);
+                        statsBuilder.setCancelable(true);
+
+                        statsBuilder.setPositiveButton(
+                                "Ok",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog statsAlert = statsBuilder.create();
+                        statsAlert.show();
+                    }
+
+                    catch (Exception e) {
+                        Log.e(TAG,"STOP WALK/RUN FAILED: Already started? " + walkRunSharedPref.getBoolean("started", false));
+                        e.printStackTrace();
+                    }
+
                 } else {
                     stepLogger.writeOnDaily(true);
                     stepProgress.setOnDaily(true);
                     startStopBtn.setBackgroundColor(Color.RED);
                     startStopBtn.setText(Constants.STOP_WALK);
 
+                    //start the walk/run
+                    try {
+                        myWalkRun.startWalkRun(Math.toIntExact(stepProgress.getTotalSteps()));
+                    }
+                    catch (Exception e) {
+                        Log.e(TAG,"START WALK/RUN FAILED. Already started?: " + walkRunSharedPref.getBoolean("started", true));
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -130,7 +175,7 @@ public class StepCountActivity extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    @TargetApi(Build.VERSION_CODES.O)
     @Override
     protected void onResume() {
         super.onResume();
@@ -142,15 +187,29 @@ public class StepCountActivity extends AppCompatActivity {
             return;
         }
 
-        long height = heightSharedPref.getLong("height", 0);
+        height = heightSharedPref.getLong("height", 0);
         textHeight.setText(String.valueOf(height));
 
         if(myWalkRun == null) {
             try {
                 myWalkRun = new WalkRun(this, Math.toIntExact(height));
             } catch (Exception e) {
-                Log.e("BAD WALKRUN HEIGHT", String.valueOf(height));
+                Log.e(TAG, "BAD WALKRUN HEIGHT" + height);
                 e.printStackTrace();
+            }
+        }
+        else {
+            if(startStopBtn.getText() == Constants.START_WALK) {
+                myWalkRun.reset();
+            }
+            else {
+                try {
+                    String progress = myWalkRun.checkProgress(Math.toIntExact(stepProgress.getTotalSteps()));
+                    textProgress.setText(progress);
+                } catch (Exception e) {
+                    Log.e(TAG, "CANNOT CHECK WALK/RUN PROGRESS. Started? " + walkRunSharedPref.getBoolean("started", true));
+                    e.printStackTrace();
+                }
             }
         }
 

@@ -91,7 +91,7 @@
         android:id="@+id/textHeight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="height"
+        android:text="@string/height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="451dp" />
