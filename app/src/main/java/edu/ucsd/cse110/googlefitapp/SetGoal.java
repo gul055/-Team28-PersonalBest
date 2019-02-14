@@ -1,9 +1,10 @@
 package edu.ucsd.cse110.googlefitapp;
 
 import android.content.Context;
-import android.util.Log;
 
-import static edu.ucsd.cse110.googlefitapp.StepCountActivity.stepProgress;
+import edu.ucsd.cse110.googlefitapp.Constants;
+import edu.ucsd.cse110.googlefitapp.Goal;
+import edu.ucsd.cse110.googlefitapp.SharedPreferencesUtil;
 
 public class SetGoal implements Goal {
     Context context;
@@ -18,18 +19,9 @@ public class SetGoal implements Goal {
 
     public boolean set(long goalCandidate) {
         if (isValidGoal(goalCandidate)) {
-            if(SharedPreferencesUtil.loadLong(context, Constants.GOAL_TAG) == goalCandidate) {
-                Log.d("PREV AND NEXT GOAL =", String.valueOf(goalCandidate));
-                return false;
-            }
-            SharedPreferencesUtil.saveLong(context, Constants.GOAL_TAG, goalCandidate);
-            SharedPreferencesUtil.saveLong(context, Constants.DAILY_STEPS_TAG, 0);
-
-            stepProgress.resetDaily();
-            Log.d("SUCCESSFUL GOAL UPDATE", String.valueOf(goalCandidate));
+            SharedPreferencesUtil.saveLong(context, Constants.GOAL, goalCandidate);
             return true;
         } else {
-            Log.d("INVALID GOAL", String.valueOf(goalCandidate));
             return false;
         }
     }

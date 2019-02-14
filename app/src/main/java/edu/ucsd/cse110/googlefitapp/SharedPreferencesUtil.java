@@ -36,17 +36,4 @@ public class SharedPreferencesUtil {
         long i = sharedPreferences.getLong(name, 0);
         return i;
     }
-
-    public static void saveInt(Context c, String name, int value) {
-        SharedPreferences sharedPreferences = c.getSharedPreferences("step_count", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(name, value);
-        editor.apply();
-    }
-
-    public static int loadInt(Context c, String name) {
-        SharedPreferences sharedPreferences = c.getSharedPreferences("step_count", Context.MODE_PRIVATE);
-        int i = sharedPreferences.getInt(name, 0);
-        return i;
-    }
 }
