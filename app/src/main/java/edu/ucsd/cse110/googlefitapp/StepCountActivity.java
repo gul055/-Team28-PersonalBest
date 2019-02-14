@@ -122,6 +122,9 @@ public class StepCountActivity extends AppCompatActivity {
 
                         AlertDialog statsAlert = statsBuilder.create();
                         statsAlert.show();
+
+                        //call this method to get the steps from the walk/run as an integer
+                        //myWalkRun.getNumSteps();
                     }
 
                     catch (Exception e) {
