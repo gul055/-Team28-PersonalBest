@@ -2,9 +2,8 @@ package edu.ucsd.cse110.googlefitapp.stepupdaters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.Preference;
 
-import static android.content.Context.*;
+import static android.content.Context.MODE_PRIVATE;
 
 public class StepLogger {
 
