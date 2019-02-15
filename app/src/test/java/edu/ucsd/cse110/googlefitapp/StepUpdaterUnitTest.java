@@ -10,6 +10,8 @@ import static org.junit.Assert.assertFalse;
 
 public class StepUpdaterUnitTest {
     StepUpdater updater;
+    StepUpdater stepProgress;
+
     @Before
     public void setup(){
         updater = new StepUpdater();
@@ -28,21 +30,17 @@ public class StepUpdaterUnitTest {
     @Test
     public void testGoalProgress(){
         /*Basic use case, person walks 50 steps*/
-        assertFalse(updater.updateDaily(false, 50));
+        assertFalse(updater.updateDaily(50));
         assertEquals(4950, updater.getGoalProgress());
         assertEquals(50, updater.getDailySteps());
 
-        /*Check if reset works correctly.*/
-        assertFalse(updater.updateDaily(true, 500));
-        assertEquals(0, updater.getDailySteps());
-
         /*Check for successful run*/
-        assertFalse(updater.updateDaily(false, 4999));
-        assertTrue(updater.updateDaily(false, 1));
+        assertFalse(updater.updateDaily( 4999));
+        assertTrue(updater.updateDaily( 1));
         assertEquals(0, updater.getDailySteps());
 
         /*Average steps taken in human lifespan*/
-        assertTrue(updater.updateDaily(false, 216262500));
+        assertTrue(updater.updateDaily( 216262500));
         assertEquals(0, updater.getDailySteps());
     }
 

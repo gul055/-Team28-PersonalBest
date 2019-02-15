@@ -120,11 +120,6 @@ public class StepCountActivity extends AppCompatActivity {
     public void setStepCount(long stepCount) {
         /*Grabs all relevant values from local file*/
 
-        /*
-        long lastSteps = stepLogger.readLastStep();
-        long dailyGoal = stepLogger.readGoal();
-        long dailyProgress = stepLogger.readDaily();
-        */
         long lastSteps = prefUtil.loadLong(this, LAST_UPDATE_TAG);
         long dailyProgress = prefUtil.loadLong(this, DAILY_STEPS_TAG);
         long dailyGoal = prefUtil.loadLong(this, GOAL_TAG);
@@ -171,7 +166,6 @@ public class StepCountActivity extends AppCompatActivity {
         textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
 
         /*After all updates have finished, write to logger*/
-        //stepLogger.writeSteps(stepProgress.getDailySteps(), stepProgress.getTotalSteps(), stepCount, stepProgress.getDailyGoal());
         prefUtil.saveLong(this, DAILY_STEPS_TAG, stepProgress.getDailySteps());
         prefUtil.saveLong(this, TOTAL_STEPS_TAG, stepProgress.getTotalSteps());
         prefUtil.saveLong(this, LAST_UPDATE_TAG, stepCount);
