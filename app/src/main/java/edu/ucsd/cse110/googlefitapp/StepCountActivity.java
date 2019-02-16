@@ -18,7 +18,7 @@ import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
-    public StepUpdater stepProgress = new StepUpdater();
+    public StepUpdater stepProgress;
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
 
@@ -96,6 +96,23 @@ public class StepCountActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SetGoalActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button mockStepsButton = findViewById(R.id.mock_steps);
+        mockStepsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Add 500 steps to whatever
+                Log.d("MOCK_STEPS", "Added 500 steps");
+            }
+        });
+
+        Button setTimeButton = findViewById(R.id.set_time);
+        setTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Implement a set time button
             }
         });
 
