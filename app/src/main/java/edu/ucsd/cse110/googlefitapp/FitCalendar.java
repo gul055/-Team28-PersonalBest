@@ -2,7 +2,9 @@ package edu.ucsd.cse110.googlefitapp;
 
 import android.util.Log;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
 
 public class FitCalendar implements CalendarInterface {
 
@@ -21,8 +23,9 @@ public class FitCalendar implements CalendarInterface {
     }
 
     @Override
+    // Bandage fix because months are indexed from 0-11
     public String getMonth() {
-        return calendar.get(Calendar.MONTH) + "";
+        return (calendar.get(Calendar.MONTH) + 1) + "";
     }
 
     @Override
