@@ -19,4 +19,6 @@
     <string name="start_stop">Start/Stop</string>
     <string name="set_new_goal">Set New Goal</string>
     <string name="steps_walked_text">TextView for displaying the number of steps walked for todat</string>
+    <string name="mock_steps">Add 500 steps</string>
+    <string name="set_time">Set time in milliseconds</string>
 </resources>
