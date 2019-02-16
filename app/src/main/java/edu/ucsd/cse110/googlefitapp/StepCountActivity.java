@@ -33,7 +33,7 @@ public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
     public HeightLogger heightLogger;
-    public SharedPreferencesUtil prefUtil;
+
     public static StepUpdater stepProgress = new StepUpdater();
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
@@ -65,7 +65,6 @@ public class StepCountActivity extends AppCompatActivity {
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
-        prefUtil = new SharedPreferencesUtil();
 
         fitnessService.setup();
 
@@ -77,19 +76,18 @@ public class StepCountActivity extends AppCompatActivity {
             @TargetApi(Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                Log.i("IN_WALK_BUTTON","Clicked Walk/Run Button!");
-                if(startStopBtn.getText() == Constants.STOP_WALK) {
+                Log.i("IN_WALK_BUTTON", "Clicked Walk/Run Button!");
+                int currSteps = (int) SharedPreferencesUtil.loadLong(StepCountActivity.this, Constants.DAILY_STEP_KEY);
+                Log.d("CURRSTEPS_PRESSEDBUTTON", String.valueOf(currSteps));
+                if (startStopBtn.getText() == Constants.STOP_WALK) {
                     fitnessService.updateStepCount();
 
                     //Stop walk/run
-                    Log.i("IN_STOP_BUTTON","Clicked stop button!");
-                    Toast.makeText(StepCountActivity.this, "Clicked stop!", Toast.LENGTH_SHORT).show();
+                    Log.i("IN_STOP_BUTTON", "Clicked stop button!");
                     try {
-                        int currSteps = Math.toIntExact(stepProgress.getTotalSteps());
-                        Log.d("end WalkRun steps: ", "" + currSteps);
                         myWalkRun.endWalkRun(currSteps);
                         Toast.makeText(StepCountActivity.this, "Walk/Run ended!", Toast.LENGTH_SHORT).show();
-                        Log.i("STOP_WALKRUN","Ended walk/run!");
+                        Log.i("STOP_WALKRUN", "Ended walk/run!");
 
                         //display stats of walk/run
                         try {
@@ -113,35 +111,30 @@ public class StepCountActivity extends AppCompatActivity {
 
                             //CALL THIS TO GET NUMBER OF STEPS FROM INTENTIONAL WALK/RUN.
                             //int intentionalSteps = myWalkRun.getNumSteps();
-                        }
-                        catch (Exception e) {
+                        } catch (Exception e) {
                             Log.d("WALKRUN_PROGRESS_CATCH", "WalkRun started?: " + walkRunSharedPref.getBoolean("started", true));
                             e.printStackTrace();
                         }
-                    } catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         Log.e("END_WALKRUN_CATCH", "FAIL TO END WALK/RUN.\nWalk/Run already started?: " + walkRunSharedPref.getBoolean("started", false));
                         Toast.makeText(StepCountActivity.this, "FAIL TO END WALK/RUN. \nWalk/Run already started?: " + walkRunSharedPref.getBoolean("started", true), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
+                    Log.d("STARTSTEPSAFTERCLICK", String.valueOf(SharedPreferencesUtil.loadInt(StepCountActivity.this, "startSteps")));
+                    Log.d("ENDSTEPSAFTERCLICK", String.valueOf(SharedPreferencesUtil.loadInt(StepCountActivity.this, "endSteps")));
                     myWalkRun.reset();
                     startStopBtn.setBackgroundColor(Color.GREEN);
                     startStopBtn.setText(Constants.START_WALK);
                     SharedPreferencesUtil.saveBoolean(StepCountActivity.this, Constants.ON_WALK_TAG, false);
-                }
-                else {
+                } else {
                     //Start walk/run
-                    Log.i("IN_START_BUTTON","Clicked start button!");
-                    Toast.makeText(StepCountActivity.this, "Clicked start!", Toast.LENGTH_SHORT).show();
+                    Log.i("IN_START_BUTTON", "Clicked start button!");
                     try {
-                        int currSteps = Math.toIntExact(stepProgress.getTotalSteps());
-                        Log.d("start WalkRun steps: ", "" + currSteps);
                         myWalkRun.startWalkRun(currSteps);
                         Toast.makeText(StepCountActivity.this, "Walk/Run started!", Toast.LENGTH_SHORT).show();
-                        Log.i("START_WALKRUN","Started walk/run!");
+                        Log.i("START_WALKRUN", "Started walk/run!");
 
-                    } catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         Toast.makeText(StepCountActivity.this, "FAIL TO START WALK/RUN.\\nWalk/Run already started?: " + walkRunSharedPref.getBoolean("started", true), Toast.LENGTH_SHORT).show();
                         Log.e("START_WALKRUN_CATCH", "FAIL TO START WALK/RUN.\nWalk/Run started?: " + walkRunSharedPref.getBoolean("started", true));
                         e.printStackTrace();
@@ -150,23 +143,6 @@ public class StepCountActivity extends AppCompatActivity {
                     startStopBtn.setText(Constants.STOP_WALK);
                     SharedPreferencesUtil.saveBoolean(StepCountActivity.this, Constants.ON_WALK_TAG, true);
                 }
-
-                /*
-                if (stepProgress.getOnDaily() == true) {
-                    stepLogger.writeOnDaily(false);
-                    stepProgress.setOnDaily(false);
-                    startStopBtn.setBackgroundColor(Color.GREEN);
-                    startStopBtn.setText(Constants.START_WALK);
-                    Toast.makeText(StepCountActivity.this, "Walk/Run stopped", Toast.LENGTH_LONG).show();
-
-                } else {
-                    stepLogger.writeOnDaily(true);
-                    stepProgress.setOnDaily(true);
-                    startStopBtn.setBackgroundColor(Color.RED);
-                    startStopBtn.setText(Constants.STOP_WALK);
-                    Toast.makeText(StepCountActivity.this, "Walk/Run started", Toast.LENGTH_LONG).show();
-                }
-                */
             }
         });
 
@@ -197,26 +173,52 @@ public class StepCountActivity extends AppCompatActivity {
         fitnessService.updateStepCount();
 
         long height = heightSharedPref.getLong("height", 0);
+        fitnessService.updateStepCount();
 
-        //Toast.makeText(StepCountActivity.this, "Height: " + height, Toast.LENGTH_SHORT).show();
-        //instantiate a WalkRun instance using height
-        if(myWalkRun == null) {
+        if (myWalkRun == null) {
             try {
                 myWalkRun = new WalkRun(StepCountActivity.this, Math.toIntExact(height));
                 walkRunSharedPref = getApplicationContext().getSharedPreferences("walkrun_data", MODE_PRIVATE);
-                Toast.makeText(StepCountActivity.this, "WalkRun started?: " + walkRunSharedPref.getBoolean("started", true), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Log.e("BAD_WALKRUN_HEIGHT", String.valueOf(height));
                 e.printStackTrace();
             }
         }
 
-        long goalSet = prefUtil.loadLong(this, Constants.GOAL_TAG);
+        long goalSet = SharedPreferencesUtil.loadLong(this, Constants.GOAL_TAG);
         stepProgress.setDailyGoal(goalSet);
-        Log.d("GOAL ON RESUME", String.valueOf(stepProgress.getDailyGoal()));
 
-        /*Initialize Walk/Run button with appropriate color and text*/
-        boolean onWalkRun = prefUtil.loadBoolean(this, Constants.ON_WALK_TAG);
+        Log.d("BEFORE UPDATE", stepProgress.getDailyGoal() + "");
+        Log.d("AFTER UPDATE", stepProgress.getDailyGoal() + "");
+
+        int currSteps = Math.toIntExact(SharedPreferencesUtil.loadLong(this, Constants.DAILY_STEP_KEY));
+        Log.d("AFTERSTEPS_ONRESUME", String.valueOf(currSteps));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//       If authentication was required during google fit setup, this will be called after the user authenticates
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == fitnessService.getRequestCode()) {
+                fitnessService.updateStepCount();
+            }
+        } else {
+            Log.e(TAG, "ERROR, google fit result code: " + resultCode);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setStepCount(long stepCount) {
+        textSteps.setText(String.valueOf(stepCount));
+        Log.d("STEPCOUNT", String.valueOf(stepCount));
+        SharedPreferencesUtil.saveLong(this, Constants.DAILY_STEP_KEY, stepCount);
+        Log.d("LOAD_UTILDAILYSTEP", String.valueOf(SharedPreferencesUtil.loadLong(this, Constants.DAILY_STEP_KEY)));
+        displayStepData();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void displayStepData() {
+        boolean onWalkRun = SharedPreferencesUtil.loadBoolean(this, Constants.ON_WALK_TAG);
         if (!onWalkRun) {
             startStopBtn.setBackgroundColor(Color.GREEN);
             startStopBtn.setText(Constants.START_WALK);
@@ -229,7 +231,8 @@ public class StepCountActivity extends AppCompatActivity {
             //walk/run is in progress, display progress
             try {
 
-                int currSteps = Math.toIntExact(stepProgress.getTotalSteps());
+                int currSteps = Math.toIntExact(SharedPreferencesUtil.loadLong(this, Constants.DAILY_STEP_KEY));
+                Log.d("STEPS_ONRESUME", String.valueOf(currSteps));
                 String progress = myWalkRun.checkProgress(currSteps);
 
                 //alert box to display walk/run progress
@@ -247,86 +250,11 @@ public class StepCountActivity extends AppCompatActivity {
 
                 AlertDialog progressAlert = builder.create();
                 progressAlert.show();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Log.d("WALKRUN_PROGRESS_CATCH", "WalkRun started?: " + walkRunSharedPref.getBoolean("started", true));
                 e.printStackTrace();
             }
         }
+
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//       If authentication was required during google fit setup, this will be called after the user authenticates
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == fitnessService.getRequestCode()) {
-                fitnessService.updateStepCount();
-            }
-        } else {
-            Log.e(TAG, "ERROR, google fit result code: " + resultCode);
-        }
-    }
-
-    public void setStepCount(long stepCount) {
-        /*Grabs all relevant values from local file*/
-
-        /*
-        long lastSteps = stepLogger.readLastStep();
-        long dailyGoal = stepLogger.readGoal();
-        long dailyProgress = stepLogger.readDaily();
-        */
-
-        long lastSteps = prefUtil.loadLong(this, LAST_UPDATE_TAG);
-        long dailyProgress = prefUtil.loadLong(this, DAILY_STEPS_TAG);
-        long dailyGoal = prefUtil.loadLong(this, GOAL_TAG);
-        Log.d("CURRENT", String.valueOf(stepCount));
-        Log.d("LAST", String.valueOf(lastSteps));
-        Log.d("DAILY GOAL", String.valueOf(dailyGoal));
-
-        long stepDifference = stepCount - lastSteps;
-
-        stepProgress.setTotalSteps(prefUtil.loadLong(this, TOTAL_STEPS_TAG));
-
-        boolean isOnDaily = stepProgress.getOnDaily();
-        Log.d("ON_DAILY", String.valueOf(isOnDaily));
-
-        stepProgress.setDailyGoal(dailyGoal);
-        stepProgress.setDailySteps(dailyProgress);
-
-        /*Updates daily*/
-        if (isOnDaily) {
-            if(stepProgress.updateDaily(stepDifference)){
-                //Add prompt here to assign new goal or to continue with preset.
-                stepProgress.setDailyGoal(stepProgress.getDailyGoal() + Constants.PRESET_INCREMENT);
-            }
-            else {
-                int timesGoalMet = SharedPreferencesUtil.loadInt(this, Constants.GOAL_MET_TAG);
-                SharedPreferencesUtil.saveInt(this, Constants.GOAL_MET_TAG, timesGoalMet + 1);
-                // TODO: ADD PROMPTS
-
-                stepProgress.resetDaily();
-            }
-        }
-
-        /*Updates total step progress*/
-        stepProgress.updateProgress(stepDifference);
-
-        /*Updates step progress to determine if on daily or not*/
-        if (stepProgress.getOnDaily() != isOnDaily)
-            stepProgress.setOnDaily(isOnDaily);
-
-        //Set text of strings.
-        Log.d("TOTAL_STEPS", String.valueOf(stepProgress.getTotalSteps()));
-        Log.d("GOAL_PROGRESS", String.valueOf(stepProgress.getGoalProgress()));
-        textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
-        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
-
-        /*After all updates have finished, write to logger*/
-        //stepLogger.writeSteps(stepProgress.getDailySteps(), stepProgress.getTotalSteps(), stepCount, stepProgress.getDailyGoal());
-        prefUtil.saveLong(this, DAILY_STEPS_TAG, stepProgress.getDailySteps());
-        prefUtil.saveLong(this, TOTAL_STEPS_TAG, stepProgress.getTotalSteps());
-        prefUtil.saveLong(this, LAST_UPDATE_TAG, stepCount);
-        prefUtil.saveLong(this, GOAL_TAG, stepProgress.getDailyGoal());
-    }
-
 }

@@ -50,6 +50,7 @@ public class WalkRun {
 
             //initial step count must be valid
             if (initSteps >= 0) {
+                Log.d("INITSTEPS_STARTWALK", String.valueOf(initSteps));
                 editor.putInt("startSteps", initSteps);
                 editor.putLong("startTime", Duration.between(refTime, LocalDateTime.now()).getSeconds());
                 editor.putBoolean("started", true);
@@ -85,6 +86,7 @@ public class WalkRun {
                     SharedPreferences.Editor editor = sharedPref.edit();
 
                     //update the WalkRun
+                    Log.d("FINALSTEPS_ENDWALK", String.valueOf(finalSteps));
                     editor.putInt("endSteps", finalSteps);
                     editor.putLong("endTime", end);
                     editor.putBoolean("ok", true);
@@ -104,6 +106,7 @@ public class WalkRun {
     /* Check the statistics so far of this WalkRun */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String checkProgress(int pSteps) throws Exception {
+        Log.d("PROGRESS_STEPS", String.valueOf(pSteps));
         if (sharedPref.getBoolean("started", false)) {
             if (!sharedPref.getBoolean("ok", false)) {
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -117,6 +120,8 @@ public class WalkRun {
                 editor.putInt("endSteps", pSteps);
                 editor.apply();
 
+                int endSteps = sharedPref.getInt("endSteps", 0);
+                Log.d("ENDSTEPS_CHECKPROG", String.valueOf(endSteps));
                 String progress = getStats();
 
                 //WalkRun is still incomplete
@@ -176,8 +181,11 @@ public class WalkRun {
     /* Return the number of steps taken on this walk/run */
     public int getNumSteps() throws Exception {
         if (sharedPref.getBoolean("ok", false)) {
-            int diff = (sharedPref.getInt("endSteps", -1) - sharedPref.getInt("startSteps", Integer.MAX_VALUE));
-            return diff;
+            int endSteps = sharedPref.getInt("endSteps", -1);
+            int startSteps = sharedPref.getInt("startSteps", Integer.MAX_VALUE);
+            Log.d("STARTSTEPS_GETNUMSTEPS", String.valueOf(startSteps));
+            Log.d("ENDSTEPS_GETNUMSTEPS", String.valueOf(endSteps));
+            return (endSteps - startSteps);
         }
         else {
             throw new Exception("Invalid: Cannot getNumSteps for incomplete WalkRun");
