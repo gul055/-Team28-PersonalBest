@@ -29,6 +29,7 @@ import static edu.ucsd.cse110.googlefitapp.Constants.GOAL;
 import static edu.ucsd.cse110.googlefitapp.Constants.GOAL_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.HEIGHT;
 import static edu.ucsd.cse110.googlefitapp.Constants.HEIGHT_PREF;
+import static edu.ucsd.cse110.googlefitapp.Constants.INTENTIONAL;
 import static edu.ucsd.cse110.googlefitapp.Constants.LAST_UPDATE_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.PRESET_INCREMENT;
 import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
@@ -121,7 +122,7 @@ public class StepCountActivity extends AppCompatActivity {
                             int day = date.getDayOfMonth();
                             int month = date.getMonthValue();
 
-                            String dateSteps = year + "-" + month + "-" + day + intentionalSteps;
+                            String dateSteps = year + "-" + month + "-" + day + INTENTIONAL;
 
                             Toast.makeText(StepCountActivity.this, year + "-" + month + "-" + day + intentionalSteps, Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
@@ -130,7 +131,6 @@ public class StepCountActivity extends AppCompatActivity {
                         }
                     } catch (Exception e) {
                         Log.e("END_WALKRUN_CATCH", "FAIL TO END WALK/RUN.\nWalk/Run already started?: " + walkRunSharedPref.getBoolean("started", false));
-                        Toast.makeText(StepCountActivity.this, "FAIL TO END WALK/RUN. \nWalk/Run already started?: " + walkRunSharedPref.getBoolean("started", true), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                     Log.d("STARTSTEPSAFTERCLICK", String.valueOf(SharedPreferencesUtil.loadInt(StepCountActivity.this, "startSteps")));
@@ -148,7 +148,6 @@ public class StepCountActivity extends AppCompatActivity {
                         Log.i("START_WALKRUN", "Started walk/run!");
 
                     } catch (Exception e) {
-                        Toast.makeText(StepCountActivity.this, "FAIL TO START WALK/RUN.\\nWalk/Run already started?: " + walkRunSharedPref.getBoolean("started", true), Toast.LENGTH_SHORT).show();
                         Log.e("START_WALKRUN_CATCH", "FAIL TO START WALK/RUN.\nWalk/Run started?: " + walkRunSharedPref.getBoolean("started", true));
                         e.printStackTrace();
                     }
@@ -177,7 +176,6 @@ public class StepCountActivity extends AppCompatActivity {
         super.onResume();
 
         if (heightLogger.readHeight() == 0) {
-            Toast.makeText(StepCountActivity.this, "You Have Not Assign Height Yet", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
             startActivity(intent);
             return;
