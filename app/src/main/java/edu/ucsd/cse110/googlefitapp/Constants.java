@@ -19,7 +19,7 @@ public final class Constants {
     public static final String HEIGHT_PREF = "height_data";
     public static final String HEIGHT = "height";
     public static final String WALKRUN_PREF = "walkrun_data";
-    public static final String INTENTIONAL = "intentional_steps"
+    public static final String INTENTIONAL = "intentional_steps";
 
     // Specific requestor code for setting goal
     public static final int GOAL_ACTIVITY_CODE = 1;
