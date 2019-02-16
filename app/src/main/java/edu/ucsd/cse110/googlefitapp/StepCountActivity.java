@@ -79,11 +79,13 @@ public class StepCountActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.i("IN_WALK_BUTTON","Clicked Walk/Run Button!");
                 if(startStopBtn.getText() == Constants.STOP_WALK) {
+                    fitnessService.updateStepCount();
                     //Stop walk/run
                     Log.i("IN_STOP_BUTTON","Clicked stop button!");
                     Toast.makeText(StepCountActivity.this, "Clicked stop!", Toast.LENGTH_SHORT).show();
                     try {
-                        myWalkRun.endWalkRun(Math.toIntExact(stepProgress.getTotalSteps()));
+                        int currSteps = Math.toIntExact(stepProgress.getTotalSteps());
+                        myWalkRun.endWalkRun(currSteps);
                         Toast.makeText(StepCountActivity.this, "Walk/Run ended!", Toast.LENGTH_SHORT).show();
                         Log.i("STOP_WALKRUN","Ended walk/run!");
 
@@ -130,7 +132,8 @@ public class StepCountActivity extends AppCompatActivity {
                     Log.i("IN_START_BUTTON","Clicked start button!");
                     Toast.makeText(StepCountActivity.this, "Clicked start!", Toast.LENGTH_SHORT).show();
                     try {
-                        myWalkRun.startWalkRun(Math.toIntExact(stepProgress.getTotalSteps()));
+                        int currSteps = Math.toIntExact(stepProgress.getTotalSteps());
+                        myWalkRun.startWalkRun(currSteps);
                         Toast.makeText(StepCountActivity.this, "Walk/Run started!", Toast.LENGTH_SHORT).show();
                         Log.i("START_WALKRUN","Started walk/run!");
 
@@ -203,8 +206,16 @@ public class StepCountActivity extends AppCompatActivity {
             }
         }
 
+        long goalSet = prefUtil.loadLong(this, Constants.GOAL_TAG);
+        stepProgress.setDailyGoal(goalSet);
+        Log.d("GOAL ON RESUME", String.valueOf(stepProgress.getDailyGoal()));
+        Log.d("BEFORE UPDATE", stepProgress.getDailyGoal() + "");
+
+        fitnessService.updateStepCount();
+
+        Log.d("AFTER UPDATE", stepProgress.getDailyGoal() + "");
         /*Initialize Walk/Run button with appropriate color and text*/
-        boolean onWalkRun = SharedPreferencesUtil.loadBoolean(this, Constants.ON_WALK_TAG);
+        boolean onWalkRun = prefUtil.loadBoolean(this, Constants.ON_WALK_TAG);
         if (!onWalkRun) {
             startStopBtn.setBackgroundColor(Color.GREEN);
             startStopBtn.setText(Constants.START_WALK);
@@ -217,7 +228,8 @@ public class StepCountActivity extends AppCompatActivity {
             //walk/run is in progress, display progress
             try {
 
-                String progress = myWalkRun.checkProgress(Math.toIntExact(stepProgress.getTotalSteps()));
+                int currSteps = Math.toIntExact(stepProgress.getTotalSteps());
+                String progress = myWalkRun.checkProgress(currSteps);
 
                 //alert box to display walk/run progress
                 AlertDialog.Builder builder = new AlertDialog.Builder(StepCountActivity.this);
@@ -240,11 +252,6 @@ public class StepCountActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
-        long goalSet = prefUtil.loadLong(this, Constants.GOAL_TAG);
-        stepProgress.setDailyGoal(goalSet);
-        Log.d("GOAL ON RESUME", String.valueOf(stepProgress.getDailyGoal()));
-        fitnessService.updateStepCount();
     }
 
     @Override
@@ -267,6 +274,7 @@ public class StepCountActivity extends AppCompatActivity {
         long dailyGoal = stepLogger.readGoal();
         long dailyProgress = stepLogger.readDaily();
         */
+
         long lastSteps = prefUtil.loadLong(this, LAST_UPDATE_TAG);
         long dailyProgress = prefUtil.loadLong(this, DAILY_STEPS_TAG);
         long dailyGoal = prefUtil.loadLong(this, GOAL_TAG);
