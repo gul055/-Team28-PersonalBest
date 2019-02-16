@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.LocalDateTime;
+
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepLogger;
@@ -25,9 +27,12 @@ import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 import static edu.ucsd.cse110.googlefitapp.Constants.DAILY_STEPS_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.GOAL;
 import static edu.ucsd.cse110.googlefitapp.Constants.GOAL_TAG;
+import static edu.ucsd.cse110.googlefitapp.Constants.HEIGHT;
+import static edu.ucsd.cse110.googlefitapp.Constants.HEIGHT_PREF;
 import static edu.ucsd.cse110.googlefitapp.Constants.LAST_UPDATE_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.PRESET_INCREMENT;
 import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
+import static edu.ucsd.cse110.googlefitapp.Constants.WALKRUN_PREF;
 
 public class StepCountActivity extends AppCompatActivity {
 
@@ -59,7 +64,7 @@ public class StepCountActivity extends AppCompatActivity {
 
         // request height for first sign in
         heightLogger = new HeightLogger(this);
-        heightSharedPref = getApplicationContext().getSharedPreferences("height_data", MODE_PRIVATE);
+        heightSharedPref = getApplicationContext().getSharedPreferences(HEIGHT_PREF, MODE_PRIVATE);
         textSteps = findViewById(R.id.textSteps);
         textGoal = findViewById(R.id.textGoal);
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
@@ -109,8 +114,16 @@ public class StepCountActivity extends AppCompatActivity {
                             AlertDialog statAlert = builder.create();
                             statAlert.show();
 
-                            //CALL THIS TO GET NUMBER OF STEPS FROM INTENTIONAL WALK/RUN.
-                            //int intentionalSteps = myWalkRun.getNumSteps();
+                            //GET THE DATE STRING + NUMBER OF STEPS FROM INTENTIONAL WALK/RUN.
+                            int intentionalSteps = myWalkRun.getNumSteps();
+                            LocalDateTime date = LocalDateTime.now();
+                            int year = date.getYear();
+                            int day = date.getDayOfMonth();
+                            int month = date.getMonthValue();
+
+                            String dateSteps = year + "-" + month + "-" + day + intentionalSteps;
+
+                            Toast.makeText(StepCountActivity.this, year + "-" + month + "-" + day + intentionalSteps, Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             Log.d("WALKRUN_PROGRESS_CATCH", "WalkRun started?: " + walkRunSharedPref.getBoolean("started", true));
                             e.printStackTrace();
@@ -172,13 +185,13 @@ public class StepCountActivity extends AppCompatActivity {
 
         fitnessService.updateStepCount();
 
-        long height = heightSharedPref.getLong("height", 0);
+        long height = heightSharedPref.getLong(HEIGHT, 0);
         fitnessService.updateStepCount();
 
         if (myWalkRun == null) {
             try {
                 myWalkRun = new WalkRun(StepCountActivity.this, Math.toIntExact(height));
-                walkRunSharedPref = getApplicationContext().getSharedPreferences("walkrun_data", MODE_PRIVATE);
+                walkRunSharedPref = getApplicationContext().getSharedPreferences(WALKRUN_PREF, MODE_PRIVATE);
             } catch (Exception e) {
                 Log.e("BAD_WALKRUN_HEIGHT", String.valueOf(height));
                 e.printStackTrace();
