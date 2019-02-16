@@ -1,6 +1,7 @@
 package edu.ucsd.cse110.googlefitapp;
 
 import android.content.Context;
+import android.util.Log;
 
 public class SetGoal implements Goal {
     Context context;
@@ -16,8 +17,10 @@ public class SetGoal implements Goal {
     public boolean set(long goalCandidate) {
         if (isValidGoal(goalCandidate)) {
             SharedPreferencesUtil.saveLong(context, Constants.GOAL, goalCandidate);
+            Log.d("GOAL", "New goal set: " + goalCandidate);
             return true;
         } else {
+            Log.d("GOAL", "Did not set goal");
             return false;
         }
     }

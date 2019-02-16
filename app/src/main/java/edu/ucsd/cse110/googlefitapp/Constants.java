@@ -14,4 +14,7 @@ public final class Constants {
 
     // Calendar constant
     public static final int WEEK_SIZE = 7;
+
+    // Step increment
+    public static final int STEP_INCREMENT = 500;
 }
