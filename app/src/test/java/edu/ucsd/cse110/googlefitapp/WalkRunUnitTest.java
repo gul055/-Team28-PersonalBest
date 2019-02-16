@@ -53,8 +53,8 @@ public class WalkRunUnitTest {
         assertEquals(3.0, run.getSpeed(), .001);
 
         //check stats statement
-        assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
-                + "Number of steps: 7305"
+        assertEquals("Duration: 1 hour(s), 0 minute(s), 0 second(s)\n"
+                + "Number of steps: 7305\n"
                 + "Speed: 3.0 mph\n"
                 + "Distance: 3.0 miles", run.getStats());
     }
@@ -151,8 +151,8 @@ public class WalkRunUnitTest {
         assertEquals(3.0, run.getSpeed(), .001);
 
         //check stats statement
-        assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
-                + "Number of steps: 7305"
+        assertEquals("Duration: 1 hour(s), 0 minute(s), 0 second(s)\n"
+                + "Number of steps: 7305\n"
                 + "Speed: 3.0 mph\n"
                 + "Distance: 3.0 miles", run.getStats());
 
@@ -175,8 +175,8 @@ public class WalkRunUnitTest {
         assertEquals(0.5, run.getSpeed(), .001);
 
         //check stats statement
-        assertEquals("Duration: 2 hours, 0 minutes, 0 seconds\n"
-                + "Number of steps: 2435"
+        assertEquals("Duration: 2 hour(s), 0 minute(s), 0 second(s)\n"
+                + "Number of steps: 2435\n"
                 + "Speed: 0.5 mph\n"
                 + "Distance: 1.0 miles", run.getStats());
     }
@@ -225,8 +225,8 @@ public class WalkRunUnitTest {
         LocalDateTime mid = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 30, 0);
 
         //check progress statement
-        assertEquals("Duration: 0 hours, 30 minutes, 0 seconds\n"
-                + "Number of steps: 3653"
+        assertEquals("Duration: 0 hour(s), 30 minute(s), 0 second(s)\n"
+                + "Number of steps: 3653\n"
                 + "Speed: 3.0 mph\n"
                 + "Distance: 1.5 miles", run.checkProgress(3653, mid));
 
@@ -234,8 +234,8 @@ public class WalkRunUnitTest {
         run.endWalkRun(7305, end);
 
         //check stats statement
-        assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
-                + "Number of steps: 7305"
+        assertEquals("Duration: 1 hour(s), 0 minute(s), 0 second(s)\n"
+                + "Number of steps: 7305\n"
                 + "Speed: 3.0 mph\n"
                 + "Distance: 3.0 miles", run.getStats());
 
@@ -251,16 +251,16 @@ public class WalkRunUnitTest {
         LocalDateTime mid = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 30, 0);
 
         //check progress statement
-        assertEquals("Duration: 0 hours, 30 minutes, 0 seconds\n"
-                + "Number of steps: 3653"
+        assertEquals("Duration: 0 hour(s), 30 minute(s), 0 second(s)\n"
+                + "Number of steps: 3653\n"
                 + "Speed: 3.0 mph\n"
                 + "Distance: 1.5 miles", run.checkProgress(3653, mid));
 
         LocalDateTime mid2 = LocalDateTime.of(2019, Month.JANUARY, 1, 2, 0, 0);
 
         //check stats statement
-        assertEquals("Duration: 2 hours, 0 minutes, 0 seconds\n"
-                + "Number of steps: 7305"
+        assertEquals("Duration: 2 hour(s), 0 minute(s), 0 second(s)\n"
+                + "Number of steps: 7305\n"
                 + "Speed: 1.5 mph\n"
                 + "Distance: 3.0 miles", run.checkProgress(7305, mid2));
 
@@ -268,8 +268,8 @@ public class WalkRunUnitTest {
         run.endWalkRun(24350, end);
 
         //check stats statement
-        assertEquals("Duration: 3 hours, 0 minutes, 0 seconds\n"
-                + "Number of steps: 24350"
+        assertEquals("Duration: 3 hour(s), 0 minute(s), 0 second(s)\n"
+                + "Number of steps: 24350\n"
                 + "Speed: 3.3 mph\n"
                 + "Distance: 10.0 miles", run.getStats());
     }
@@ -285,8 +285,8 @@ public class WalkRunUnitTest {
         run.endWalkRun(7305, end);
 
         //check stats statement
-        assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
-                + "Number of steps: 7305"
+        assertEquals("Duration: 1 hour(s), 0 minute(s), 0 second(s)\n"
+                + "Number of steps: 7305\n"
                 + "Speed: 3.0 mph\n"
                 + "Distance: 3.0 miles", run.getStats());
 
@@ -294,8 +294,8 @@ public class WalkRunUnitTest {
             LocalDateTime mid = LocalDateTime.of(2019, Month.JANUARY, 1, 0, 30, 0);
 
             //check progress statement
-            assertEquals("Duration: 0 hours, 30 minutes, 0 seconds\n"
-                    + "Number of steps: 3653"
+            assertEquals("Duration: 0 hour(s), 30 minute(s), 0 second(s)\n"
+                    + "Number of steps: 3653\n"
                     + "Speed: 3.0 mph\n"
                     + "Distance: 1.5 miles", run.checkProgress(3653, mid));
 
@@ -316,7 +316,7 @@ public class WalkRunUnitTest {
             run.endWalkRun(7305, end);
             //check stats statement
             assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
-                    + "Number of steps: 7305"
+                    + "Number of steps: 7305\n"
                     + "Speed: 3.0 mph\n"
                     + "Distance: 3.0 miles", run.getStats());
             fail("Can't end a WalkRun that hasn't started");
@@ -330,7 +330,7 @@ public class WalkRunUnitTest {
 
             //check progress statement
             assertEquals("Duration: 0 hours, 30 minutes, 0 seconds\n"
-                    + "Number of steps: 3653"
+                    + "Number of steps: 3653\n"
                     + "Speed: 3.0 mph\n"
                     + "Distance: 1.5 miles", run.checkProgress(3653, mid));
 
@@ -345,7 +345,7 @@ public class WalkRunUnitTest {
             run.endWalkRun(7305, end);
             //check stats statement
             assertEquals("Duration: 1 hours, 0 minutes, 0 seconds\n"
-                    + "Number of steps: 7305"
+                    + "Number of steps: 7305\n"
                     + "Speed: 3.0 mph\n"
                     + "Distance: 3.0 miles", run.getStats());
             fail("Can't end a WalkRun that hasn't started");

@@ -16,4 +16,7 @@
     <string name="inches">Inches</string>
     <string name="ok">OK</string>
     <string name="height">height</string>
+    <string name="start_stop">Start/Stop</string>
+    <string name="set_new_goal">Set New Goal</string>
+    <string name="steps_walked_text">TextView for displaying the number of steps walked for todat</string>
 </resources>

@@ -44,7 +44,7 @@ public class WalkRun {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void startWalkRun(int initSteps) throws Exception {
         //every start must be met with an end
-        if (sharedPref.getBoolean("started", false)) {
+        if (!sharedPref.getBoolean("started", false)) {
             SharedPreferences.Editor editor = sharedPref.edit();
 
             //initial step count must be valid
@@ -103,7 +103,7 @@ public class WalkRun {
     /* Check the statistics so far of this WalkRun */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String checkProgress(int pSteps) throws Exception {
-        if (!sharedPref.getBoolean("started", false)) {
+        if (sharedPref.getBoolean("started", false)) {
             if (!sharedPref.getBoolean("ok", false)) {
                 SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -159,8 +159,8 @@ public class WalkRun {
 
             reset();
 
-            return ("Duration: " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds\n"
-                    + "Number of steps: " + steps
+            return ("Duration: " + hours + " hour(s), " + minutes + " minute(s), " + seconds + " second(s)\n"
+                    + "Number of steps: " + steps + "\n"
                     + "Speed: " + mph + " mph\n"
                     + "Distance: " + distance + " miles");
         } else {
