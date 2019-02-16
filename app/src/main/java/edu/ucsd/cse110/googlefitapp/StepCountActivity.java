@@ -3,6 +3,7 @@ package edu.ucsd.cse110.googlefitapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -78,9 +79,7 @@ public class StepCountActivity extends AppCompatActivity {
                     stepProgress.setOnDaily(true);
                     startStopBtn.setBackgroundColor(Color.RED);
                     startStopBtn.setText(Constants.STOP_WALK);
-
                 }
-
             }
         });
 
@@ -99,15 +98,16 @@ public class StepCountActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        fitnessService.updateStepCount();
         long goalSet = prefUtil.loadLong(this, Constants.GOAL_TAG);
         stepProgress.setDailyGoal(goalSet);
         Log.d("GOAL ON RESUME", String.valueOf(stepProgress.getDailyGoal()));
-        fitnessService.updateStepCount();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //       If authentication was required during google fit setup, this will be called after the user authenticates
+
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == fitnessService.getRequestCode()) {
                 fitnessService.updateStepCount();
@@ -118,58 +118,26 @@ public class StepCountActivity extends AppCompatActivity {
     }
 
     public void setStepCount(long stepCount) {
-        /*Grabs all relevant values from local file*/
+        textSteps.setText(String.valueOf(stepCount));
+        prefUtil.saveLong(this, TOTAL_STEPS_TAG, stepCount);
+    }
 
-        long lastSteps = prefUtil.loadLong(this, LAST_UPDATE_TAG);
-        long dailyProgress = prefUtil.loadLong(this, DAILY_STEPS_TAG);
-        long dailyGoal = prefUtil.loadLong(this, GOAL_TAG);
-        Log.d("CURRENT", String.valueOf(stepCount));
-        Log.d("LAST", String.valueOf(lastSteps));
-        Log.d("DAILY GOAL", String.valueOf(dailyGoal));
+    /*ALL CREDIT FOR THE FOLLOWING ASYNCTASK CODE GOES TO THE TUTSPLUS TUTORIAL ON GOOGLE FIT API
+    Title: Google Fit for Android: History API
+    https://code.tutsplus.com/tutorials/google-fit-for-android-history-api--cms-25856
+    Captured: 2/15/2019
+    How the source was used: Copied code
+    K.D.
+    */
+    //TODO: CALL THIS FROM SOMEWHERE.
+    private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
 
-        long stepDifference = stepCount - lastSteps;
-
-        stepProgress.setTotalSteps(prefUtil.loadLong(this, TOTAL_STEPS_TAG));
-
-        boolean isOnDaily = stepProgress.getOnDaily();
-        Log.d("ON_DAILY", String.valueOf(isOnDaily));
-
-        stepProgress.setDailyGoal(dailyGoal);
-        stepProgress.setDailySteps(dailyProgress);
-
-        /*Updates daily*/
-        if (isOnDaily) {
-            if(stepProgress.updateDaily(stepDifference)){
-                //Add prompt here to assign new goal or to continue with preset.
-                stepProgress.setDailyGoal(stepProgress.getDailyGoal() + Constants.PRESET_INCREMENT);
-            }
-            else {
-                int timesGoalMet = SharedPreferencesUtil.loadInt(this, Constants.GOAL_MET_TAG);
-                SharedPreferencesUtil.saveInt(this, Constants.GOAL_MET_TAG, timesGoalMet + 1);
-                // TODO: ADD PROMPTS
-
-                stepProgress.resetDaily();
-            }
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Log.d("INASYNC", "In task");
+            fitnessService.getWeeklyData();
+            return null;
         }
-
-        /*Updates total step progress*/
-        stepProgress.updateProgress(stepDifference);
-
-        /*Updates step progress to determine if on daily or not*/
-        if (stepProgress.getOnDaily() != isOnDaily)
-            stepProgress.setOnDaily(isOnDaily);
-
-        //Set text of strings.
-        Log.d("TOTAL_STEPS", String.valueOf(stepProgress.getTotalSteps()));
-        Log.d("GOAL_PROGRESS", String.valueOf(stepProgress.getGoalProgress()));
-        textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
-        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
-
-        /*After all updates have finished, write to logger*/
-        prefUtil.saveLong(this, DAILY_STEPS_TAG, stepProgress.getDailySteps());
-        prefUtil.saveLong(this, TOTAL_STEPS_TAG, stepProgress.getTotalSteps());
-        prefUtil.saveLong(this, LAST_UPDATE_TAG, stepCount);
-        prefUtil.saveLong(this, GOAL_TAG, stepProgress.getDailyGoal());
     }
 
 }
