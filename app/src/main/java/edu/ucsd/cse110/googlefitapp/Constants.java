@@ -13,6 +13,7 @@ public final class Constants {
     public static final String LAST_UPDATE_TAG = "last_update";
     public static final String GOAL_TAG = "goal";
     public static final String GOAL_MET_TAG = "goal_met";
+    public static final String DAILY_STEP_KEY = "daily_step";
     public static final String ON_WALK_TAG = "on_walk";
     public static final int PRESET_INCREMENT = 500;
 
