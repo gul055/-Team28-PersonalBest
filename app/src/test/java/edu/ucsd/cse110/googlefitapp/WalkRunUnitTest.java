@@ -23,12 +23,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
 public class WalkRunUnitTest {
-    private final static double strideMultiplier = .413;
-    private final static int inchesInFeet = 12;
-    private final static int feetInMile = 5280;
-    private final static int secondsInHour = 3600;
-    private final static int secondsInMinute = 60;
-
     private Context ctx;
 
     @Before

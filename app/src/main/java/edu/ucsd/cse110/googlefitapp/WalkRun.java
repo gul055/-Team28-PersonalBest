@@ -1,8 +1,6 @@
 package edu.ucsd.cse110.googlefitapp;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -22,22 +20,9 @@ public class WalkRun {
     private final static int secondsInHour = 3600;
     private final static int secondsInMinute = 60;
 
-    //boolean checks for valid WalkRun method calls
-    boolean started = false;
-    boolean ok = false;
-
     SharedPreferences sharedPref;
 
     LocalDateTime refTime = LocalDateTime.of(2016, Month.JANUARY, 1, 0, 0, 0);
-    LocalDateTime startTime;
-    LocalDateTime endTime;
-
-    long walkRunTime;
-
-    int startSteps;
-    int endSteps;
-
-    int height;
 
     /* Initialize a walk/run */
     public WalkRun(Context context, int userHeight) throws Exception {
