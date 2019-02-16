@@ -13,4 +13,6 @@
     <string name="newgoal">New goal set.</string>
     <string name="mock_steps">Add 500 steps</string>
     <string name="set_time">Set time in milliseconds</string>
+    <string name="go_back">Go back</string>
+    <string name="weekly_snapshot">Weekly snapshot</string>
 </resources>

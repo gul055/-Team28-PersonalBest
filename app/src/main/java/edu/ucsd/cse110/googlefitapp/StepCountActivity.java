@@ -39,6 +39,7 @@ public class StepCountActivity extends AppCompatActivity {
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
+        stepProgress = new StepUpdater(this);
 
         fitnessService.setup();
 
@@ -113,6 +114,16 @@ public class StepCountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Implement a set time button
+            }
+        });
+
+        Button snapshot = findViewById(R.id.weekly_snapshot);
+        snapshot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("SNAPSHOT", "Entering graph");
+                Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+                startActivity(intent);
             }
         });
 

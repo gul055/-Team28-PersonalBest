@@ -22,4 +22,7 @@ public final class Constants {
     public static final float GROUP_SPACE = 0.06f;
     public static final float BAR_SPACE = 0.02f;
     public static final float BAR_WIDTH = 0.45f;
+    public static final String RECORDED_STEP = "Recorded Steps";
+    public static final String INCIDENTAL_STEP = "Incidental Steps";
+    public static final String GOAL_LABEL = "Daily Goals";
 }
