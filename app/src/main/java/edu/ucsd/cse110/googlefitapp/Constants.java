@@ -17,4 +17,9 @@ public final class Constants {
 
     // Step increment
     public static final int STEP_INCREMENT = 500;
+
+    // Graph constant
+    public static final float GROUP_SPACE = 0.06f;
+    public static final float BAR_SPACE = 0.02f;
+    public static final float BAR_WIDTH = 0.45f;
 }

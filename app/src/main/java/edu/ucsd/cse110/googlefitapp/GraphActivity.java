@@ -25,16 +25,13 @@ public class GraphActivity extends AppCompatActivity {
         // Each data point should be a set of floats
 
         BarChart chart = findViewById(R.id.chart);
-        List<BarEntry> entries = new ArrayList<>();
+        DataHandler dataHandler = new DataHandler();
 
-        // Insert code for adding data as BarEntry into entries here
-
-        BarDataSet dataSet = new BarDataSet(entries, "Progress");
-
-        BarData data = new BarData(dataSet);
+        BarData data = new BarData(dataHandler.getStepSet(), dataHandler.getGoalSet());
+        FitCalendar calendar = new FitCalendar();
         data.setBarWidth(Constants.BAR_WIDTH);
         chart.setData(data);
-        chart.setFitBars(Constants.FIT_BARS);
+        chart.groupBars(calendar.getDayOfMonth(), Constants.GROUP_SPACE, Constants.BAR_SPACE);
         chart.invalidate();
     }
 }

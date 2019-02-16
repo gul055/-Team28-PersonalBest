@@ -27,6 +27,10 @@ public class FitCalendar implements CalendarInterface {
         return (calendar.get(Calendar.DAY_OF_MONTH) + increment) + "";
     }
 
+    public int getDayOfMonth(){
+        return calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
     @Override
     public String getDate(int increment) {
         return getYear() + "-" + getMonth() + "-" + getDayOfMonth(increment);
