@@ -9,7 +9,6 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.renderer.YAxisRenderer;
 
 public class GraphActivity extends AppCompatActivity {
 

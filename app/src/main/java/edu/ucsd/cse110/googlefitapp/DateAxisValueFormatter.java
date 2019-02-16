@@ -20,8 +20,7 @@ public class DateAxisValueFormatter implements IAxisValueFormatter {
     public String getFormattedValue(float value, AxisBase axis) {
         try {
             return days[(int) value];
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             return null;
         }
     }

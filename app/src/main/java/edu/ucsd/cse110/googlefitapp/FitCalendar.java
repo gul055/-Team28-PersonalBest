@@ -2,9 +2,7 @@ package edu.ucsd.cse110.googlefitapp;
 
 import android.util.Log;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
 
 public class FitCalendar implements CalendarInterface {
 
@@ -60,7 +58,8 @@ public class FitCalendar implements CalendarInterface {
         return week;
     }
 
+    // Subtract month by 1 in compliance with the weird indexing that is Java calendar
     public void setDate(int year, int month, int day) {
-        calendar.set(year, month, day);
+        calendar.set(year, month - 1, day);
     }
 }
