@@ -25,4 +25,5 @@ public final class Constants {
     public static final String RECORDED_STEP = "Recorded Steps";
     public static final String INCIDENTAL_STEP = "Incidental Steps";
     public static final String GOAL_LABEL = "Daily Goals";
+    public static final float GRANULARITY = 1f;
 }

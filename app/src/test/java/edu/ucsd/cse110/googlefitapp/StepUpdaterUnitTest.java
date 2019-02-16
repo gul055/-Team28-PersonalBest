@@ -1,7 +1,11 @@
 package edu.ucsd.cse110.googlefitapp;
 
+import android.content.Intent;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.robolectric.Robolectric;
+import org.robolectric.RuntimeEnvironment;
 
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 
@@ -11,10 +15,13 @@ import static org.junit.Assert.assertFalse;
 
 public class StepUpdaterUnitTest {
     StepUpdater updater;
+    private MainActivity activity;
 
     @Before
     public void setup() {
-        updater = new StepUpdater();
+        Intent intent = new Intent(RuntimeEnvironment.application, MainActivity.class);
+        activity = Robolectric.buildActivity(MainActivity.class, intent).create().get();
+        updater = new StepUpdater(activity.getApplicationContext());
     }
 
     /*Basic constructor test*/

@@ -7,13 +7,9 @@ import android.widget.Button;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.github.mikephil.charting.renderer.YAxisRenderer;
 
 public class GraphActivity extends AppCompatActivity {
 
@@ -36,21 +32,31 @@ public class GraphActivity extends AppCompatActivity {
         // Each data point should be a set of floats
 
         FitCalendar calendar = new FitCalendar();
-        int firstDayOfWeek = calendar.getFirstDayOfWeek();
 
         BarChart chart = findViewById(R.id.chart);
-        DataHandler dataHandler = new DataHandler(firstDayOfWeek);
+
+        // This is using fake data right now
+        DataHandler dataHandler = new DataHandler();
 
         BarData data = new BarData(dataHandler.getStepSet(), dataHandler.getGoalSet());
-        // This is using fake data right now
+        chart.setData(data);
 
         // Bunch of initializations of graph
         data.setBarWidth(Constants.BAR_WIDTH);
-        chart.setData(data);
-        chart.getDescription().setEnabled(false);
+
         XAxis xAxis = chart.getXAxis();
+        xAxis.setGranularity(Constants.GRANULARITY);
+        xAxis.setValueFormatter(new DateAxisValueFormatter(calendar));
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMaximum(chart.getBarData().getGroupWidth(Constants.GROUP_SPACE, Constants.BAR_SPACE) * Constants.WEEK_SIZE);
         xAxis.setCenterAxisLabels(true);
-        chart.groupBars(firstDayOfWeek, Constants.GROUP_SPACE, Constants.BAR_SPACE);
+        YAxis yAxisRight = chart.getAxisRight();
+        yAxisRight.setEnabled(false);
+        chart.getDescription().setEnabled(false);
+        chart.groupBars(0f, Constants.GROUP_SPACE, Constants.BAR_SPACE);
         chart.invalidate();
     }
 }
