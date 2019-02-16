@@ -11,4 +11,7 @@ public final class Constants {
 
     // Specific requestor code for setting goal
     public static final int GOAL_ACTIVITY_CODE = 1;
+
+    // Calendar constant
+    public static final int WEEK_SIZE = 7;
 }
