@@ -68,12 +68,6 @@
         app:layout_constraintVertical_bias="0.273"
         android:text="@string/step_placeholder" />
 
-    <Button
-        android:id="@+id/setGoal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/set_goal" />
-
     <TextView
         android:id="@+id/textHeight"
         android:layout_width="wrap_content"
@@ -81,6 +75,10 @@
         android:text="@string/height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias=".5"
+        app:layout_constrainedStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".1"
         tools:layout_editor_absoluteY="451dp" />
 
     <TextView
@@ -89,6 +87,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias=".5"
+        app:layout_constrainedStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias=".4"
         tools:layout_editor_absoluteY="177dp" />
 
 </android.support.constraint.ConstraintLayout>
