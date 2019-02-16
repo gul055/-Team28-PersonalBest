@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -150,12 +151,16 @@ public class WalkRun {
 
             //number of steps
             int steps = getNumSteps();
+            Log.d("numSteps in stats", "" + steps);
 
             //speed
             double mph = getSpeed();
+            Log.d("speed in stats", "" + mph);
+
 
             //distance
             double distance = getDistance();
+            Log.d("distance in stats", "" + distance);
 
             reset();
 
@@ -171,7 +176,8 @@ public class WalkRun {
     /* Return the number of steps taken on this walk/run */
     public int getNumSteps() throws Exception {
         if (sharedPref.getBoolean("ok", false)) {
-            return (sharedPref.getInt("endSteps", -1) - sharedPref.getInt("startSteps", Integer.MAX_VALUE));
+            int diff = (sharedPref.getInt("endSteps", -1) - sharedPref.getInt("startSteps", Integer.MAX_VALUE));
+            return diff;
         }
         else {
             throw new Exception("Invalid: Cannot getNumSteps for incomplete WalkRun");
