@@ -6,5 +6,7 @@ public class CalendarAdapter extends AbstractCalendar {
 
     Calendar calendar;
 
-    public CalendarAdapter(){ calendar = Calendar.getInstance();}
+    public CalendarAdapter() {
+        calendar = Calendar.getInstance();
+    }
 }

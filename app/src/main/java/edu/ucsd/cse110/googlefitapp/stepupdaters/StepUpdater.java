@@ -57,5 +57,7 @@ public class StepUpdater {
         return false;
     }
 
-    public void resetDaily(){ this.setDailyGoal(0); }
+    public void resetDaily() {
+        this.setDailyGoal(0);
+    }
 }

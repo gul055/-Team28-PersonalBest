@@ -40,7 +40,7 @@ public final class Constants {
 
     //Default step size
     public static final int DEFAULT_GOAL = 5000;
-  
+
     // Graph constant
     public static final float GROUP_SPACE = 0.06f;
     public static final float BAR_SPACE = 0.02f;

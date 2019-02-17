@@ -12,6 +12,7 @@ public class promptGoal extends AppCompatActivity {
 
     public StepUpdater stepProgress;
     private boolean notNowPress = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

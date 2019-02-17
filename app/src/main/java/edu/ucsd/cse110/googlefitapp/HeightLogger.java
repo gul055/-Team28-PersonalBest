@@ -11,13 +11,13 @@ public class HeightLogger {
     SharedPreferences sharedPref;
     private final static int inchesInFeet = 12;
 
-    public HeightLogger(Context context){
+    public HeightLogger(Context context) {
         sharedPref = context.getSharedPreferences(HEIGHT_PREF, MODE_PRIVATE);
     }
 
     /*Returns false if invalid input, true otherwise*/
-    public boolean writeHeight(long feet, long inches){
-        if(feet < 0 || inches < 0){
+    public boolean writeHeight(long feet, long inches) {
+        if (feet < 0 || inches < 0) {
             return false;
         }
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -27,11 +27,11 @@ public class HeightLogger {
         return true;
     }
 
-    public long readHeight(){
+    public long readHeight() {
         return sharedPref.getLong(HEIGHT, 0);
     }
 
-    public long convertHeight(long feet, long inches){
+    public long convertHeight(long feet, long inches) {
         return inches + (feet * inchesInFeet);
     }
 }

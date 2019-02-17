@@ -26,15 +26,9 @@ import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepLogger;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 
-import static edu.ucsd.cse110.googlefitapp.Constants.DAILY_STEPS_TAG;
-import static edu.ucsd.cse110.googlefitapp.Constants.GOAL;
-import static edu.ucsd.cse110.googlefitapp.Constants.GOAL_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.HEIGHT;
 import static edu.ucsd.cse110.googlefitapp.Constants.HEIGHT_PREF;
 import static edu.ucsd.cse110.googlefitapp.Constants.INTENTIONAL;
-import static edu.ucsd.cse110.googlefitapp.Constants.LAST_UPDATE_TAG;
-import static edu.ucsd.cse110.googlefitapp.Constants.PRESET_INCREMENT;
-import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.WALKRUN_PREF;
 
 public class StepCountActivity extends AppCompatActivity {
@@ -163,8 +157,7 @@ public class StepCountActivity extends AppCompatActivity {
                     if (goalMet == Constants.FIRST_MEET_GOAL && !notNowPress) {
                         Intent i = new Intent(getApplicationContext(), promptGoal.class);
                         startActivity(i);
-                    }
-                    else if (goalMet >= Constants.MULTIPLY_MEET_GOAL && notNowPress && dayOfWeek == Calendar.SATURDAY) {
+                    } else if (goalMet >= Constants.MULTIPLY_MEET_GOAL && notNowPress && dayOfWeek == Calendar.SATURDAY) {
                         Intent i = new Intent(getApplicationContext(), promptGoal.class);
                         startActivity(i);
                     }
@@ -358,7 +351,7 @@ public class StepCountActivity extends AppCompatActivity {
         }
     }
 
-    public void setCalendar(AbstractCalendar c){
+    public void setCalendar(AbstractCalendar c) {
         calendar = c;
     }
 }
