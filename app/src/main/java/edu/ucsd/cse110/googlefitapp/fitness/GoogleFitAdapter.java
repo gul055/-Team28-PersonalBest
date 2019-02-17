@@ -177,24 +177,24 @@ public class GoogleFitAdapter implements FitnessService {
                             @Override
                             public void onSuccess(DataReadResponse dataReadResponse) {
                                 List<Bucket> buckets = dataReadResponse.getBuckets();
-                                Log.e("History", "Number of returned DataSets: " + buckets.size());
+                                Log.d("History", "Number of returned DataSets: " + buckets.size());
                                 for(Bucket bucket : buckets) {
                                     List<DataSet> dataSets = bucket.getDataSets();
                                     for(DataSet dataSet : dataSets) {
-                                        Log.e("History", "Data returned for Data type: " + dataSet.getDataType().getName());
+                                        Log.d("History", "Data returned for Data type: " + dataSet.getDataType().getName());
                                         DateFormat dateFormat = DateFormat.getDateInstance();
                                         DateFormat timeFormat = DateFormat.getTimeInstance();
 
                                         for (DataPoint dp : dataSet.getDataPoints()) {
 
                                             String startTimeString = dateFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS));
-                                            Log.e("History", "Data point:");
-                                            Log.e("History", "\tType: " + dp.getDataType().getName());
-                                            Log.e("History", "\tStart: " + startTimeString + " " + timeFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
-                                            Log.e("History", "\tEnd: " + dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS)) + " " + timeFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
+                                            Log.d("History", "Data point:");
+                                            Log.d("History", "\tType: " + dp.getDataType().getName());
+                                            Log.d("History", "\tStart: " + startTimeString + " " + timeFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
+                                            Log.d("History", "\tEnd: " + dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS)) + " " + timeFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
                                             for(Field field : dp.getDataType().getFields()) {
                                                 int steps = dp.getValue(field).asInt();
-                                                Log.e("History", "\tField: " + field.getName() +
+                                                Log.d("History", "\tField: " + field.getName() +
                                                         " Value: " + dp.getValue(field));
 
                                                 Calendar cal = Calendar.getInstance();

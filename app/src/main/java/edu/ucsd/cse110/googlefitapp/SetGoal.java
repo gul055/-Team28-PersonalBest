@@ -18,11 +18,11 @@ public class SetGoal implements Goal {
 
     public boolean set(long goalCandidate) {
         if (isValidGoal(goalCandidate)) {
-            if(SharedPreferencesUtil.loadLong(context, Constants.GOAL_TAG) == goalCandidate) {
+            if(SharedPreferencesUtil.loadLong(context, Constants.GOAL) == goalCandidate) {
                 Log.d("PREV AND NEXT GOAL =", String.valueOf(goalCandidate));
                 return false;
             }
-            SharedPreferencesUtil.saveLong(context, Constants.GOAL_TAG, goalCandidate);
+            SharedPreferencesUtil.saveLong(context, Constants.GOAL, goalCandidate);
             SharedPreferencesUtil.saveLong(context, Constants.DAILY_STEPS_TAG, 0);
 
             stepProgress.resetDaily();

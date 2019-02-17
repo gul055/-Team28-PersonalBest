@@ -19,7 +19,6 @@ import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 
 import static edu.ucsd.cse110.googlefitapp.Constants.DAILY_STEPS_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.GOAL;
-import static edu.ucsd.cse110.googlefitapp.Constants.GOAL_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.LAST_UPDATE_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.PRESET_INCREMENT;
 import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
@@ -27,7 +26,6 @@ import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
 public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
-    public SharedPreferencesUtil prefUtil;
     public static StepUpdater stepProgress = new StepUpdater();
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
@@ -48,7 +46,6 @@ public class StepCountActivity extends AppCompatActivity {
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
-        prefUtil = new SharedPreferencesUtil();
 
         fitnessService.setup();
 
@@ -56,30 +53,9 @@ public class StepCountActivity extends AppCompatActivity {
         final Button startStopBtn = (Button) findViewById(R.id.startStopBtn);
         Button setGoalBtn = (Button) findViewById(R.id.setGoalBtn);
 
-        if (stepLogger.readOnDaily() == false) {
-            stepProgress.setOnDaily(false);
-            startStopBtn.setBackgroundColor(Color.GREEN);
-            startStopBtn.setText(Constants.START_WALK);
-        } else {
-            stepProgress.setOnDaily(true);
-            startStopBtn.setBackgroundColor(Color.RED);
-            startStopBtn.setText(Constants.STOP_WALK);
-        }
-
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (stepProgress.getOnDaily() == true) {
-                    stepLogger.writeOnDaily(false);
-                    stepProgress.setOnDaily(false);
-                    startStopBtn.setBackgroundColor(Color.GREEN);
-                    startStopBtn.setText(Constants.START_WALK);
-                } else {
-                    stepLogger.writeOnDaily(true);
-                    stepProgress.setOnDaily(true);
-                    startStopBtn.setBackgroundColor(Color.RED);
-                    startStopBtn.setText(Constants.STOP_WALK);
-                }
             }
         });
 
@@ -99,9 +75,26 @@ public class StepCountActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         fitnessService.updateStepCount();
-        long goalSet = prefUtil.loadLong(this, Constants.GOAL_TAG);
-        stepProgress.setDailyGoal(goalSet);
+        long goalSet = SharedPreferencesUtil.loadLong(this, Constants.GOAL);
+
+        /*Set goal*/
+        //TODO: SRP this pls
+        if(goalSet == 0){
+            stepProgress.setDailyGoal(5000);
+        }
+        else{
+            stepProgress.setDailyGoal(goalSet);
+        }
+
+        /*Set the steps for stepUpdater*/
+        stepProgress.setTotalSteps(SharedPreferencesUtil.loadLong(this, Constants.TOTAL_STEPS_TAG));
+
+        /*Set and calculate goal progress*/
+        long startSteps = SharedPreferencesUtil.loadLong(this, Constants.STARTSTEPS_TAG);
+        stepProgress.updateDaily(stepProgress.getTotalSteps() - startSteps);
+        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
         Log.d("GOAL ON RESUME", String.valueOf(stepProgress.getDailyGoal()));
+        Log.d("GOAL_PROGRESS", String.valueOf(String.valueOf(stepProgress.getGoalProgress())));
     }
 
     @Override
@@ -118,8 +111,9 @@ public class StepCountActivity extends AppCompatActivity {
     }
 
     public void setStepCount(long stepCount) {
+        stepProgress.setTotalSteps(stepCount);
         textSteps.setText(String.valueOf(stepCount));
-        prefUtil.saveLong(this, TOTAL_STEPS_TAG, stepCount);
+        SharedPreferencesUtil.saveLong(this, TOTAL_STEPS_TAG, stepCount);
     }
 
     /*ALL CREDIT FOR THE FOLLOWING ASYNCTASK CODE GOES TO THE TUTSPLUS TUTORIAL ON GOOGLE FIT API
