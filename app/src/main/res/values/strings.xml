@@ -21,4 +21,9 @@
     <string name="steps_walked_text">TextView for displaying the number of steps walked for todat</string>
     <string name="mock_steps">Add 500 steps</string>
     <string name="set_time">Set time in milliseconds</string>
+    <string name="autoGoal">Yes</string>
+    <string name="notNow">Not now</string>
+    <string name="cong">Congratulations!</string>
+    <string name="cong_text_one">You have met your goal</string>
+    <string name="cong_text_two">Would you like a new goal?</string>
 </resources>
