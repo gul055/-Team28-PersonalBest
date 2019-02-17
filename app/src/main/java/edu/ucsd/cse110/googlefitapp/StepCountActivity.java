@@ -269,7 +269,7 @@ public class StepCountActivity extends AppCompatActivity {
             }
         }
 
-        long goalSet = SharedPreferencesUtil.loadLong(this, Constants.GOAL_TAG);
+        //long goalSet = SharedPreferencesUtil.loadLong(this, Constants.GOAL_TAG);
         stepProgress.setDailyGoal(goalSet);
 
         Log.d("BEFORE UPDATE", stepProgress.getDailyGoal() + "");
