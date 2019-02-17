@@ -16,4 +16,12 @@ public class Goals {
         return this.stepGoal;
     }
 
+    /*goalAmt is -1 if non-manual goal, otherwise manual goal*/
+    public void calculateGoal(long goalAmt) {
+        if (goalAmt == -1) {
+            this.setGoal(this.stepGoal + PRESETINCREASE);
+        } else {
+            this.setGoal(goalAmt);
+        }
+    }
 }

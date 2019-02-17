@@ -35,6 +35,8 @@ public class SetGoalActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), Constants.SET_FAIL, Toast.LENGTH_LONG).show();
                 }
+                SharedPreferencesUtil.saveBoolean(getApplicationContext(), Constants.NOT_NOW_PRESS, false);
+                SharedPreferencesUtil.saveLong(getApplicationContext(), Constants.GOAL_MET_TAG, 0);
                 finish();
             }
         });
