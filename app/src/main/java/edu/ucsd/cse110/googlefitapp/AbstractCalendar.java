@@ -22,7 +22,7 @@ public abstract class AbstractCalendar {
     }
 
     public String getYearMonthDay(){
-        return get(Calendar.YEAR) + getMonthDay();
+        return get(Calendar.YEAR) + "-" +  getMonthDay();
     }
 
     public void setTimeInMillis(int ms){
