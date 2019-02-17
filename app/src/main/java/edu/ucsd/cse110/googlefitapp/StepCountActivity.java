@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
@@ -40,7 +41,7 @@ public class StepCountActivity extends AppCompatActivity {
     public StepLogger stepLogger;
     public HeightLogger heightLogger;
 
-    public static StepUpdater stepProgress;
+    public StepUpdater stepProgress;
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
 
@@ -63,15 +64,23 @@ public class StepCountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
 
+        stepProgress = new StepUpdater(getApplicationContext());
+
         // request height for first sign in
+
         heightLogger = new HeightLogger(this);
+        if (heightLogger.readHeight() == 0) {
+            Toast.makeText(StepCountActivity.this, "You Have Not Assign Height Yet", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
+            startActivity(intent);
+            return;
+        }
         heightSharedPref = getApplicationContext().getSharedPreferences(HEIGHT_PREF, MODE_PRIVATE);
         textSteps = findViewById(R.id.textSteps);
         textGoal = findViewById(R.id.textGoal);
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
-        stepProgress = new StepUpdater(this);
 
         fitnessService.setup();
 
@@ -140,6 +149,24 @@ public class StepCountActivity extends AppCompatActivity {
                     startStopBtn.setBackgroundColor(Color.GREEN);
                     startStopBtn.setText(Constants.START_WALK);
                     SharedPreferencesUtil.saveBoolean(StepCountActivity.this, Constants.ON_WALK_TAG, false);
+
+                    //get how many time user meets its goal and what date is today
+                    long goalMet = SharedPreferencesUtil.loadLong(getApplicationContext(), Constants.GOAL_MET_TAG);
+                    boolean notNowPress = SharedPreferencesUtil.loadBoolean(getApplicationContext(), Constants.NOT_NOW_PRESS);
+
+                    int dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+
+
+                    //check if the user meets its goal
+                    if (goalMet == Constants.FIRST_MEET_GOAL && !notNowPress) {
+                        Intent i = new Intent(getApplicationContext(), promptGoal.class);
+                        startActivity(i);
+                    }
+                    else if (goalMet >= Constants.MULTIPLY_MEET_GOAL && notNowPress && dayOfWeek == Calendar.SATURDAY) {
+                        Intent i = new Intent(getApplicationContext(), promptGoal.class);
+                        startActivity(i);
+                    }
+
                 } else {
                     //Start walk/run
                     Log.i("IN_START_BUTTON", "Clicked start button!");

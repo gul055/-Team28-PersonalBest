@@ -23,4 +23,9 @@
     <string name="set_time">Set time in milliseconds</string>
     <string name="go_back">Go back</string>
     <string name="weekly_snapshot">Weekly snapshot</string>
+    <string name="autoGoal">Yes</string>
+    <string name="notNow">Not now</string>
+    <string name="cong">Congratulations!</string>
+    <string name="cong_text_one">You have met your goal</string>
+    <string name="cong_text_two">Would you like a new goal?</string>
 </resources>
