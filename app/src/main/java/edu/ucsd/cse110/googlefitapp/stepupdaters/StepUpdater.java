@@ -2,16 +2,21 @@
 //import Steps.java;
 package edu.ucsd.cse110.googlefitapp.stepupdaters;
 
+import android.content.Context;
+
+import edu.ucsd.cse110.googlefitapp.Constants;
+import edu.ucsd.cse110.googlefitapp.SharedPreferencesUtil;
+
 public class StepUpdater {
     Steps totalSteps;
     Steps dailySteps;
     Goals dailyGoal;
     boolean isOnDaily;
 
-    public StepUpdater() {
+    public StepUpdater(Context c) {
         totalSteps = new Steps(0);
         dailySteps = new Steps(0);
-        dailyGoal = new Goals(5000);
+        dailyGoal = new Goals(SharedPreferencesUtil.loadLong(c, Constants.GOAL));
         isOnDaily = false;
     }
 
@@ -58,13 +63,7 @@ public class StepUpdater {
     }
 
     /*Returns true if daily goal is reached, false otherwise*/
-    public boolean updateDaily(boolean reset, long steps) {
-
-        /*Checks if we reset our steps*/
-        if (reset) {
-            this.dailySteps.setSteps(0);
-            return false;
-        }
+    public boolean updateDaily(long steps) {
 
         this.dailySteps.addSteps(steps);
         /*Checks if goal was met*/
@@ -73,5 +72,9 @@ public class StepUpdater {
             return true;
         }
         return false;
+    }
+
+    public void resetDaily(){
+        this.setDailySteps(0);
     }
 }

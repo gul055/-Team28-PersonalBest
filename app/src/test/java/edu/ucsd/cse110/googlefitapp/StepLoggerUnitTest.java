@@ -22,14 +22,14 @@ public class StepLoggerUnitTest {
     private MainActivity activity;
 
     @Before
-    public void setup(){
+    public void setup() {
         Intent intent = new Intent(RuntimeEnvironment.application, MainActivity.class);
         activity = Robolectric.buildActivity(MainActivity.class, intent).create().get();
         stepLogger = new StepLogger(activity.getApplicationContext());
     }
 
     @Test
-    public void testReadWriteSteps(){
+    public void testReadWriteSteps() {
         stepLogger.writeSteps(50, 100, 20, 500);
         assertEquals(50, stepLogger.readDaily());
         assertEquals(100, stepLogger.readTotal());
@@ -38,7 +38,7 @@ public class StepLoggerUnitTest {
     }
 
     @Test
-    public void testReadWriteDailyBool(){
+    public void testReadWriteDailyBool() {
         stepLogger.writeOnDaily(true);
         assertTrue(stepLogger.readOnDaily());
         stepLogger.writeOnDaily(false);

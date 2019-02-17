@@ -1,5 +1,7 @@
 package edu.ucsd.cse110.googlefitapp.fitness;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -13,7 +15,6 @@ import com.google.android.gms.fitness.data.Field;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import edu.ucsd.cse110.googlefitapp.MainActivity;
 import edu.ucsd.cse110.googlefitapp.StepCountActivity;
 
 public class GoogleFitAdapter implements FitnessService {
@@ -83,6 +84,7 @@ public class GoogleFitAdapter implements FitnessService {
                 .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
                 .addOnSuccessListener(
                         new OnSuccessListener<DataSet>() {
+                            @TargetApi(Build.VERSION_CODES.O)
                             @Override
                             public void onSuccess(DataSet dataSet) {
                                 Log.d(TAG, dataSet.toString());
