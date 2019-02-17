@@ -63,13 +63,7 @@ public class StepUpdater {
     }
 
     /*Returns true if daily goal is reached, false otherwise*/
-    public boolean updateDaily(boolean reset, long steps) {
-
-        /*Checks if we reset our steps*/
-        if (reset) {
-            this.dailySteps.setSteps(0);
-            return false;
-        }
+    public boolean updateDaily(long steps) {
 
         this.dailySteps.addSteps(steps);
         /*Checks if goal was met*/
@@ -78,5 +72,9 @@ public class StepUpdater {
             return true;
         }
         return false;
+    }
+
+    public void resetDaily(){
+        this.setDailySteps(0);
     }
 }
