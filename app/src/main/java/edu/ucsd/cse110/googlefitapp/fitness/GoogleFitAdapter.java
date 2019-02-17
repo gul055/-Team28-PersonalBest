@@ -1,5 +1,7 @@
 package edu.ucsd.cse110.googlefitapp.fitness;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -12,7 +14,6 @@ import com.google.android.gms.fitness.data.DataPoint;
 import com.google.android.gms.fitness.data.DataSet;
 import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.data.Field;
-import com.google.android.gms.fitness.data.Goal;
 import com.google.android.gms.fitness.request.DataReadRequest;
 import com.google.android.gms.fitness.result.DataReadResponse;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,8 +24,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import edu.ucsd.cse110.googlefitapp.MainActivity;
 import edu.ucsd.cse110.googlefitapp.SharedPreferencesUtil;
 import edu.ucsd.cse110.googlefitapp.StepCountActivity;
 
@@ -97,6 +96,7 @@ public class GoogleFitAdapter implements FitnessService {
                 .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
                 .addOnSuccessListener(
                         new OnSuccessListener<DataSet>() {
+                            @TargetApi(Build.VERSION_CODES.O)
                             @Override
                             public void onSuccess(DataSet dataSet) {
                                 Date date = new Date();
@@ -112,7 +112,7 @@ public class GoogleFitAdapter implements FitnessService {
 
                                 Calendar cal = Calendar.getInstance();
                                 String year = String.valueOf(cal.get(Calendar.YEAR));
-                                String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH)+ 1);
+                                String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
                                 String month = String.valueOf(cal.get(Calendar.MONTH)+ 1);
                                 String dateStr = year + "-" + month + "-" + day;
                                 String key = dateStr + "total_steps";
@@ -201,7 +201,7 @@ public class GoogleFitAdapter implements FitnessService {
                                                 cal.setTimeInMillis(dp.getStartTime(TimeUnit.MILLISECONDS));
                                                 //TODO: REPLACE WITH STRING BUILDER.
                                                 String year = String.valueOf(cal.get(Calendar.YEAR));
-                                                String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH)+ 1);
+                                                String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
                                                 String month = String.valueOf(cal.get(Calendar.MONTH)+ 1);
                                                 String date = year + "-" + month + "-" + day;
                                                 String key = date + "total_steps";

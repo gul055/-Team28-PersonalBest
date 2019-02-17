@@ -11,4 +11,14 @@
     <string name="no">No</string>
     <string name="invalid_goal_warning">Invalid goal. Please try again.</string>
     <string name="newgoal">New goal set.</string>
+    <string name="height_prompt">Please input your height:</string>
+    <string name="feet">Feet</string>
+    <string name="inches">Inches</string>
+    <string name="ok">OK</string>
+    <string name="height">height</string>
+    <string name="start_stop">Start/Stop</string>
+    <string name="set_new_goal">Set New Goal</string>
+    <string name="steps_walked_text">TextView for displaying the number of steps walked for todat</string>
+    <string name="mock_steps">Add 500 steps</string>
+    <string name="set_time">Set time in milliseconds</string>
 </resources>

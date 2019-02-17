@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".StepCountActivity" />
-        <activity android:name=".SetGoalActivity"></activity>
+        <activity android:name=".SetGoalActivity" />
+        <activity android:name=".GraphActivity"></activity>
     </application>
 
 </manifest>

@@ -22,7 +22,6 @@ public class StepUpdaterUnitTest {
     public void testConstructor(){
         assertEquals(5000, updater.getDailyGoal());
         assertEquals(0, updater.getTotalSteps());
-        assertFalse(updater.getOnDaily());
         assertEquals(0, updater.getDailySteps());
     }
 
@@ -42,22 +41,5 @@ public class StepUpdaterUnitTest {
         /*Average steps taken in human lifespan*/
         assertTrue(updater.updateDaily( 216262500));
         assertEquals(0, updater.getDailySteps());
-    }
-
-    /*Test total steps update*/
-    @Test
-    public void testTotalSteps(){
-        /*Normal small case*/
-        updater.updateProgress(50);
-        assertEquals(50, updater.getTotalSteps());
-        /*Normal medium case*/
-        updater.updateProgress(1500);
-        /*Normal large case*/
-        assertEquals(1550, updater.getTotalSteps());
-        updater.updateProgress(15961);
-        assertEquals(17511, updater.getTotalSteps());
-        /*No steps walked*/
-        updater.updateProgress(0);
-        assertEquals(17511, updater.getTotalSteps());
     }
 }
