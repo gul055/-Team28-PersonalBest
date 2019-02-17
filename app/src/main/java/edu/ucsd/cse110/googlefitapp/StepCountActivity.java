@@ -3,6 +3,7 @@ package edu.ucsd.cse110.googlefitapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,10 +17,16 @@ import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepLogger;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 
+import static edu.ucsd.cse110.googlefitapp.Constants.DAILY_STEPS_TAG;
+import static edu.ucsd.cse110.googlefitapp.Constants.GOAL;
+import static edu.ucsd.cse110.googlefitapp.Constants.LAST_UPDATE_TAG;
+import static edu.ucsd.cse110.googlefitapp.Constants.PRESET_INCREMENT;
+import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
+
 public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
-    public StepUpdater stepProgress = new StepUpdater();
+    public static StepUpdater stepProgress = new StepUpdater();
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
 
@@ -30,7 +37,6 @@ public class StepCountActivity extends AppCompatActivity {
     private TextView textSteps, textGoal;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
@@ -46,53 +52,14 @@ public class StepCountActivity extends AppCompatActivity {
         // Create all buttons
         final Button startStopBtn = (Button) findViewById(R.id.startStopBtn);
         Button setGoalBtn = (Button) findViewById(R.id.setGoalBtn);
-        Button showStepsBtn = (Button) findViewById(R.id.showStepsBtn);
-
-        if (stepLogger.readOnDaily() == false) {
-            stepProgress.setOnDaily(false);
-            startStopBtn.setBackgroundColor(Color.GREEN);
-            startStopBtn.setText(Constants.START_WALK);
-        } else {
-            stepProgress.setOnDaily(true);
-            startStopBtn.setBackgroundColor(Color.RED);
-            startStopBtn.setText(Constants.STOP_WALK);
-        }
 
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (stepProgress.getOnDaily() == true) {
-                    stepLogger.writeOnDaily(false);
-                    stepProgress.setOnDaily(false);
-                    startStopBtn.setBackgroundColor(Color.GREEN);
-                    startStopBtn.setText(Constants.START_WALK);
-                } else {
-                    stepLogger.writeOnDaily(true);
-                    stepProgress.setOnDaily(true);
-                    startStopBtn.setBackgroundColor(Color.RED);
-                    startStopBtn.setText(Constants.STOP_WALK);
-
-                }
-
             }
         });
 
         setGoalBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Set the next goal steps
-            }
-        });
-
-        showStepsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fitnessService.updateStepCount();
-            }
-        });
-
-        Button setGoalButton = findViewById(R.id.setGoal);
-        setGoalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SetGoalActivity.class);
@@ -105,8 +72,35 @@ public class StepCountActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        fitnessService.updateStepCount();
+        long goalSet = SharedPreferencesUtil.loadLong(this, Constants.GOAL);
+
+        /*Set goal*/
+        //TODO: SRP this pls
+        if(goalSet == 0){
+            stepProgress.setDailyGoal(5000);
+        }
+        else{
+            stepProgress.setDailyGoal(goalSet);
+        }
+
+        /*Set the steps for stepUpdater*/
+        stepProgress.setTotalSteps(SharedPreferencesUtil.loadLong(this, Constants.TOTAL_STEPS_TAG));
+
+        /*Set and calculate goal progress*/
+        long startSteps = SharedPreferencesUtil.loadLong(this, Constants.STARTSTEPS_TAG);
+        stepProgress.updateDaily(stepProgress.getTotalSteps() - startSteps);
+        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
+        Log.d("GOAL ON RESUME", String.valueOf(stepProgress.getDailyGoal()));
+        Log.d("GOAL_PROGRESS", String.valueOf(String.valueOf(stepProgress.getGoalProgress())));
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //       If authentication was required during google fit setup, this will be called after the user authenticates
+
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == fitnessService.getRequestCode()) {
                 fitnessService.updateStepCount();
@@ -116,50 +110,28 @@ public class StepCountActivity extends AppCompatActivity {
         }
     }
 
-    public void setDailyStatus() {
-        boolean isOnDaily = stepLogger.readOnDaily();
-        stepLogger.writeOnDaily(isOnDaily);
+    public void setStepCount(long stepCount) {
+        stepProgress.setTotalSteps(stepCount);
+        textSteps.setText(String.valueOf(stepCount));
+        SharedPreferencesUtil.saveLong(this, TOTAL_STEPS_TAG, stepCount);
     }
 
-    public void setStepCount(long stepCount) {
-        /*Grabs all relevant values from local file*/
-        long lastSteps = stepLogger.readLastStep();
-        long dailyGoal = stepLogger.readGoal();
-        long dailyProgress = stepLogger.readDaily();
+    /*ALL CREDIT FOR THE FOLLOWING ASYNCTASK CODE GOES TO THE TUTSPLUS TUTORIAL ON GOOGLE FIT API
+    Title: Google Fit for Android: History API
+    https://code.tutsplus.com/tutorials/google-fit-for-android-history-api--cms-25856
+    Captured: 2/15/2019
+    How the source was used: Copied code
+    K.D.
+    */
+    //TODO: CALL THIS FROM SOMEWHERE.
+    private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
 
-        Log.d("CURRENT", String.valueOf(stepCount));
-        Log.d("LAST", String.valueOf(lastSteps));
-        long stepDifference = stepCount - lastSteps;
-
-        stepProgress.setTotalSteps(stepLogger.readTotal());
-
-        boolean isOnDaily = stepProgress.getOnDaily();
-        Log.d("ON_DAILY", String.valueOf(isOnDaily));
-
-        stepProgress.setDailyGoal(dailyGoal);
-        stepProgress.setDailySteps(dailyProgress);
-
-        /*Updates daily*/
-        if (isOnDaily) {
-            stepProgress.updateDaily(false, stepDifference);
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Log.d("INASYNC", "In task");
+            fitnessService.getWeeklyData();
+            return null;
         }
-
-        /*Updates total step progress*/
-        stepProgress.updateProgress(stepDifference);
-
-        /*Updates step progress to determine if on daily or not*/
-        if (stepProgress.getOnDaily() != isOnDaily)
-            stepProgress.setOnDaily(isOnDaily);
-
-        //.setText(String.valueOf(stepCount));
-        Log.d("TOTAL_STEPS", String.valueOf(stepProgress.getTotalSteps()));
-        Log.d("GOAL_PROGRESS", String.valueOf(stepProgress.getGoalProgress()));
-        textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
-        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
-
-        /*After all updates have finished, write to logger*/
-        stepLogger.writeSteps(stepProgress.getDailySteps(), stepProgress.getTotalSteps(), stepCount, stepProgress.getDailyGoal());
-
     }
 
 }
