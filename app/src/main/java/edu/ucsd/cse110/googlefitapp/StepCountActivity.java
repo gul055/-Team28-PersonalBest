@@ -35,7 +35,7 @@ public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
     private HeightLogger heightLogger;
-    private StepUpdater stepProgress;
+    public StepUpdater stepProgress;
     private AbstractCalendar calendar;
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
