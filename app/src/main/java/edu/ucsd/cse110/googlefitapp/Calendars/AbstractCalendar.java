@@ -1,6 +1,10 @@
-package edu.ucsd.cse110.googlefitapp;
+package edu.ucsd.cse110.googlefitapp.Calendars;
+
+import android.util.Log;
 
 import java.util.Calendar;
+
+import edu.ucsd.cse110.googlefitapp.Constants;
 
 public abstract class AbstractCalendar {
 
@@ -29,15 +33,17 @@ public abstract class AbstractCalendar {
         calendar.setTimeInMillis(ms);
     }
 
-    // Gets the current dat + next 6 days of the week in string
+    // Gets the current day + next 6 days of the week in string
     public String[] getWeek(boolean withYear) {
         String[] week = new String[Constants.WEEK_SIZE];
 
         for (int day = 0; day < Constants.WEEK_SIZE; day++) {
             if (withYear) {
                 week[day] = getYearMonthDay();
+                Log.d("Generating date:", week[day]);
             } else {
                 week[day] = getMonthDay();
+                Log.d("Generating date:", week[day]);
             }
 
             // Increment date

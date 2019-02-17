@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 import java.util.Calendar;
+import java.util.Date;
 
 import static edu.ucsd.cse110.googlefitapp.Constants.MAIN;
 import static edu.ucsd.cse110.googlefitapp.Constants.MINIMUM_SUB_GOAL;
@@ -21,6 +22,7 @@ public class EncourageHandler {
     private static StepUpdater stepUpdater;
     private static EncourageFactory encourageFactory;
     private static long prevSteps;
+    public static Calendar calendar;
 
     public EncourageHandler(Context context, StepUpdater stepUpdater) {
         this.context = context;
@@ -32,8 +34,41 @@ public class EncourageHandler {
         SubEncourageGiven = false;
         PreviousEncourageGiven = false;
         prevSteps = Long.MAX_VALUE;
+        calendar = Calendar.getInstance();
     }
 
+
+    public long getCurrSteps() {
+        return stepUpdater.getDailySteps();
+    }
+
+    public EncourageMsg getPastEncouragement() {
+        return pastEncouragement;
+    }
+
+    public EncourageMsg getCurrEncouragement() {
+        return currEncouragement;
+    }
+
+    public boolean isPreviousEncourageGiven() {
+        return PreviousEncourageGiven;
+    }
+
+    public boolean isSubEncourageGiven() {
+        return SubEncourageGiven;
+    }
+
+    public boolean isMainEncourageGiven() {
+        return MainEncourageGiven;
+    }
+
+    public long getPrevSteps() {
+        return prevSteps;
+    }
+
+    public void setHour(int hour) {
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+    }
 
     /**
      * prevMsgTimeLimit() - determines if a previous sub-goal message should be displayed based on
@@ -70,24 +105,25 @@ public class EncourageHandler {
     }
 
     /**
-     * update() - updates the handler's messages according to time and if a new message should
-     *            be made. Lastly,
+     * update() - contains logic
      **/
     public void update() {
         // If a new day -> update the handler
-        if (Calendar.getInstance().getTime().after(currEncouragement.getDate())) {
+        if (Calendar.getInstance().get(Calendar.DAY_OF_YEAR) > calendar.get(Calendar.DAY_OF_YEAR)) {
             resetForNewDay();
         }
 
-        // Create a new EncourageMsg if a sub/main goal has been met
-        if( stepUpdater.getDailySteps() >= stepUpdater.getDailyGoal() && currEncouragement == null ) {
+        // If the goal was just met -> Create a MainEncourageMsg and set as currEncouragement
+        if( stepUpdater.getDailySteps() == 0 ) { // The goal was just reached
             currEncouragement = encourageFactory.buildMsg(MAIN, stepUpdater, prevSteps);
             Log.d("ENCOURAGEMENT_MADE", "Made " +
                     currEncouragement.getClass().toString() +
                     "for date:" +
                     currEncouragement.getDate().toString());
         }
-        else if(stepUpdater.getDailySteps() >= prevSteps + MINIMUM_SUB_GOAL ){
+        // If the sub goal was just met or improved -> Create/update a SubEncourageMsg and set as currEncouragement
+        else if(stepUpdater.getDailySteps() >= prevSteps + MINIMUM_SUB_GOAL &&
+                currEncouragement == null || currEncouragement.getClass() != MainEncourageMsg.class){
             currEncouragement = encourageFactory.buildMsg(SUB, stepUpdater, prevSteps);
             Log.d("ENCOURAGEMENT_MADE", "Made " +
                     currEncouragement.getClass().toString() +
@@ -95,17 +131,22 @@ public class EncourageHandler {
                     currEncouragement.getDate().toString());
         }
 
-        giveEncouragement();
+      // giveEncouragement();
     }
 
     /**
-     * resetForNewDay - resets all flags given and sets the day as the next
+     * resetForNewDay - performs the following functions:
+     *                  1. resets all flags for encouragements given
+     *                  2. sets today's total steps as prevSteps
+     *                  3. updates the handler's calendar
+     *                  4. sets any ungiven encouragement message to a prevEncouragement
      */
     public void resetForNewDay() {
         MainEncourageGiven = false;
         SubEncourageGiven = false;
         PreviousEncourageGiven = false;
-        prevSteps = stepUpdater.getDailySteps();
+        prevSteps = stepUpdater.getTotalSteps(); //???
+        calendar = Calendar.getInstance();
 
         // If an encouragement was queued but not given yesterday make it a past encouragement
         if(currEncouragement != null && (!MainEncourageGiven || !SubEncourageGiven)) {
@@ -140,7 +181,7 @@ public class EncourageHandler {
                     currEncouragement = null;
                     MainEncourageGiven = true;
                 } else if (!SubEncourageGiven && currEncouragement.getClass() == SubEncourageMsg.class
-                        && afterSubTimeLimit()) {
+                                                                        && afterSubTimeLimit() ) {
                     Toast.makeText(context, currEncouragement.getMessage(), Toast.LENGTH_LONG);
                     Log.d("SUB_ENCOURAGEMENT", "Subgoal encouragement given");
                     currEncouragement = null;

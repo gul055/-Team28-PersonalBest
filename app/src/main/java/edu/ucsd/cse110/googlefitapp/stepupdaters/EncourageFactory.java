@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import static edu.ucsd.cse110.googlefitapp.Constants.MAIN;
 import static edu.ucsd.cse110.googlefitapp.Constants.MAIN_ENCOURAGEMENT;
+import static edu.ucsd.cse110.googlefitapp.Constants.MINIMUM_SUB_GOAL;
 import static edu.ucsd.cse110.googlefitapp.Constants.SUB;
 import static edu.ucsd.cse110.googlefitapp.Constants.SUB_ENCOURAGEMENT1;
 import static edu.ucsd.cse110.googlefitapp.Constants.SUB_ENCOURAGEMENT2;
@@ -26,7 +27,8 @@ public class EncourageFactory {
             case SUB: {
                 return new SubEncourageMsg(Calendar.getInstance().getTime(),
                                 SUB_ENCOURAGEMENT1,
-                                Math.abs(stepUpdater.getDailySteps() - prevSteps),
+                        ((stepUpdater.getDailySteps() - prevSteps)
+                                                        / MINIMUM_SUB_GOAL) * MINIMUM_SUB_GOAL,
                                 SUB_ENCOURAGEMENT2);
             }
             default:
