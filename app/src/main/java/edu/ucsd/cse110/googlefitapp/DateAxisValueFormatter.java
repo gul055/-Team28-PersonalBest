@@ -7,12 +7,12 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 public class DateAxisValueFormatter implements IAxisValueFormatter {
 
-    FitCalendar calendar;
+    AbstractCalendar calendar;
     String[] days;
 
-    public DateAxisValueFormatter(FitCalendar calendar) {
+    public DateAxisValueFormatter(AbstractCalendar calendar) {
         this.calendar = calendar;
-        days = calendar.getWeekWithoutYear();
+        days = calendar.getWeek(Constants.WITHOUT_YEAR);
         Log.d("DAYS OF THE WEEK", days[0]);
     }
 

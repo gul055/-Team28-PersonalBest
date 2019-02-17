@@ -30,7 +30,7 @@ public class GraphActivity extends AppCompatActivity {
         // Insert code for retrieving data here
         // Each data point should be a set of floats
 
-        FitCalendar calendar = new FitCalendar();
+        AbstractCalendar calendar = new LockedCalendar();
 
         BarChart chart = findViewById(R.id.chart);
 

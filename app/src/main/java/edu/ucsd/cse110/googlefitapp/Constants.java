@@ -29,6 +29,11 @@ public final class Constants {
 
     // Calendar constant
     public static final int WEEK_SIZE = 7;
+    public static final String REAL_CALENDAR = "real";
+    public static final String LOCK_TO_FIRST_DAY_OF_WEEK = "lock";
+    public static final String FAKE_CALENDAR = "fake";
+    public static final boolean WITHOUT_YEAR = false;
+    public static final boolean WITH_YEAR = true;
 
     // Step increment
     public static final int STEP_INCREMENT = 500;
