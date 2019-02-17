@@ -62,6 +62,14 @@ public class EncourageHandler {
     }
 
     /**
+     * calcSubImprovement() - calculates the approximate step improvement and reports the closest
+     *                        interval of 500 steps past the last day's total steps
+     */
+    public long calcSubImprovement() {
+        return ( (stepUpdater.getDailySteps() - prevSteps) / MINIMUM_SUB_GOAL ) *  MINIMUM_SUB_GOAL ;
+    }
+
+    /**
      * update() - updates the handler's messages according to time and if a new message should
      *            be made. Lastly,
      **/
@@ -72,16 +80,22 @@ public class EncourageHandler {
         }
 
         // Create a new EncourageMsg if a sub/main goal has been met
-        if( stepUpdater.getTotalSteps() >= stepUpdater.getDailyGoal() ) {
+        if( stepUpdater.getDailySteps() >= stepUpdater.getDailyGoal() && currEncouragement == null ) {
             currEncouragement = encourageFactory.buildMsg(MAIN, stepUpdater, prevSteps);
+            Log.d("ENCOURAGEMENT_MADE", "Made " +
+                    currEncouragement.getClass().toString() +
+                    "for date:" +
+                    currEncouragement.getDate().toString());
         }
-        else if(stepUpdater.getTotalSteps() >= prevSteps + MINIMUM_SUB_GOAL ){
+        else if(stepUpdater.getDailySteps() >= prevSteps + MINIMUM_SUB_GOAL ){
             currEncouragement = encourageFactory.buildMsg(SUB, stepUpdater, prevSteps);
+            Log.d("ENCOURAGEMENT_MADE", "Made " +
+                    currEncouragement.getClass().toString() +
+                    "for date:" +
+                    currEncouragement.getDate().toString());
         }
-        Log.d("ENCOURAGEMENT_MADE", "Made " +
-                                                    currEncouragement.getClass().toString() +
-                                                    "for date:" +
-                                                    currEncouragement.getDate().toString());
+
+        giveEncouragement();
     }
 
     /**
@@ -91,7 +105,7 @@ public class EncourageHandler {
         MainEncourageGiven = false;
         SubEncourageGiven = false;
         PreviousEncourageGiven = false;
-        prevSteps = stepUpdater.getTotalSteps();
+        prevSteps = stepUpdater.getDailySteps();
 
         // If an encouragement was queued but not given yesterday make it a past encouragement
         if(currEncouragement != null && (!MainEncourageGiven || !SubEncourageGiven)) {

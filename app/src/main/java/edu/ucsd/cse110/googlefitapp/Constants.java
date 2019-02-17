@@ -9,7 +9,6 @@ public final class Constants {
     public static final String NO_GOAL = "No goal inputted!";
     public static final String START_WALK = "Start Walk/Run";
     public static final String STOP_WALK = "Stop Walk/Run";
-<<<<<<< HEAD
     public static final String MAIN_ENCOURAGEMENT = "Congratulations, you reached your daily step Goal!";
     public static final String SUB_ENCOURAGEMENT1 = "You've increased your daily steps by over ";
     public static final String SUB_ENCOURAGEMENT2 = " steps. Keep up the good work!";
@@ -17,9 +16,7 @@ public final class Constants {
     public static final int SUB = 1;
     public static final int SUB_MSG_TIME_LIMIT = 20; //8pm
     public static final int PREV_MSG_TIME_LIMIT = 12; //12am
-=======
     public static final String STARTSTEPS_TAG = "startSteps";
->>>>>>> 6783eb25c8415d37f432c7fe048c151e5dc2cd3d
     public static final String DAILY_STEPS_TAG = "daily_steps";
     public static final String TOTAL_STEPS_TAG = "total_steps";
     public static final String LAST_UPDATE_TAG = "last_update";

@@ -23,6 +23,7 @@ import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
+import edu.ucsd.cse110.googlefitapp.stepupdaters.EncourageHandler;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepLogger;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 
@@ -37,6 +38,7 @@ public class StepCountActivity extends AppCompatActivity {
     private HeightLogger heightLogger;
     public StepUpdater stepProgress;
     private AbstractCalendar calendar;
+    private EncourageHandler encourageHandler;
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
 
@@ -60,6 +62,7 @@ public class StepCountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step_count);
 
         stepProgress = new StepUpdater(getApplicationContext());
+        encourageHandler = new EncourageHandler(getApplicationContext(), stepProgress);
 
         // request height for first sign in
 
@@ -198,6 +201,7 @@ public class StepCountActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         fitnessService.updateStepCount();
+        encourageHandler.update();
         long goalSet = SharedPreferencesUtil.loadLong(this, Constants.GOAL);
 
         /*Set goal*/
