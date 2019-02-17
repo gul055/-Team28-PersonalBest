@@ -11,4 +11,9 @@
     <string name="no">No</string>
     <string name="invalid_goal_warning">Invalid goal. Please try again.</string>
     <string name="newgoal">New goal set.</string>
+    <string name="autoGoal">Yes</string>
+    <string name="notNow">Not now</string>
+    <string name="cong">Congratulations!</string>
+    <string name="cong_text_one">You have met your goal</string>
+    <string name="cong_text_two">Would you like a new goal?</string>
 </resources>

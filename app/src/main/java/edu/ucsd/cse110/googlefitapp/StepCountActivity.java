@@ -8,17 +8,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+
+
+import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepLogger;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 
+import static edu.ucsd.cse110.googlefitapp.Constants.GOAL_TAG;
+import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
+
 public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
-    public StepUpdater stepProgress = new StepUpdater();
+    public SharedPreferencesUtil prefUtil;
+    public StepUpdater stepProgress;
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
 
@@ -39,6 +47,7 @@ public class StepCountActivity extends AppCompatActivity {
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
+        stepProgress = new StepUpdater(this);
 
         fitnessService.setup();
 
@@ -65,6 +74,22 @@ public class StepCountActivity extends AppCompatActivity {
                     stepProgress.setOnDaily(false);
                     startStopBtn.setBackgroundColor(Color.GREEN);
                     startStopBtn.setText(Constants.START_WALK);
+
+                    //get how many time user meets its goal and what date is today
+                    long goalMet = prefUtil.loadLong(getApplicationContext(), Constants.GOAL_MET_TAG);
+                    boolean notNowPress = prefUtil.loadBoolean(getApplicationContext(), Constants.NOT_NOW_PRESS);
+                    int dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+
+                    //check if the user meets its goal
+                    if (goalMet == Constants.FIRST_MEET_GOAL && !notNowPress) {
+                        Intent i = new Intent(getApplicationContext(), promptGoal.class);
+                        startActivity(i);
+                    }
+                    else if (goalMet >= Constants.MULTIPLY_MEET_GOAL && notNowPress && dayOfWeek == Calendar.SATURDAY) {
+                        Intent i = new Intent(getApplicationContext(), promptGoal.class);
+                        startActivity(i);
+                    }
+
                 } else {
                     stepLogger.writeOnDaily(true);
                     stepProgress.setOnDaily(true);
@@ -80,6 +105,14 @@ public class StepCountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Set the next goal steps
+
+                /*THIS IS NOT A NEXT GOAL STEPS!
+                Test if the promptCoal window works
+
+                Intent i = new Intent(getApplicationContext(), promptGoal.class);
+                startActivity(i);
+
+                should be deleted after it can be call by time or user reach the gaol*/
             }
         });
 
@@ -104,6 +137,16 @@ public class StepCountActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        long goalSet = prefUtil.loadLong(this, Constants.GOAL);
+        stepProgress.setDailyGoal(goalSet);
+        Log.d("GOAL ON RESUME", String.valueOf(stepProgress.getDailyGoal()));
+        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
+        fitnessService.updateStepCount();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //       If authentication was required during google fit setup, this will be called after the user authenticates
         if (resultCode == Activity.RESULT_OK) {
@@ -121,9 +164,13 @@ public class StepCountActivity extends AppCompatActivity {
     }
 
     public void setStepCount(long stepCount) {
+        textSteps.setText(String.valueOf(stepCount));
+        prefUtil.saveLong(this, TOTAL_STEPS_TAG, stepCount);
+
         /*Grabs all relevant values from local file*/
+        /*
         long lastSteps = stepLogger.readLastStep();
-        long dailyGoal = stepLogger.readGoal();
+        long dailyGoal = prefUtil.loadLong(this, Constants.GOAL);
         long dailyProgress = stepLogger.readDaily();
 
         Log.d("CURRENT", String.valueOf(stepCount));
@@ -138,15 +185,15 @@ public class StepCountActivity extends AppCompatActivity {
         stepProgress.setDailyGoal(dailyGoal);
         stepProgress.setDailySteps(dailyProgress);
 
-        /*Updates daily*/
+        /*Updates daily
         if (isOnDaily) {
             stepProgress.updateDaily(false, stepDifference);
         }
 
-        /*Updates total step progress*/
+        /*Updates total step progress
         stepProgress.updateProgress(stepDifference);
 
-        /*Updates step progress to determine if on daily or not*/
+        /*Updates step progress to determine if on daily or not
         if (stepProgress.getOnDaily() != isOnDaily)
             stepProgress.setOnDaily(isOnDaily);
 
@@ -154,11 +201,11 @@ public class StepCountActivity extends AppCompatActivity {
         Log.d("TOTAL_STEPS", String.valueOf(stepProgress.getTotalSteps()));
         Log.d("GOAL_PROGRESS", String.valueOf(stepProgress.getGoalProgress()));
         textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
-        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
+        textGoal.setText(String.valueOf(dailyGoal));
 
-        /*After all updates have finished, write to logger*/
+        /*After all updates have finished, write to logger
         stepLogger.writeSteps(stepProgress.getDailySteps(), stepProgress.getTotalSteps(), stepCount, stepProgress.getDailyGoal());
-
+        */
     }
 
 }

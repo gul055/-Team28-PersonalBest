@@ -2,16 +2,26 @@
 //import Steps.java;
 package edu.ucsd.cse110.googlefitapp.stepupdaters;
 
+
+import android.content.Context;
+
+import edu.ucsd.cse110.googlefitapp.Constants;
+import edu.ucsd.cse110.googlefitapp.SharedPreferencesUtil;
+
 public class StepUpdater {
+    SharedPreferencesUtil sharedPref;
     Steps totalSteps;
     Steps dailySteps;
     Goals dailyGoal;
     boolean isOnDaily;
 
-    public StepUpdater() {
+    public StepUpdater(Context c) {
         totalSteps = new Steps(0);
         dailySteps = new Steps(0);
-        dailyGoal = new Goals(5000);
+
+        // Preferably, you'll wanna use SharedPreferencesUtil to retrieve the goal data
+        dailyGoal = new Goals(SharedPreferencesUtil.loadLong(c, Constants.GOAL));
+        //dailyGoal = new Goals(5000);
         isOnDaily = false;
     }
 
