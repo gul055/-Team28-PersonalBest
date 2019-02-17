@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp;
+package edu.ucsd.cse110.googlefitapp.Graph;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,11 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
+
+import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
+import edu.ucsd.cse110.googlefitapp.Calendars.LockedCalendar;
+import edu.ucsd.cse110.googlefitapp.Constants;
+import edu.ucsd.cse110.googlefitapp.R;
 
 public class GraphActivity extends AppCompatActivity {
 
@@ -27,15 +32,17 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        // Insert code for retrieving data here
-        // Each data point should be a set of floats
-
         AbstractCalendar calendar = new LockedCalendar();
+        String[] weekString = calendar.getWeek(Constants.WITH_YEAR);
 
         BarChart chart = findViewById(R.id.chart);
 
+        DataGetter getter = new DataGetter(getApplicationContext());
+        float[][] stepDataArray = getter.get2DArrayData(weekString, Constants.DAILY_STEP_KEY, Constants.TOTAL_STEPS_TAG);
+        float[] goalArray = getter.getArrayData(weekString, Constants.GOAL);
+
         // This is using fake data right now
-        DataHandler dataHandler = new DataHandler();
+        DataHandler dataHandler = new DataHandler(stepDataArray, goalArray);
 
         BarData data = new BarData(dataHandler.getStepSet(), dataHandler.getGoalSet());
         chart.setData(data);

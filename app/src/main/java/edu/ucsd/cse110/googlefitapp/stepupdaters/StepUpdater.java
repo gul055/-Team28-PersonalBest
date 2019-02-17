@@ -5,7 +5,7 @@ package edu.ucsd.cse110.googlefitapp.stepupdaters;
 import android.content.Context;
 
 import edu.ucsd.cse110.googlefitapp.Constants;
-import edu.ucsd.cse110.googlefitapp.SharedPreferencesUtil;
+import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
 public class StepUpdater {
     Steps totalSteps;

@@ -1,7 +1,10 @@
-package edu.ucsd.cse110.googlefitapp;
+package edu.ucsd.cse110.googlefitapp.Goals;
 
 import android.content.Context;
 import android.util.Log;
+
+import edu.ucsd.cse110.googlefitapp.Constants;
+import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
 public class SetGoal implements Goal {
     Context context;
