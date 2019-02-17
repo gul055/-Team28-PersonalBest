@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -25,23 +26,17 @@ import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepLogger;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 
-import static edu.ucsd.cse110.googlefitapp.Constants.DAILY_STEPS_TAG;
-import static edu.ucsd.cse110.googlefitapp.Constants.GOAL;
-import static edu.ucsd.cse110.googlefitapp.Constants.GOAL_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.HEIGHT;
 import static edu.ucsd.cse110.googlefitapp.Constants.HEIGHT_PREF;
 import static edu.ucsd.cse110.googlefitapp.Constants.INTENTIONAL;
-import static edu.ucsd.cse110.googlefitapp.Constants.LAST_UPDATE_TAG;
-import static edu.ucsd.cse110.googlefitapp.Constants.PRESET_INCREMENT;
-import static edu.ucsd.cse110.googlefitapp.Constants.TOTAL_STEPS_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.WALKRUN_PREF;
 
 public class StepCountActivity extends AppCompatActivity {
 
     public StepLogger stepLogger;
-    public HeightLogger heightLogger;
-
+    private HeightLogger heightLogger;
     public StepUpdater stepProgress;
+    private AbstractCalendar calendar;
 
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
 
@@ -81,12 +76,13 @@ public class StepCountActivity extends AppCompatActivity {
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
         stepLogger = new StepLogger(this);
+        calendar = new CalendarAdapter();
 
         fitnessService.setup();
 
         // Create all buttons
-        startStopBtn = (Button) findViewById(R.id.startStopBtn);
-        setGoalBtn = (Button) findViewById(R.id.setGoalBtn);
+        startStopBtn = findViewById(R.id.startStopBtn);
+        setGoalBtn = findViewById(R.id.setGoalBtn);
 
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.O)
@@ -154,15 +150,14 @@ public class StepCountActivity extends AppCompatActivity {
                     long goalMet = SharedPreferencesUtil.loadLong(getApplicationContext(), Constants.GOAL_MET_TAG);
                     boolean notNowPress = SharedPreferencesUtil.loadBoolean(getApplicationContext(), Constants.NOT_NOW_PRESS);
 
-                    int dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+                    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
 
                     //check if the user meets its goal
                     if (goalMet == Constants.FIRST_MEET_GOAL && !notNowPress) {
                         Intent i = new Intent(getApplicationContext(), promptGoal.class);
                         startActivity(i);
-                    }
-                    else if (goalMet >= Constants.MULTIPLY_MEET_GOAL && notNowPress && dayOfWeek == Calendar.SATURDAY) {
+                    } else if (goalMet >= Constants.MULTIPLY_MEET_GOAL && notNowPress && dayOfWeek == Calendar.SATURDAY) {
                         Intent i = new Intent(getApplicationContext(), promptGoal.class);
                         startActivity(i);
                     }
@@ -202,7 +197,49 @@ public class StepCountActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        fitnessService.updateStepCount();
+        long goalSet = SharedPreferencesUtil.loadLong(this, Constants.GOAL);
 
+        /*Set goal*/
+        //TODO: SRP this pls
+        if (goalSet == 0) {
+            stepProgress.setDailyGoal(Constants.DEFAULT_GOAL);
+            SharedPreferencesUtil.saveLong(this, Constants.GOAL, Constants.DEFAULT_GOAL);
+        } else {
+            stepProgress.setDailyGoal(goalSet);
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        String goalTag = CalendarStringBuilderUtil.stringBuilderCalendar(calendar, "goal");
+        Log.d("GOAL_KEY", goalTag);
+        SharedPreferencesUtil.saveLong(this, goalTag, stepProgress.getDailyGoal());
+
+
+        /*Set the steps for stepUpdater*/
+        stepProgress.setTotalSteps(SharedPreferencesUtil.loadLong(this, Constants.TOTAL_STEPS_TAG));
+
+        /*Set and calculate goal progress*/
+        /*TODO: FIX THIS GOAL STUFF
+        int startSteps = SharedPreferencesUtil.loadInt(this, "startSteps");
+        Log.d("PROGRESS_STARTSTEPS", String.valueOf(startSteps));
+        stepProgress.updateDaily(stepProgress.getTotalSteps() - (long) startSteps);
+
+        Log.d("PROGRESS_TOTALSTEPS", String.valueOf(stepProgress.getTotalSteps()));
+        textGoal.setText(String.valueOf(stepProgress.getGoalProgress()));
+
+        Log.d("GOAL ON RESUME", String.valueOf(stepProgress.getDailyGoal()));
+        Log.d("GOAL_PROGRESS", String.valueOf(String.valueOf(stepProgress.getGoalProgress())));
+        */
+
+        if (heightLogger.readHeight() == 0) {
+            Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
+            startActivity(intent);
+            return;
+        }
+
+        long height = heightSharedPref.getLong(HEIGHT, 0);
+
+        /*
         if (heightLogger.readHeight() == 0) {
             Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
             startActivity(intent);
@@ -213,6 +250,7 @@ public class StepCountActivity extends AppCompatActivity {
 
         long height = heightSharedPref.getLong(HEIGHT, 0);
         fitnessService.updateStepCount();
+        */
 
         if (myWalkRun == null) {
             try {
@@ -224,7 +262,7 @@ public class StepCountActivity extends AppCompatActivity {
             }
         }
 
-        long goalSet = SharedPreferencesUtil.loadLong(this, Constants.GOAL_TAG);
+        //long goalSet = SharedPreferencesUtil.loadLong(this, Constants.GOAL_TAG);
         stepProgress.setDailyGoal(goalSet);
 
         Log.d("BEFORE UPDATE", stepProgress.getDailyGoal() + "");
@@ -237,6 +275,7 @@ public class StepCountActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //       If authentication was required during google fit setup, this will be called after the user authenticates
+
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == fitnessService.getRequestCode()) {
                 fitnessService.updateStepCount();
@@ -255,6 +294,24 @@ public class StepCountActivity extends AppCompatActivity {
         displayStepData();
     }
 
+    /*ALL CREDIT FOR THE FOLLOWING ASYNCTASK CODE GOES TO THE TUTSPLUS TUTORIAL ON GOOGLE FIT API
+    Title: Google Fit for Android: History API
+    https://code.tutsplus.com/tutorials/google-fit-for-android-history-api--cms-25856
+    Captured: 2/15/2019
+    How the source was used: Copied code
+    K.D.
+    */
+    //TODO: CALL THIS FROM SOMEWHERE.
+    private class AsyncTaskRunner extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Log.d("INASYNC", "In task");
+            fitnessService.getWeeklyData();
+            return null;
+        }
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void displayStepData() {
         boolean onWalkRun = SharedPreferencesUtil.loadBoolean(this, Constants.ON_WALK_TAG);
@@ -262,11 +319,9 @@ public class StepCountActivity extends AppCompatActivity {
             startStopBtn.setBackgroundColor(Color.GREEN);
             startStopBtn.setText(Constants.START_WALK);
             myWalkRun.reset();
-
         } else {
             startStopBtn.setBackgroundColor(Color.RED);
             startStopBtn.setText(Constants.STOP_WALK);
-
             //walk/run is in progress, display progress
             try {
 
@@ -294,6 +349,9 @@ public class StepCountActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
 
+    public void setCalendar(AbstractCalendar c) {
+        calendar = c;
     }
 }

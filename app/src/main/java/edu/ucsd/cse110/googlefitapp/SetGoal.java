@@ -16,8 +16,14 @@ public class SetGoal implements Goal {
 
     public boolean set(long goalCandidate) {
         if (isValidGoal(goalCandidate)) {
+            if (SharedPreferencesUtil.loadLong(context, Constants.GOAL) == goalCandidate) {
+                Log.d("PREV AND NEXT GOAL =", String.valueOf(goalCandidate));
+                return false;
+            }
             SharedPreferencesUtil.saveLong(context, Constants.GOAL, goalCandidate);
-            Log.d("GOAL", "New goal set: " + goalCandidate);
+            SharedPreferencesUtil.saveLong(context, Constants.DAILY_STEPS_TAG, 0);
+
+            Log.d("SUCCESSFUL GOAL UPDATE", String.valueOf(goalCandidate));
             return true;
         } else {
             Log.d("GOAL", "Did not set goal");

@@ -2,7 +2,8 @@ package edu.ucsd.cse110.googlefitapp;
 
 public class FakeCalendar implements CalendarInterface {
 
-    public FakeCalendar(){}
+    public FakeCalendar() {
+    }
 
     @Override
     public String getYear() {

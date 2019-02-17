@@ -1,3 +1,4 @@
+
 package edu.ucsd.cse110.googlefitapp;
 
 import android.content.Context;

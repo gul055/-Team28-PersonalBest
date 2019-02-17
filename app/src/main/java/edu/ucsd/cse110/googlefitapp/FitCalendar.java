@@ -7,7 +7,7 @@ public class FitCalendar implements CalendarInterface {
     Calendar calendar;
 
     // Construct calendar and set its date to the first date of the week
-    public FitCalendar(){
+    public FitCalendar() {
         calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
     }
@@ -36,13 +36,13 @@ public class FitCalendar implements CalendarInterface {
     @Override
     public String[] getWeek() {
         String[] week = new String[Constants.WEEK_SIZE];
-        for(int day = 0; day < Constants.WEEK_SIZE; day++){
+        for (int day = 0; day < Constants.WEEK_SIZE; day++) {
             week[day] = getDate(day);
         }
         return week;
     }
 
-    public void setDate(int year, int month, int day){
+    public void setDate(int year, int month, int day) {
         calendar.set(year, month, day);
     }
 }

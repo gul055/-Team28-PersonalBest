@@ -81,8 +81,7 @@ public class WalkRun {
                 //cannot end walk at a time before it is started
                 if (end - start < 0) {
                     throw new Exception("Invalid: End time < start time");
-                }
-                else {
+                } else {
                     SharedPreferences.Editor editor = sharedPref.edit();
 
                     //update the WalkRun
@@ -186,8 +185,7 @@ public class WalkRun {
             Log.d("STARTSTEPS_GETNUMSTEPS", String.valueOf(startSteps));
             Log.d("ENDSTEPS_GETNUMSTEPS", String.valueOf(endSteps));
             return (endSteps - startSteps);
-        }
-        else {
+        } else {
             throw new Exception("Invalid: Cannot getNumSteps for incomplete WalkRun");
         }
     }
@@ -199,8 +197,7 @@ public class WalkRun {
             double distanceFeet = stride * getNumSteps() / inchesInFeet;
             double distanceMiles = distanceFeet / feetInMile;
             return Math.round(distanceMiles * 10) / 10.0;
-        }
-        else {
+        } else {
             throw new Exception("Invalid: Cannot getDistance for incomplete WalkRun");
         }
     }

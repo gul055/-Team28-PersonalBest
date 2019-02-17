@@ -29,14 +29,13 @@ public class HeightPrompt extends AppCompatActivity {
                 try {
                     Long feet = Long.parseLong(EditFeet.getText().toString());
                     Long inches = Long.parseLong(EditInches.getText().toString());
-                    if(heightLog.writeHeight(feet, inches)) {
+                    if (heightLog.writeHeight(feet, inches)) {
                         launchStepCountActivity();
                         Toast.makeText(HeightPrompt.this, "Saved", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         Toast.makeText(HeightPrompt.this, "Invalid input", Toast.LENGTH_SHORT).show();
                     }
-                } catch(NumberFormatException ex) {
+                } catch (NumberFormatException ex) {
                     Toast.makeText(HeightPrompt.this, "Invalid input", Toast.LENGTH_SHORT).show();
                 }
             }
