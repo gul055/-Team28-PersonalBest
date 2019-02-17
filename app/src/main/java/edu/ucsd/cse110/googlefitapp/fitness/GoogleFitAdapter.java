@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import edu.ucsd.cse110.googlefitapp.SharedPreferencesUtil;
+import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 import edu.ucsd.cse110.googlefitapp.StepCountActivity;
 
 public class GoogleFitAdapter implements FitnessService {

@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp;
+package edu.ucsd.cse110.googlefitapp.Graph;
 
 import android.graphics.Color;
 
@@ -8,6 +8,8 @@ import com.github.mikephil.charting.data.BarEntry;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.ucsd.cse110.googlefitapp.Constants;
 
 public class DataHandler {
 

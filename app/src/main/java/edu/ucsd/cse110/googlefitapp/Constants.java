@@ -23,6 +23,7 @@ public final class Constants {
     public static final String NOT_NOW_PRESS = "notNowListener";
     public static final int FIRST_MEET_GOAL = 1;
     public static final int MULTIPLY_MEET_GOAL = 2;
+    public static final String CURRENT_GOAL = "current_goal";
 
     // Specific requestor code for setting goal
     public static final int GOAL_ACTIVITY_CODE = 1;
