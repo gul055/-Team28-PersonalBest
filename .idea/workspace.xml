@@ -12,83 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62c85d4f-4d72-40e0-a2f0-0abbd826325e" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/CalendarInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/FakeCalendar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/FitCalendar.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/GraphActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/HeightLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/HeightPrompt.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/MockMainActivity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/StepsGraph.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/WalkRun.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/promptGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_graph.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_height_prompt.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_prompt_goal.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/CalendarTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/WalkRunUnitTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/arch/core/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/arch/lifecycle/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/arch/lifecycle/livedata/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/arch/lifecycle/livedata/core/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/arch/lifecycle/viewmodel/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/asynclayoutinflater/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/compat/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/coordinatorlayout/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/coreui/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/coreutils/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/cursoradapter/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/customview/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/documentfile/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/drawerlayout/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/fragment/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/graphics/drawable/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/interpolator/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/loader/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/localbroadcastmanager/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/print/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/slidingpanelayout/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/swiperefreshlayout/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/v7/appcompat/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/android/support/v7/viewpager/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/androidx/versionedparcelable/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/not_namespaced_r_class_sources/debug/generateDebugRFile/out/com/github/grtld/mylibrary/R.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/generated/source/buildConfig/debug/com/github/grtld/mylibrary/BuildConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/intermediates/aapt_friendly_merged_manifests/debug/processDebugManifest/aapt/output.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/intermediates/incremental/packageDebugResources/compile-file-map.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/intermediates/incremental/packageDebugResources/merged.dir/values/values.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/intermediates/incremental/packageDebugResources/merger.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/intermediates/merged_manifests/debug/processDebugManifest/merged/AndroidManifest.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/intermediates/merged_manifests/debug/processDebugManifest/merged/output.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/intermediates/packaged_res/debug/values/values.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/intermediates/res/symbol-table-with-package/debug/package-aware-r.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/intermediates/symbols/debug/R.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mylibrary/build/outputs/logs/manifest-merger-debug-report.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.circleci/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.circleci/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/edu/ucsd/cse110/googlefitapp/ExampleInstrumentedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/edu/ucsd/cse110/googlefitapp/ExampleInstrumentedTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/SetGoal.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/SetGoal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/SetGoalActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/SetGoalActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/SharedPreferencesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/SharedPreferencesUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/StepCountActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/StepCountActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/fitness/FitnessServiceFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/fitness/FitnessServiceFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/fitness/GoogleFitAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/fitness/GoogleFitAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/StepLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/StepLogger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/StepUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/StepUpdater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_count_to_ten.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_step_count.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_step_count.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/ExampleUnitTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/StepLoggerUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/StepLoggerUnitTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/StepUpdaterUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/LimitEncouragementUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/EncourageBuilderUnitTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -111,54 +36,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="StepUpdater.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/StepUpdater.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1173">
-              <caret line="70" column="40" selection-start-line="70" selection-start-column="40" selection-end-line="70" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainEncourageMsg.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/MainEncourageMsg.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="50" selection-start-column="50" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SubEncourageMsg.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/SubEncourageMsg.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="50" selection-start-column="50" selection-end-column="50" />
-              <folding>
-                <element signature="e#510#511#0" expanded="true" />
-                <element signature="e#582#583#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EncourageMsg.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/EncourageMsg.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="50" selection-start-column="50" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="EncourageHandler.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/EncourageHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2269">
+            <state relative-caret-position="943">
               <caret line="140" column="5" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StepLoggerUnitTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/StepLoggerUnitTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="59">
+              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EncourageBuilderUnitTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/EncourageBuilderUnitTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="348">
+              <caret line="45" column="25" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StepUpdater.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/StepUpdater.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="782">
+              <caret line="70" column="40" selection-start-line="70" selection-start-column="40" selection-end-line="70" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -172,20 +87,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/Constants.java">
+      <file leaf-file-name="CalendarTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/CalendarTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="39" selection-start-line="39" selection-end-line="39" />
+            <state relative-caret-position="85">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.iml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/app.iml">
+      <file leaf-file-name="StepCountActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/StepCountActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="105" column="77" selection-start-line="105" selection-start-column="77" selection-end-line="105" selection-end-column="77" />
+            <state relative-caret-position="1283">
+              <caret line="136" column="9" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/Constants.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="663">
+              <caret line="39" selection-start-line="39" selection-end-line="39" />
             </state>
           </provider>
         </entry>
@@ -2487,6 +2411,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/EncourageHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/Constants.java" />
         <option value="$PROJECT_DIR$/app/app.iml" />
+        <option value="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/LimitEncouragementUnitTest.java" />
+        <option value="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/EncourageBuilder.java" />
+        <option value="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/EncourageBuilderUnitTest.java" />
       </list>
     </option>
   </component>
@@ -2501,8 +2428,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -2510,11 +2435,92 @@
               <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
               <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
+            <path>
+              <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="googlefitapp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="googlefitapp" type="462c0819:PsiDirectoryNode" />
+              <item name="fitness" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="googlefitapp" type="462c0819:PsiDirectoryNode" />
+              <item name="stepupdaters" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cse110" type="b2602c69:ProjectViewProjectNode" />
+              <item name="cse110" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="googlefitapp" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2542,7 +2548,30 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Android JUnit.WalkRunUnitTest.startProgressEnd">
+    <configuration name="WalkRunUnitTest.startProgressEnd" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.ucsd.cse110.googlefitapp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="edu.ucsd.cse110.googlefitapp" />
+      <option name="MAIN_CLASS_NAME" value="edu.ucsd.cse110.googlefitapp.WalkRunUnitTest" />
+      <option name="METHOD_NAME" value="startProgressEnd" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <patterns />
+    </configuration>
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -2641,6 +2670,15 @@
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
     </configuration>
+    <list>
+      <item itemvalue="Android App.app" />
+      <item itemvalue="Android JUnit.WalkRunUnitTest.startProgressEnd" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Android JUnit.WalkRunUnitTest.startProgressEnd" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -2681,89 +2719,51 @@
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Preview" order="4" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32905984" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32905984" />
-      <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Gradle" order="5" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="right" id="Theme Preview" order="6" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Logcat" order="7" />
+      <window_info id="Captures" order="6" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19597316" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info id="Build Variants" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Logcat" order="7" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Designer" order="5" />
-      <window_info id="Captures" order="6" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32905984" />
+      <window_info anchor="right" id="Device File Explorer" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Android Profiler" order="12" show_stripe_button="false" weight="0.32905984" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info id="Build Variants" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Build" order="11" weight="0.32905984" />
-      <window_info id="Capture Tool" order="7" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Android Profiler" order="12" show_stripe_button="false" weight="0.32905984" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/StepUpdater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="71" column="40" selection-start-line="71" selection-start-column="40" selection-end-line="71" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/MainEncourageMsg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="50" selection-start-column="50" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/SubEncourageMsg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="50" selection-start-column="50" selection-end-column="50" />
-          <folding>
-            <element signature="e#510#511#0" expanded="true" />
-            <element signature="e#582#583#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/EncourageMsg.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/EncourageFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="27" column="51" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -2874,14 +2874,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_step_count.xml">
-      <provider editor-type-id="text-editor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/fitness/FitnessServiceFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -2896,24 +2888,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/StepCountActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="892">
-          <caret line="136" column="9" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/SetGoalActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/LimitEncouragementUnitTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -2923,13 +2901,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/SetGoalUITest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-155">
-          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -2954,28 +2925,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/StepUpdater.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1173">
-          <caret line="70" column="40" selection-start-line="70" selection-start-column="40" selection-end-line="70" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/SubEncourageMsg.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="50" selection-start-column="50" selection-end-column="50" />
-          <folding>
-            <element signature="e#510#511#0" expanded="true" />
-            <element signature="e#582#583#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/EncourageFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="27" column="51" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -2993,9 +2946,102 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/app.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="118" column="79" lean-forward="true" selection-start-line="118" selection-start-column="79" selection-end-line="118" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_step_count.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/HeightLogger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/HeightPrompt.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-257">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/WalkRun.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3179">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/FakeGoal.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/StepsGraph.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/CalendarInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/CalendarTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/SetGoalUITest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/SetGoalUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-77">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/EncourageHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2269">
+        <state relative-caret-position="943">
           <caret line="140" column="5" selection-start-line="140" selection-start-column="5" selection-end-line="140" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -3003,17 +3049,62 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/WalkRunUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2125">
+          <caret line="224" selection-start-line="224" selection-end-line="224" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/ExampleUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/StepCountActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1283">
+          <caret line="136" column="9" selection-start-line="136" selection-start-column="9" selection-end-line="136" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
+        <state relative-caret-position="663">
           <caret line="39" selection-start-line="39" selection-end-line="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.iml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/StepUpdater.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="105" column="77" selection-start-line="105" selection-start-column="77" selection-end-line="105" selection-end-column="77" />
+        <state relative-caret-position="782">
+          <caret line="70" column="40" selection-start-line="70" selection-start-column="40" selection-end-line="70" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/StepLoggerUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/edu/ucsd/cse110/googlefitapp/stepupdaters/EncourageFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="27" column="51" selection-start-line="27" selection-start-column="51" selection-end-line="27" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/EncourageBuilderUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="45" column="25" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
