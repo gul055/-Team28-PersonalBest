@@ -24,8 +24,6 @@ public class SetGoal implements Goal {
             SharedPreferencesUtil.saveLong(context, Constants.DAILY_STEPS_TAG, 0);
 
             Log.d("SUCCESSFUL GOAL UPDATE", String.valueOf(goalCandidate));
-            SharedPreferencesUtil.saveLong(context, Constants.GOAL, goalCandidate);
-            Log.d("GOAL", "New goal set: " + goalCandidate);
             return true;
         } else {
             Log.d("GOAL", "Did not set goal");

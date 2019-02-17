@@ -29,10 +29,24 @@ public final class Constants {
 
     // Calendar constant
     public static final int WEEK_SIZE = 7;
+    public static final String REAL_CALENDAR = "real";
+    public static final String LOCK_TO_FIRST_DAY_OF_WEEK = "lock";
+    public static final String FAKE_CALENDAR = "fake";
+    public static final boolean WITHOUT_YEAR = false;
+    public static final boolean WITH_YEAR = true;
 
     // Step increment
     public static final int STEP_INCREMENT = 500;
 
     //Default step size
     public static final int DEFAULT_GOAL = 5000;
+  
+    // Graph constant
+    public static final float GROUP_SPACE = 0.06f;
+    public static final float BAR_SPACE = 0.02f;
+    public static final float BAR_WIDTH = 0.45f;
+    public static final String RECORDED_STEP = "Recorded Steps";
+    public static final String INCIDENTAL_STEP = "Incidental Steps";
+    public static final String GOAL_LABEL = "Daily Goals";
+    public static final float GRANULARITY = 1f;
 }
