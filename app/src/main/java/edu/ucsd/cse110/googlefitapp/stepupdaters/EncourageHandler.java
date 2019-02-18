@@ -3,6 +3,7 @@ package edu.ucsd.cse110.googlefitapp.stepupdaters;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -23,6 +24,7 @@ public class EncourageHandler {
     private static EncourageFactory encourageFactory;
     private static long prevSteps;
     public static Calendar calendar;
+    public static boolean debug;
 
     public EncourageHandler(Context context, StepUpdater stepUpdater) {
         this.context = context;
@@ -35,6 +37,7 @@ public class EncourageHandler {
         PreviousEncourageGiven = false;
         prevSteps = Long.MAX_VALUE;
         calendar = Calendar.getInstance();
+        debug = false;
     }
 
 
@@ -62,6 +65,10 @@ public class EncourageHandler {
         return MainEncourageGiven;
     }
 
+    public void setPrevSteps(long steps) {
+        prevSteps = steps;
+    }
+
     public long getPrevSteps() {
         return prevSteps;
     }
@@ -70,51 +77,57 @@ public class EncourageHandler {
         calendar.set(Calendar.HOUR_OF_DAY, hour);
     }
 
+    public void setDebug(boolean state) {
+        debug = state;
+    }
+
     /**
      * prevMsgTimeLimit() - determines if a previous sub-goal message should be displayed based on
-     *                      the current time : < PREV_MSG_TIME_LIMIT = 12 = 12pm
+     * the current time : < PREV_MSG_TIME_LIMIT = 12 = 12pm
      */
     public boolean beforePrevTimeLimit() {
-        if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < PREV_MSG_TIME_LIMIT) {
+        if (calendar.get(Calendar.HOUR_OF_DAY) < PREV_MSG_TIME_LIMIT) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     /**
      * subMsgTimeLimit() - determines if a previous sub-goal message should be displayed based on
-     *                      the current time : >= SUB_MSG_TIME_LIMIT = 20 = 8pm
+     * the current time : >= SUB_MSG_TIME_LIMIT = 20 = 8pm
      */
     public boolean afterSubTimeLimit() {
-        if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY) >= SUB_MSG_TIME_LIMIT) {
+        if (calendar.get(Calendar.HOUR_OF_DAY) >= SUB_MSG_TIME_LIMIT) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     /**
      * calcSubImprovement() - calculates the approximate step improvement and reports the closest
-     *                        interval of 500 steps past the last day's total steps
+     * interval of 500 steps past the last day's total steps
      */
     public long calcSubImprovement() {
-        return ( (stepUpdater.getDailySteps() - prevSteps) / MINIMUM_SUB_GOAL ) *  MINIMUM_SUB_GOAL ;
+        return ((stepUpdater.getDailySteps() - prevSteps) / MINIMUM_SUB_GOAL) * MINIMUM_SUB_GOAL;
     }
 
     /**
      * update() - contains logic
      **/
     public void update() {
+        //Update the calendar
+        if(!debug) {
+            calendar = Calendar.getInstance();
+        }
         // If a new day -> update the handler
         if (Calendar.getInstance().get(Calendar.DAY_OF_YEAR) > calendar.get(Calendar.DAY_OF_YEAR)) {
             resetForNewDay();
         }
 
         // If the goal was just met -> Create a MainEncourageMsg and set as currEncouragement
-        if( stepUpdater.getDailySteps() == 0 ) { // The goal was just reached
+        if (stepUpdater.getDailySteps() == 0) { // The goal was just reached
             currEncouragement = encourageFactory.buildMsg(MAIN, stepUpdater, prevSteps);
             Log.d("ENCOURAGEMENT_MADE", "Made " +
                     currEncouragement.getClass().toString() +
@@ -122,24 +135,23 @@ public class EncourageHandler {
                     currEncouragement.getDate().toString());
         }
         // If the sub goal was just met or improved -> Create/update a SubEncourageMsg and set as currEncouragement
-        else if(stepUpdater.getDailySteps() >= prevSteps + MINIMUM_SUB_GOAL &&
-                currEncouragement == null || currEncouragement.getClass() != MainEncourageMsg.class){
+        else if (stepUpdater.getDailySteps() >= prevSteps + MINIMUM_SUB_GOAL &&
+                currEncouragement == null || currEncouragement.getClass() != MainEncourageMsg.class) {
             currEncouragement = encourageFactory.buildMsg(SUB, stepUpdater, prevSteps);
             Log.d("ENCOURAGEMENT_MADE", "Made " +
                     currEncouragement.getClass().toString() +
                     "for date:" +
                     currEncouragement.getDate().toString());
         }
-
-      // giveEncouragement();
+        giveEncouragement();
     }
 
     /**
      * resetForNewDay - performs the following functions:
-     *                  1. resets all flags for encouragements given
-     *                  2. sets today's total steps as prevSteps
-     *                  3. updates the handler's calendar
-     *                  4. sets any ungiven encouragement message to a prevEncouragement
+     * 1. resets all flags for encouragements given
+     * 2. sets today's total steps as prevSteps
+     * 3. updates the handler's calendar
+     * 4. sets any ungiven encouragement message to a prevEncouragement
      */
     public void resetForNewDay() {
         MainEncourageGiven = false;
@@ -149,7 +161,7 @@ public class EncourageHandler {
         calendar = Calendar.getInstance();
 
         // If an encouragement was queued but not given yesterday make it a past encouragement
-        if(currEncouragement != null && (!MainEncourageGiven || !SubEncourageGiven)) {
+        if (currEncouragement != null && (!MainEncourageGiven || !SubEncourageGiven)) {
             pastEncouragement = currEncouragement;
             currEncouragement = null;
         }
@@ -159,38 +171,32 @@ public class EncourageHandler {
 
     /**
      * giveEncouragement() - creates Toasts in the given
-     *                       context according to the following rules and resets afterwards:
-     *                       1. Displays at most 1 Main or Sub goal if met on any previous day
-     *                       2. Displays at most 1 Main goal met if on the same day
-     *                       3. Displays as most 1 Sub goal met if on the same day
+     * context according to the following rules and resets afterwards:
+     * 1. Displays at most 1 Main or Sub goal if met on any previous day
+     * 2. Displays at most 1 Main goal met if on the same day
+     * 3. Displays as most 1 Sub goal met if on the same day
      */
     public void giveEncouragement() {
-        while(true) {
-            if(pastEncouragement != null){
-                if (!PreviousEncourageGiven && pastEncouragement != null && beforePrevTimeLimit()) {
-                    Toast.makeText(context, pastEncouragement.getMessage(), Toast.LENGTH_LONG);
-                    Log.d("PAST_ENCOURAGEMENT", "Previous day encouragement given");
-                    pastEncouragement = null;
-                    PreviousEncourageGiven = true;
-                }
+        if (pastEncouragement != null) {
+            if (!PreviousEncourageGiven && pastEncouragement != null && beforePrevTimeLimit()) {
+                Toast.makeText(context, pastEncouragement.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d("PAST_ENCOURAGEMENT", "Previous day encouragement given");
+                pastEncouragement = null;
+                PreviousEncourageGiven = true;
             }
-            if(currEncouragement != null) {
-                if (!MainEncourageGiven && currEncouragement.getClass() == MainEncourageMsg.class) {
-                    Toast.makeText(context, currEncouragement.getMessage(), Toast.LENGTH_LONG);
-                    Log.d("MAIN_ENCOURAGEMENT", "Main goal encouragement given");
-                    currEncouragement = null;
-                    MainEncourageGiven = true;
-                } else if (!SubEncourageGiven && currEncouragement.getClass() == SubEncourageMsg.class
-                                                                        && afterSubTimeLimit() ) {
-                    Toast.makeText(context, currEncouragement.getMessage(), Toast.LENGTH_LONG);
-                    Log.d("SUB_ENCOURAGEMENT", "Subgoal encouragement given");
-                    currEncouragement = null;
-                    SubEncourageGiven = true;
-                }
-            }
-            else{
-                // No more encouragements to give -> break loop
-                break;
+        }
+        if (currEncouragement != null) {
+            if (!MainEncourageGiven && currEncouragement.getClass() == MainEncourageMsg.class) {
+                Toast.makeText(context, currEncouragement.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d("MAIN_ENCOURAGEMENT", "Main goal encouragement given");
+                currEncouragement = null;
+                MainEncourageGiven = true;
+            } else if (!SubEncourageGiven && currEncouragement.getClass() == SubEncourageMsg.class
+                    && afterSubTimeLimit()) {
+                Toast.makeText(context, currEncouragement.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d("SUB_ENCOURAGEMENT", "Subgoal encouragement given");
+                currEncouragement = null;
+                SubEncourageGiven = true;
             }
         }
     }

@@ -15,19 +15,11 @@ import org.robolectric.shadows.ShadowToast;
 import java.util.Calendar;
 import java.util.Date;
 
-import edu.ucsd.cse110.googlefitapp.stepupdaters.EncourageFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.EncourageHandler;
-import edu.ucsd.cse110.googlefitapp.stepupdaters.EncourageMsg;
-import edu.ucsd.cse110.googlefitapp.stepupdaters.MainEncourageMsg;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.SubEncourageMsg;
-
-import static edu.ucsd.cse110.googlefitapp.Constants.MAIN;
-import static edu.ucsd.cse110.googlefitapp.Constants.MAIN_ENCOURAGEMENT;
-import static edu.ucsd.cse110.googlefitapp.Constants.SUB;
 import static edu.ucsd.cse110.googlefitapp.Constants.SUB_ENCOURAGEMENT1;
 import static edu.ucsd.cse110.googlefitapp.Constants.SUB_ENCOURAGEMENT2;
-import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -59,22 +51,35 @@ public class EncourageHandlerUnitTest {
     }
 
     @Test
-    public void testSubMet() {
-        stepUpdater.updateDaily(1999);
-        handler.update();
-        handler.setHour(21); //9pm to trigger subgoal
-        assertEquals(4999, handler.getCurrSteps()); // today's steps at least 500 > yest
-        assertTrue(!handler.isMainEncourageGiven());
-        assertTrue(handler.isSubEncourageGiven());
+    public void testHourSet() {
+        handler.setHour(2); //9pm to trigger subgoal
+        assertTrue(handler.beforePrevTimeLimit());
+        handler.setHour(21);
+        assertTrue(handler.afterSubTimeLimit());
     }
 
     @Test
-    public void testSubEncourageBuild() {
-
+    public void testSubMet() {
+        handler.setDebug(true);
+        handler.setHour(21); //9pm to trigger subgoal
+        handler.setPrevSteps(10); // to trigger subgoal
+        handler.update();
+        assertEquals(3000, handler.getCurrSteps()); // today's steps at least 500 > yest
+        assertTrue(!handler.isMainEncourageGiven());
+        assertEquals(true, handler.isSubEncourageGiven());
+        String expectedToast = SUB_ENCOURAGEMENT1 + String.valueOf(2500) + SUB_ENCOURAGEMENT2;
+        assertEquals(expectedToast, ShadowToast.getTextOfLatestToast());
     }
 
     @Test
     public void testNullBuild() {
-
+        handler.setDebug(true);
+        handler.setHour(19); //7pm to trigger subgoal should fail!!!
+        handler.setPrevSteps(10); // to trigger subgoal
+        handler.update();
+        assertEquals(3000, handler.getCurrSteps()); // today's steps at least 500 > yest
+        assertTrue(!handler.isMainEncourageGiven());
+        assertTrue(!handler.isSubEncourageGiven());
+        assertEquals(SubEncourageMsg.class, handler.getCurrEncouragement().getClass());
     }
 }
