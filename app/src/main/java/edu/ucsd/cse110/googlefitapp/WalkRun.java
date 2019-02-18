@@ -10,6 +10,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Month;
 
+import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
+
 import static android.content.Context.MODE_PRIVATE;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -22,19 +24,17 @@ public class WalkRun {
     private final static int secondsInMinute = 60;
 
     SharedPreferences sharedPref;
-
+    Context context;
     LocalDateTime refTime = LocalDateTime.of(2016, Month.JANUARY, 1, 0, 0, 0);
 
     /* Initialize a walk/run */
     public WalkRun(Context context, int userHeight) throws Exception {
+        this.context = context;
         //negative or 0 height does not make sense
         if (userHeight > 0) {
-            sharedPref = context.getSharedPreferences("walkrun_data", MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putInt("height", userHeight);
-            editor.putBoolean("ok", false);
-            editor.putBoolean("started", false);
-            editor.apply();
+            SharedPreferencesUtil.saveInt(context, Constants.HEIGHT_TAG, userHeight);
+            SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, false);
+            SharedPreferencesUtil.saveBoolean(context, Constants.STARTED_TAG, false);
 
         } else {
             throw new Exception("Invalid height");
@@ -45,17 +45,27 @@ public class WalkRun {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void startWalkRun(int initSteps) throws Exception {
         //every start must be met with an end
-        if (!sharedPref.getBoolean("started", false)) {
-            SharedPreferences.Editor editor = sharedPref.edit();
+        boolean isStarted =  SharedPreferencesUtil.loadBoolean(context, Constants.STARTED_TAG);
+        if (!isStarted) {
+            //TODO:REMOVE AFTER TESTS
+            //SharedPreferences.Editor editor = sharedPref.edit();
 
             //initial step count must be valid
             if (initSteps >= 0) {
                 Log.d("INITSTEPS_STARTWALK", String.valueOf(initSteps));
+                SharedPreferencesUtil.saveInt(context, Constants.STARTSTEPS_TAG, initSteps);
+                SharedPreferencesUtil.saveLong(context, Constants.STARTTIME_TAG, Duration.between(refTime, LocalDateTime.now()).getSeconds());
+                SharedPreferencesUtil.saveBoolean(context, Constants.STARTED_TAG, true);
+                SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, false);
+
+                //TODO: REMOVE AFTER TESTS
+                /*
                 editor.putInt("startSteps", initSteps);
                 editor.putLong("startTime", Duration.between(refTime, LocalDateTime.now()).getSeconds());
                 editor.putBoolean("started", true);
                 editor.putBoolean("ok", false);
                 editor.apply();
+                */
             } else {
                 throw new Exception("Invalid: negative initial step count");
             }
@@ -68,30 +78,40 @@ public class WalkRun {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void endWalkRun(int finalSteps) throws Exception {
         //can only end WalkRun that has already started
-        if (sharedPref.getBoolean("started", false)) {
+        boolean isStarted = SharedPreferencesUtil.loadBoolean(context, Constants.STARTED_TAG);
+        if (isStarted) {
             if (finalSteps < 0) {
                 throw new Exception("Invalid: negative final step count");
             }
             //cannot decrease the amount of steps taken on a walk
-            if (finalSteps >= sharedPref.getInt("startSteps", Integer.MAX_VALUE)) {
+            int startSteps = SharedPreferencesUtil.loadInt(context, Constants.STARTSTEPS_TAG);
+            if (finalSteps >= startSteps) {
 
-                long start = sharedPref.getLong("startTime", 0);
+                long start = SharedPreferencesUtil.loadLong(context, Constants.STARTTIME_TAG);
+                //sharedPref.getLong("startTime", 0);
                 long end = Duration.between(refTime, LocalDateTime.now()).getSeconds();
 
                 //cannot end walk at a time before it is started
                 if (end - start < 0) {
                     throw new Exception("Invalid: End time < start time");
                 } else {
-                    SharedPreferences.Editor editor = sharedPref.edit();
+                    //TODO: REMOVE
+                    //SharedPreferences.Editor editor = sharedPref.edit();
 
                     //update the WalkRun
                     Log.d("FINALSTEPS_ENDWALK", String.valueOf(finalSteps));
+
+                    SharedPreferencesUtil.saveInt(context, Constants.ENDSTEPS_TAG, finalSteps);
+                    SharedPreferencesUtil.saveLong(context, Constants.ENDTIME_TAG, end);
+                    SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, true);
+                    //TODO: REMOVE
+                    /*
                     editor.putInt("endSteps", finalSteps);
                     editor.putLong("endTime", end);
                     editor.putBoolean("ok", true);
 
                     editor.apply();
-
+                    */
                     reset();
                 }
             } else {
@@ -106,27 +126,38 @@ public class WalkRun {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String checkProgress(int pSteps) throws Exception {
         Log.d("PROGRESS_STEPS", String.valueOf(pSteps));
-        if (sharedPref.getBoolean("started", false)) {
-            if (!sharedPref.getBoolean("ok", false)) {
-                SharedPreferences.Editor editor = sharedPref.edit();
+
+        boolean isStarted = SharedPreferencesUtil.loadBoolean(context, Constants.STARTED_TAG);
+        boolean isOk = SharedPreferencesUtil.loadBoolean(context, Constants.OK_TAG);
+        if (isStarted) {
+            if (!isOk) {
+                //SharedPreferences.Editor editor = sharedPref.edit();
 
                 //temporarily make it ok to get stats
-                editor.putBoolean("ok", true);
+                //editor.putBoolean("ok", true);
+                SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, true);
                 long end = Duration.between(refTime, LocalDateTime.now()).getSeconds();
 
                 //update WalkRun prefs with the progress time and steps
-                editor.putLong("endTime", end);
+                SharedPreferencesUtil.saveLong(context, Constants.ENDTIME_TAG, end);
+                SharedPreferencesUtil.saveInt(context, Constants.ENDSTEPS_TAG, pSteps);
+                //TODO: REMOVE
+                /*editor.putLong("endTime", end);
                 editor.putInt("endSteps", pSteps);
-                editor.apply();
+                editor.apply();*/
 
-                int endSteps = sharedPref.getInt("endSteps", 0);
+                int endSteps = SharedPreferencesUtil.loadInt(context, Constants.ENDSTEPS_TAG);
+                //.getInt("endSteps", 0);
                 Log.d("ENDSTEPS_CHECKPROG", String.valueOf(endSteps));
                 String progress = getStats();
 
                 //WalkRun is still incomplete
-                editor.putBoolean("ok", false);
+
+                SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, false);
+                SharedPreferencesUtil.saveBoolean(context, Constants.STARTED_TAG, true);
+                /*editor.putBoolean("ok", false);
                 editor.putBoolean("started", true);
-                editor.apply();
+                editor.apply();*/
 
                 //Progress return string with stats
                 String progressHeader = "Walk/Run progress:\n";
@@ -142,7 +173,8 @@ public class WalkRun {
     /* Return an String containing the steps, duration, speed, and distance of this WalkRun */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public String getStats() throws Exception {
-        if (sharedPref.getBoolean("ok", false)) {
+        boolean isOk = SharedPreferencesUtil.loadBoolean(context, Constants.OK_TAG);
+        if (isOk) {
             //duration
             long seconds = secondsWalked();
 
@@ -179,9 +211,12 @@ public class WalkRun {
 
     /* Return the number of steps taken on this walk/run */
     public int getNumSteps() throws Exception {
-        if (sharedPref.getBoolean("ok", false)) {
-            int endSteps = sharedPref.getInt("endSteps", -1);
-            int startSteps = sharedPref.getInt("startSteps", Integer.MAX_VALUE);
+        boolean isOk = SharedPreferencesUtil.loadBoolean(context, Constants.OK_TAG);
+        if (isOk) {
+            int endSteps = SharedPreferencesUtil.loadInt(context, Constants.ENDSTEPS_TAG);
+            // sharedPref.getInt("endSteps", -1);
+            int startSteps = SharedPreferencesUtil.loadInt(context, Constants.STARTSTEPS_TAG);
+                    // sharedPref.getInt("startSteps", Integer.MAX_VALUE);
             Log.d("STARTSTEPS_GETNUMSTEPS", String.valueOf(startSteps));
             Log.d("ENDSTEPS_GETNUMSTEPS", String.valueOf(endSteps));
             return (endSteps - startSteps);
@@ -192,8 +227,10 @@ public class WalkRun {
 
     /* Return the distance walked in miles, rounded to one decimal place */
     public double getDistance() throws Exception {
-        if (sharedPref.getBoolean("ok", false)) {
-            double stride = sharedPref.getInt("height", -1) * strideMultiplier;
+        boolean isOk = SharedPreferencesUtil.loadBoolean(context, Constants.OK_TAG);
+        if (isOk) {
+            int height = SharedPreferencesUtil.loadInt(context, Constants.HEIGHT_TAG);
+            double stride = height * strideMultiplier;
             double distanceFeet = stride * getNumSteps() / inchesInFeet;
             double distanceMiles = distanceFeet / feetInMile;
             return Math.round(distanceMiles * 10) / 10.0;
@@ -213,7 +250,9 @@ public class WalkRun {
     /* Get duration of WalkRun in seconds */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public long secondsWalked() throws Exception {
-        long diff = sharedPref.getLong("endTime", -1) - sharedPref.getLong("startTime", 0);
+        long endTime = SharedPreferencesUtil.loadLong(context, Constants.ENDTIME_TAG);
+        long startTime = SharedPreferencesUtil.loadLong(context, Constants.STARTTIME_TAG);
+        long diff = endTime - startTime;
 
         if (diff > 0) {
             return diff;
@@ -224,11 +263,12 @@ public class WalkRun {
 
     /* Called to reset WalkRun preferences, ready to go on another walk/run */
     public void reset() {
-        SharedPreferences.Editor editor = sharedPref.edit();
+        //SharedPreferences.Editor editor = sharedPref.edit();
 
         //ready to start new WalkRun
-        editor.putBoolean("started", false);
+        //editor.putBoolean("started", false);
+        SharedPreferencesUtil.saveBoolean(context, Constants.STARTED_TAG, false);
 
-        editor.apply();
+        //editor.apply();
     }
 }

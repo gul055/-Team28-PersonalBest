@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".StepCountActivity" />
+        <activity android:name=".HeightPrompt"/>
         <activity android:name=".SetGoalActivity" />
         <activity android:name=".GraphActivity"></activity>
         <activity android:name=".promptGoal"></activity>

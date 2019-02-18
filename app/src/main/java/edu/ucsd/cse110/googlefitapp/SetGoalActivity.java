@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
+
 public class SetGoalActivity extends AppCompatActivity {
 
     @Override

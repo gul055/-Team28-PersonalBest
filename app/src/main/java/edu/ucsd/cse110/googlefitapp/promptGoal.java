@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
+import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
 
 public class promptGoal extends AppCompatActivity {
 

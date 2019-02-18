@@ -3,6 +3,8 @@ package edu.ucsd.cse110.googlefitapp;
 import android.content.Context;
 import android.util.Log;
 
+import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
+
 public class SetGoal implements Goal {
     Context context;
 
