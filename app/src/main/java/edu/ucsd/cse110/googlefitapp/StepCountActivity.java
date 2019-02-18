@@ -280,7 +280,7 @@ public class StepCountActivity extends AppCompatActivity {
     public void setStepCount(long stepCount) {
         Log.d("STEPCOUNT", String.valueOf(stepCount));
         SharedPreferencesUtil.saveLong(this, Constants.DAILY_STEP_KEY, stepCount);
-        stepProgress.setTotalSteps(stepCount);
+        stepProgress.setTotalSteps(stepCount, calendar);
         textSteps.setText(String.valueOf(stepCount));
         Log.d("LOAD_UTILDAILYSTEP", String.valueOf(SharedPreferencesUtil.loadLong(this, Constants.DAILY_STEP_KEY)));
         displayStepData();

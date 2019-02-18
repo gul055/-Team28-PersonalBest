@@ -5,11 +5,9 @@ package edu.ucsd.cse110.googlefitapp.stepupdaters;
 import android.content.Context;
 import android.util.Log;
 
-
-import edu.ucsd.cse110.googlefitapp.Utils.CalendarStringBuilderUtil;
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
-import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
 import edu.ucsd.cse110.googlefitapp.Constants;
+import edu.ucsd.cse110.googlefitapp.Utils.CalendarStringBuilderUtil;
 import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
 public class StepUpdater {
@@ -33,13 +31,9 @@ public class StepUpdater {
         this.c = c;
     }
 
-    public void setDailyGoal(long goal) {
-        this.dailyGoal.setGoal(goal);
-    }
-
-    public void setTotalSteps(long totalSteps) {
+    public void setTotalSteps(long totalSteps, AbstractCalendar calendar) {
         this.totalSteps.setSteps(totalSteps);
-        this.writeSteps(totalSteps);
+        this.writeSteps(totalSteps, calendar);
     }
 
     public void setGoalSteps(long goalSteps) {
@@ -54,15 +48,17 @@ public class StepUpdater {
         return this.dailyGoal.getGoal();
     }
 
+    public void setDailyGoal(long goal) {
+        this.dailyGoal.setGoal(goal);
+    }
+
     /*Grabs the total goal progress*/
     public long getGoalProgress() {
         return this.getDailyGoal() - this.goalSteps.getSteps();
     }
 
-    public void writeSteps(long steps) {
-        // TODO: Pass in a calendar instead, rather making one on the fly
-        AbstractCalendar cal = new CalendarAdapter();
-        String key = CalendarStringBuilderUtil.stringBuilderCalendar(cal, Constants.TOTAL_STEPS_TAG);
+    public void writeSteps(long steps, AbstractCalendar calendar) {
+        String key = CalendarStringBuilderUtil.stringBuilderCalendar(calendar, Constants.TOTAL_STEPS_TAG);
         Log.d("KEY_BUILT_STEPUPDATER", key + " " + steps);
         SharedPreferencesUtil.saveInt(c.getApplicationContext(), key, (int) steps);
     }
