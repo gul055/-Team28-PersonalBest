@@ -28,13 +28,12 @@ import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.MockStepUpdater;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepLogger;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
-import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
-import edu.ucsd.cse110.googlefitapp.utils.CalendarStringBuilderUtil;
+import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
+import edu.ucsd.cse110.googlefitapp.Utils.CalendarStringBuilderUtil;
 
 import static edu.ucsd.cse110.googlefitapp.Constants.HEIGHT;
 import static edu.ucsd.cse110.googlefitapp.Constants.HEIGHT_PREF;
 import static edu.ucsd.cse110.googlefitapp.Constants.INTENTIONAL;
-import static edu.ucsd.cse110.googlefitapp.Constants.PRESET_INCREMENT;
 import static edu.ucsd.cse110.googlefitapp.Constants.STARTED_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.STARTSTEPS_TAG;
 import static edu.ucsd.cse110.googlefitapp.Constants.WALKRUN_PREF;
@@ -193,9 +192,9 @@ public class StepCountActivity extends AppCompatActivity {
             }
         });
 
-        mockSteps.setOnClickListener(new View.OnClickListener(){
+        mockSteps.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 stepProgress.addTotalSteps(Constants.PRESET_INCREMENT);
                 textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
                 updateGoal();
@@ -377,7 +376,7 @@ public class StepCountActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void voids){
+        protected void onPostExecute(Void voids) {
             Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
             startActivity(intent);
         }

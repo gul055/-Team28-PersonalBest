@@ -25,8 +25,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
 import edu.ucsd.cse110.googlefitapp.StepCountActivity;
+import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
 public class GoogleFitAdapter implements FitnessService {
     private final int GOOGLE_FIT_PERMISSIONS_REQUEST_CODE = System.identityHashCode(this) & 0xFFFF;

@@ -12,11 +12,9 @@ import com.github.mikephil.charting.data.BarData;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.LockedCalendar;
-import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.Graph.DataGetter;
 import edu.ucsd.cse110.googlefitapp.Graph.DataHandler;
 import edu.ucsd.cse110.googlefitapp.Graph.DateAxisValueFormatter;
-import edu.ucsd.cse110.googlefitapp.R;
 
 public class GraphActivity extends AppCompatActivity {
 

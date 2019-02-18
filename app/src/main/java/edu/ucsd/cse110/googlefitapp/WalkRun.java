@@ -10,9 +10,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Month;
 
-import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
-
-import static android.content.Context.MODE_PRIVATE;
+import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class WalkRun {
@@ -45,7 +43,7 @@ public class WalkRun {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void startWalkRun(int initSteps) throws Exception {
         //every start must be met with an end
-        boolean isStarted =  SharedPreferencesUtil.loadBoolean(context, Constants.STARTED_TAG);
+        boolean isStarted = SharedPreferencesUtil.loadBoolean(context, Constants.STARTED_TAG);
         if (!isStarted) {
             //TODO:REMOVE AFTER TESTS
             //SharedPreferences.Editor editor = sharedPref.edit();

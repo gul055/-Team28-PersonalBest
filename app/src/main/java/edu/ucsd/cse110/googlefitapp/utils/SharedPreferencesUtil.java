@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp.utils;
+package edu.ucsd.cse110.googlefitapp.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
