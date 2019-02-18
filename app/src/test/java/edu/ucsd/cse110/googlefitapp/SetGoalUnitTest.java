@@ -11,13 +11,9 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 
-<<<<<<< HEAD
-import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
-=======
 import edu.ucsd.cse110.googlefitapp.Goals.Goal;
 import edu.ucsd.cse110.googlefitapp.Goals.SetGoal;
 import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
->>>>>>> bd3726a69ce39868b848b3bdec427036c1d72bf1
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
