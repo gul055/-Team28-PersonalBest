@@ -59,6 +59,7 @@ public class StepUpdater {
     }
 
     public void writeSteps(long steps) {
+        // TODO: Pass in a calendar instead
         Calendar cal = Calendar.getInstance();
         String key = CalendarStringBuilderUtil.stringBuilderCalendar(cal, Constants.TOTAL_STEPS_TAG);
         Log.d("KEY_BUILT_STEPUPDATER", key + " " + steps);

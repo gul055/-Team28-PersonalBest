@@ -19,7 +19,7 @@
         <activity android:name=".StepCountActivity" />
         <activity android:name=".Goals.SetGoalActivity" />
         <activity android:name=".Graph.GraphActivity"></activity>
-        <activity android:name=".HeightPrompt"></activity>
+        <activity android:name=".Height.HeightPrompt"></activity>
         <activity android:name=".Goals.promptGoal"></activity>
     </application>
 

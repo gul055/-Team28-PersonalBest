@@ -23,6 +23,11 @@ import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
+import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
+import edu.ucsd.cse110.googlefitapp.Goals.promptGoal;
+import edu.ucsd.cse110.googlefitapp.Graph.GraphActivity;
+import edu.ucsd.cse110.googlefitapp.Height.HeightLogger;
+import edu.ucsd.cse110.googlefitapp.Height.HeightPrompt;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.MockStepUpdater;
@@ -237,7 +242,7 @@ public class StepCountActivity extends AppCompatActivity {
             stepProgress.setDailyGoal(goalSet);
         }
 
-        String goalTag = CalendarStringBuilderUtil.stringBuilderCalendar(calendar, "goal");
+        String goalTag = CalendarStringBuilderUtil.stringBuilderCalendar(calendar, Constants.GOAL);
         Log.d("GOAL_KEY", goalTag);
         SharedPreferencesUtil.saveLong(this, goalTag, stepProgress.getDailyGoal());
 
