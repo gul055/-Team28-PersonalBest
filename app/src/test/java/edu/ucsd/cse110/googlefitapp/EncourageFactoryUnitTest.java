@@ -57,7 +57,6 @@ public class EncourageFactoryUnitTest {
             EncourageMsg msg = factory.buildMsg(MAIN, stepUpdater, 1000);
             assertEquals(MainEncourageMsg.class, msg.getClass());
             assertEquals(MAIN_ENCOURAGEMENT, msg.getMessage());
-            assertTrue(date.compareTo(msg.getDate()) < 0);
         }
 
         @Test

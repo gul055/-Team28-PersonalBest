@@ -15,7 +15,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="62c85d4f-4d72-40e0-a2f0-0abbd826325e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/EncourageFactoryUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/EncourageFactoryUnitTest.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -100,8 +99,8 @@
       <file leaf-file-name="EncourageFactoryUnitTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/EncourageFactoryUnitTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="67" column="92" selection-start-line="67" selection-start-column="92" selection-end-line="67" selection-end-column="92" />
+            <state relative-caret-position="15">
+              <caret line="58" column="63" selection-start-line="58" selection-start-column="63" selection-end-line="58" selection-end-column="63" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -3293,8 +3292,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/test/java/edu/ucsd/cse110/googlefitapp/EncourageFactoryUnitTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="67" column="92" selection-start-line="67" selection-start-column="92" selection-end-line="67" selection-end-column="92" />
+        <state relative-caret-position="15">
+          <caret line="58" column="63" selection-start-line="58" selection-start-column="63" selection-end-line="58" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
