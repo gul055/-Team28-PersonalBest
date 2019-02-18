@@ -223,7 +223,6 @@ public class StepCountActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         encourageHandler.update();
 
         if (heightLogger.readHeight() == 0) {

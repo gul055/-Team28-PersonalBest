@@ -37,16 +37,16 @@ public class EncourageHandlerUnitTest {
         stepUpdater = new StepUpdater(activity.getApplicationContext());
         handler = new EncourageHandler(activity.getApplicationContext(), stepUpdater);
         stepUpdater.setDailyGoal(5000);
-        stepUpdater.updateDaily(3000);
+        stepUpdater.setTotalSteps(3000);
         date = Calendar.getInstance().getTime();
 
     }
 
     @Test
     public void testUpdateGoalMet() {
-        stepUpdater.updateDaily(2000);
+        stepUpdater.setTotalSteps(5000);
         handler.update();
-        assertEquals(0, handler.getCurrSteps()); //goal met
+        assertEquals(5000, handler.getCurrSteps()); //goal met
         assertTrue(handler.isMainEncourageGiven());
     }
 

@@ -42,7 +42,7 @@ public class EncourageHandler {
 
 
     public long getCurrSteps() {
-        return stepUpdater.getDailySteps();
+        return stepUpdater.getTotalSteps();
     }
 
     public EncourageMsg getPastEncouragement() {
@@ -110,7 +110,7 @@ public class EncourageHandler {
      * interval of 500 steps past the last day's total steps
      */
     public long calcSubImprovement() {
-        return ((stepUpdater.getDailySteps() - prevSteps) / MINIMUM_SUB_GOAL) * MINIMUM_SUB_GOAL;
+        return ((stepUpdater.getTotalSteps() - prevSteps) / MINIMUM_SUB_GOAL) * MINIMUM_SUB_GOAL;
     }
 
     /**
@@ -127,7 +127,7 @@ public class EncourageHandler {
         }
 
         // If the goal was just met -> Create a MainEncourageMsg and set as currEncouragement
-        if (stepUpdater.getDailySteps() == 0) { // The goal was just reached
+        if (stepUpdater.getTotalSteps() >= stepUpdater.getDailyGoal()) { // The goal was just reached
             currEncouragement = encourageFactory.buildMsg(MAIN, stepUpdater, prevSteps);
             Log.d("ENCOURAGEMENT_MADE", "Made " +
                     currEncouragement.getClass().toString() +
@@ -135,7 +135,7 @@ public class EncourageHandler {
                     currEncouragement.getDate().toString());
         }
         // If the sub goal was just met or improved -> Create/update a SubEncourageMsg and set as currEncouragement
-        else if (stepUpdater.getDailySteps() >= prevSteps + MINIMUM_SUB_GOAL &&
+        else if (stepUpdater.getTotalSteps() >= prevSteps + MINIMUM_SUB_GOAL &&
                 currEncouragement == null || currEncouragement.getClass() != MainEncourageMsg.class) {
             currEncouragement = encourageFactory.buildMsg(SUB, stepUpdater, prevSteps);
             Log.d("ENCOURAGEMENT_MADE", "Made " +

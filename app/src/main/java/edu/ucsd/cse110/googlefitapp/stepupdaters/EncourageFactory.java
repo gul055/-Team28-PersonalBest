@@ -27,7 +27,7 @@ public class EncourageFactory {
             case SUB: {
                 return new SubEncourageMsg(Calendar.getInstance().getTime(),
                                 SUB_ENCOURAGEMENT1,
-                        ((stepUpdater.getDailySteps() - prevSteps)
+                        ((stepUpdater.getTotalSteps() - prevSteps)
                                                         / MINIMUM_SUB_GOAL) * MINIMUM_SUB_GOAL,
                                 SUB_ENCOURAGEMENT2);
             }

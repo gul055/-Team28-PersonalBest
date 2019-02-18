@@ -61,7 +61,7 @@ public class EncourageFactoryUnitTest {
 
         @Test
         public void testSubEncourageBuild() {
-            stepUpdater.updateDaily(3500);
+            stepUpdater.setTotalSteps(3500);
             EncourageMsg msg = factory.buildMsg(SUB, stepUpdater, 3000);
             assertEquals(SubEncourageMsg.class, msg.getClass());
             assertEquals(SUB_ENCOURAGEMENT1 + "500" + SUB_ENCOURAGEMENT2, msg.getMessage());
@@ -69,7 +69,7 @@ public class EncourageFactoryUnitTest {
 
         @Test
         public void testNullBuild() {
-            stepUpdater.updateDaily(3500);
+            stepUpdater.setTotalSteps(3500);
             EncourageMsg msg = factory.buildMsg(5, stepUpdater, 3000);
             assertEquals(null, msg);
         }

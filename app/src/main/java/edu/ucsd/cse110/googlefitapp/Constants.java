@@ -33,7 +33,6 @@ public final class Constants {
     public static final String HEIGHT_TAG = "height";
     public static final String OK_TAG = "ok";
     public static final String STARTED_TAG = "started";
-    public static final String STARTSTEPS_TAG = "startSteps";
     public static final String STARTTIME_TAG = "startTime";
     public static final String ENDTIME_TAG = "endTime";
     public static final String ENDSTEPS_TAG = "endSteps";
