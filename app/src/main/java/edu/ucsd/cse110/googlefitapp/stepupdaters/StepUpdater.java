@@ -5,9 +5,10 @@ package edu.ucsd.cse110.googlefitapp.stepupdaters;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.Calendar;
 
-import edu.ucsd.cse110.googlefitapp.CalendarStringBuilderUtil;
+import edu.ucsd.cse110.googlefitapp.Utils.CalendarStringBuilderUtil;
+import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
+import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
 import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
@@ -59,8 +60,8 @@ public class StepUpdater {
     }
 
     public void writeSteps(long steps) {
-        // TODO: Pass in a calendar instead
-        Calendar cal = Calendar.getInstance();
+        // TODO: Pass in a calendar instead, rather making one on the fly
+        AbstractCalendar cal = new CalendarAdapter();
         String key = CalendarStringBuilderUtil.stringBuilderCalendar(cal, Constants.TOTAL_STEPS_TAG);
         Log.d("KEY_BUILT_STEPUPDATER", key + " " + steps);
         SharedPreferencesUtil.saveInt(c.getApplicationContext(), key, (int) steps);
