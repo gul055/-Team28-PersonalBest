@@ -207,8 +207,6 @@ public class StepCountActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AsyncTaskRunner runner = new AsyncTaskRunner();
                 runner.execute();
-                Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
-                startActivity(intent);
             }
         });
 
