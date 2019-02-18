@@ -281,7 +281,7 @@ public class StepCountActivity extends AppCompatActivity {
         Log.d("STEPCOUNT", String.valueOf(stepCount));
         SharedPreferencesUtil.saveLong(this, Constants.DAILY_STEP_KEY, stepCount);
         stepProgress.setTotalSteps(stepCount, calendar);
-        textSteps.setText(String.valueOf(stepCount));
+        textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
         Log.d("LOAD_UTILDAILYSTEP", String.valueOf(SharedPreferencesUtil.loadLong(this, Constants.DAILY_STEP_KEY)));
         displayStepData();
         updateGoal();
@@ -329,19 +329,13 @@ public class StepCountActivity extends AppCompatActivity {
     public void updateGoal() {
         boolean isStarted = SharedPreferencesUtil.loadBoolean(this, STARTED_TAG);
         if (isStarted) {
-            int startSteps = SharedPreferencesUtil.loadInt(this, STARTSTEPS_TAG);
-            Log.d("PROGRESS_STARTSTEPS", String.valueOf(startSteps));
             Log.d("STEPPROGRESS TOTALSTEPS", String.valueOf(stepProgress.getTotalSteps()));
 
-            stepProgress.setGoalSteps(stepProgress.getTotalSteps() - (long) startSteps);
-            long currentProgress = stepProgress.getGoalProgress();
-            if (currentProgress <= 0) {
+            if (stepProgress.getTotalSteps() >= stepProgress.getDailyGoal()) {
                 //Ends the run!
                 long timesGoalMet = SharedPreferencesUtil.loadLong(this, Constants.GOAL_MET_TAG);
                 SharedPreferencesUtil.saveLong(this, Constants.GOAL_MET_TAG, timesGoalMet + 1);
                 startStopBtn.performClick();
-            } else {
-                textGoal.setText(String.valueOf(currentProgress));
             }
             Log.d("GOAL_ON_RESUME", String.valueOf(stepProgress.getDailyGoal()));
             Log.d("GOAL_PROGRESS", String.valueOf(stepProgress.getGoalProgress()));
