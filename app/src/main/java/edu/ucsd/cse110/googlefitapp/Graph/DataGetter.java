@@ -22,9 +22,9 @@ public class DataGetter {
             String key2 = dateStrings[i] + tag2;
             Log.d("First key being used", key1);
             Log.d("Second key being used", key2);
-            dataArray[i][0] = SharedPreferencesUtil.loadLong(context, key1);
+            dataArray[i][0] = SharedPreferencesUtil.loadInt(context, key1);
             Log.d("Adding data1", dataArray[i][0] + "");
-            dataArray[i][1] = SharedPreferencesUtil.loadLong(context, key2) - dataArray[i][0];
+            dataArray[i][1] = SharedPreferencesUtil.loadInt(context, key2) - dataArray[i][0];
             Log.d("Adding data2", dataArray[i][1] + "");
         }
 

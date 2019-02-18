@@ -12,6 +12,8 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.shadows.ShadowToast;
 
+import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
+
 @RunWith(RobolectricTestRunner.class)
 public class SetGoalUITest {
 

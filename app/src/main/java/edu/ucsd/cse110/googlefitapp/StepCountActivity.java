@@ -23,6 +23,11 @@ import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
+import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
+import edu.ucsd.cse110.googlefitapp.Goals.promptGoal;
+import edu.ucsd.cse110.googlefitapp.Graph.GraphActivity;
+import edu.ucsd.cse110.googlefitapp.Height.HeightLogger;
+import edu.ucsd.cse110.googlefitapp.Height.HeightPrompt;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.MockStepUpdater;
@@ -207,8 +212,6 @@ public class StepCountActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AsyncTaskRunner runner = new AsyncTaskRunner();
                 runner.execute();
-                Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -239,7 +242,7 @@ public class StepCountActivity extends AppCompatActivity {
             stepProgress.setDailyGoal(goalSet);
         }
 
-        String goalTag = CalendarStringBuilderUtil.stringBuilderCalendar(calendar, "goal");
+        String goalTag = CalendarStringBuilderUtil.stringBuilderCalendar(calendar, Constants.GOAL);
         Log.d("GOAL_KEY", goalTag);
         SharedPreferencesUtil.saveLong(this, goalTag, stepProgress.getDailyGoal());
 
@@ -277,8 +280,8 @@ public class StepCountActivity extends AppCompatActivity {
     public void setStepCount(long stepCount) {
         Log.d("STEPCOUNT", String.valueOf(stepCount));
         SharedPreferencesUtil.saveLong(this, Constants.DAILY_STEP_KEY, stepCount);
-        stepProgress.setTotalSteps(stepCount);
-        textSteps.setText(String.valueOf(stepCount));
+        stepProgress.setTotalSteps(stepCount, calendar);
+        textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
         Log.d("LOAD_UTILDAILYSTEP", String.valueOf(SharedPreferencesUtil.loadLong(this, Constants.DAILY_STEP_KEY)));
         displayStepData();
         updateGoal();
@@ -326,19 +329,13 @@ public class StepCountActivity extends AppCompatActivity {
     public void updateGoal() {
         boolean isStarted = SharedPreferencesUtil.loadBoolean(this, STARTED_TAG);
         if (isStarted) {
-            int startSteps = SharedPreferencesUtil.loadInt(this, STARTSTEPS_TAG);
-            Log.d("PROGRESS_STARTSTEPS", String.valueOf(startSteps));
             Log.d("STEPPROGRESS TOTALSTEPS", String.valueOf(stepProgress.getTotalSteps()));
 
-            stepProgress.setGoalSteps(stepProgress.getTotalSteps() - (long) startSteps);
-            long currentProgress = stepProgress.getGoalProgress();
-            if (currentProgress <= 0) {
+            if (stepProgress.getTotalSteps() >= stepProgress.getDailyGoal()) {
                 //Ends the run!
                 long timesGoalMet = SharedPreferencesUtil.loadLong(this, Constants.GOAL_MET_TAG);
                 SharedPreferencesUtil.saveLong(this, Constants.GOAL_MET_TAG, timesGoalMet + 1);
                 startStopBtn.performClick();
-            } else {
-                textGoal.setText(String.valueOf(currentProgress));
             }
             Log.d("GOAL_ON_RESUME", String.valueOf(stepProgress.getDailyGoal()));
             Log.d("GOAL_PROGRESS", String.valueOf(stepProgress.getGoalProgress()));
