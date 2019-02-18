@@ -210,6 +210,15 @@ public class StepCountActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (heightLogger.readHeight() == 0) {
+            Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
+            startActivity(intent);
+            return;
+        }
+
+        long height = heightSharedPref.getLong(HEIGHT, 0);
+
         fitnessService.updateStepCount();
 
         String goalTag = CalendarStringBuilderUtil.stringBuilderCalendar(calendar, Constants.GOAL);
@@ -242,14 +251,6 @@ public class StepCountActivity extends AppCompatActivity {
         Log.d("GOAL ON RESUME", String.valueOf(stepProgress.getDailyGoal()));
         Log.d("GOAL_PROGRESS", String.valueOf(String.valueOf(stepProgress.getGoalProgress())));
         */
-
-        if (heightLogger.readHeight() == 0) {
-            Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
-            startActivity(intent);
-            return;
-        }
-
-        long height = heightSharedPref.getLong(HEIGHT, 0);
 
         /*
         if (heightLogger.readHeight() == 0) {
