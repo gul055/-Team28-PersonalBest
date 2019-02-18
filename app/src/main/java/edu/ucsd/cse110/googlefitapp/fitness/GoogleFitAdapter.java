@@ -24,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
 import edu.ucsd.cse110.googlefitapp.StepCountActivity;
 
@@ -130,7 +131,7 @@ public class GoogleFitAdapter implements FitnessService {
 
     public void getWeeklyData() {
         GoogleSignInAccount lastSignedInAccount = GoogleSignIn.getLastSignedInAccount(activity);
-        if(lastSignedInAccount == null){
+        if (lastSignedInAccount == null) {
             return;
         }
 
@@ -142,7 +143,7 @@ public class GoogleFitAdapter implements FitnessService {
 
         int sundayTodayDiff = Calendar.SUNDAY - Calendar.DAY_OF_WEEK;
 
-        calendar.add(Calendar.DAY_OF_WEEK,sundayTodayDiff);
+        calendar.add(Calendar.DAY_OF_WEEK, sundayTodayDiff);
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -163,14 +164,14 @@ public class GoogleFitAdapter implements FitnessService {
         Fitness.getHistoryClient(activity, lastSignedInAccount)
                 .readData(readRequest)
                 .addOnSuccessListener(
-                        new OnSuccessListener<DataReadResponse>(){
+                        new OnSuccessListener<DataReadResponse>() {
                             @Override
                             public void onSuccess(DataReadResponse dataReadResponse) {
                                 List<Bucket> buckets = dataReadResponse.getBuckets();
                                 Log.d("History", "Number of returned DataSets: " + buckets.size());
-                                for(Bucket bucket : buckets) {
+                                for (Bucket bucket : buckets) {
                                     List<DataSet> dataSets = bucket.getDataSets();
-                                    for(DataSet dataSet : dataSets) {
+                                    for (DataSet dataSet : dataSets) {
                                         Log.d("History", "Data returned for Data type: " + dataSet.getDataType().getName());
                                         DateFormat dateFormat = DateFormat.getDateInstance();
                                         DateFormat timeFormat = DateFormat.getTimeInstance();
@@ -182,7 +183,7 @@ public class GoogleFitAdapter implements FitnessService {
                                             Log.d("History", "\tType: " + dp.getDataType().getName());
                                             Log.d("History", "\tStart: " + startTimeString + " " + timeFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
                                             Log.d("History", "\tEnd: " + dateFormat.format(dp.getEndTime(TimeUnit.MILLISECONDS)) + " " + timeFormat.format(dp.getStartTime(TimeUnit.MILLISECONDS)));
-                                            for(Field field : dp.getDataType().getFields()) {
+                                            for (Field field : dp.getDataType().getFields()) {
                                                 int steps = dp.getValue(field).asInt();
                                                 Log.d("History", "\tField: " + field.getName() +
                                                         " Value: " + dp.getValue(field));
@@ -192,7 +193,7 @@ public class GoogleFitAdapter implements FitnessService {
                                                 //TODO: REPLACE WITH STRING BUILDER.
                                                 String year = String.valueOf(cal.get(Calendar.YEAR));
                                                 String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-                                                String month = String.valueOf(cal.get(Calendar.MONTH)+ 1);
+                                                String month = String.valueOf(cal.get(Calendar.MONTH) + 1);
                                                 String date = year + "-" + month + "-" + day;
                                                 String key = date + "total_steps";
                                                 Log.d("KEY_BUILT", key);

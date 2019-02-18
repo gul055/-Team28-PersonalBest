@@ -58,14 +58,6 @@ public class WalkRun {
                 SharedPreferencesUtil.saveBoolean(context, Constants.STARTED_TAG, true);
                 SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, false);
 
-                //TODO: REMOVE AFTER TESTS
-                /*
-                editor.putInt("startSteps", initSteps);
-                editor.putLong("startTime", Duration.between(refTime, LocalDateTime.now()).getSeconds());
-                editor.putBoolean("started", true);
-                editor.putBoolean("ok", false);
-                editor.apply();
-                */
             } else {
                 throw new Exception("Invalid: negative initial step count");
             }
@@ -104,14 +96,6 @@ public class WalkRun {
                     SharedPreferencesUtil.saveInt(context, Constants.ENDSTEPS_TAG, finalSteps);
                     SharedPreferencesUtil.saveLong(context, Constants.ENDTIME_TAG, end);
                     SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, true);
-                    //TODO: REMOVE
-                    /*
-                    editor.putInt("endSteps", finalSteps);
-                    editor.putLong("endTime", end);
-                    editor.putBoolean("ok", true);
-
-                    editor.apply();
-                    */
                     reset();
                 }
             } else {
@@ -141,10 +125,6 @@ public class WalkRun {
                 //update WalkRun prefs with the progress time and steps
                 SharedPreferencesUtil.saveLong(context, Constants.ENDTIME_TAG, end);
                 SharedPreferencesUtil.saveInt(context, Constants.ENDSTEPS_TAG, pSteps);
-                //TODO: REMOVE
-                /*editor.putLong("endTime", end);
-                editor.putInt("endSteps", pSteps);
-                editor.apply();*/
 
                 int endSteps = SharedPreferencesUtil.loadInt(context, Constants.ENDSTEPS_TAG);
                 //.getInt("endSteps", 0);
@@ -155,9 +135,6 @@ public class WalkRun {
 
                 SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, false);
                 SharedPreferencesUtil.saveBoolean(context, Constants.STARTED_TAG, true);
-                /*editor.putBoolean("ok", false);
-                editor.putBoolean("started", true);
-                editor.apply();*/
 
                 //Progress return string with stats
                 String progressHeader = "Walk/Run progress:\n";
@@ -214,9 +191,7 @@ public class WalkRun {
         boolean isOk = SharedPreferencesUtil.loadBoolean(context, Constants.OK_TAG);
         if (isOk) {
             int endSteps = SharedPreferencesUtil.loadInt(context, Constants.ENDSTEPS_TAG);
-            // sharedPref.getInt("endSteps", -1);
             int startSteps = SharedPreferencesUtil.loadInt(context, Constants.STARTSTEPS_TAG);
-                    // sharedPref.getInt("startSteps", Integer.MAX_VALUE);
             Log.d("STARTSTEPS_GETNUMSTEPS", String.valueOf(startSteps));
             Log.d("ENDSTEPS_GETNUMSTEPS", String.valueOf(endSteps));
             return (endSteps - startSteps);
@@ -263,12 +238,7 @@ public class WalkRun {
 
     /* Called to reset WalkRun preferences, ready to go on another walk/run */
     public void reset() {
-        //SharedPreferences.Editor editor = sharedPref.edit();
-
-        //ready to start new WalkRun
-        //editor.putBoolean("started", false);
         SharedPreferencesUtil.saveBoolean(context, Constants.STARTED_TAG, false);
 
-        //editor.apply();
     }
 }

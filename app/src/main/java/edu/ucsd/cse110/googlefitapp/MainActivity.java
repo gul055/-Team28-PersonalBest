@@ -1,13 +1,10 @@
 package edu.ucsd.cse110.googlefitapp;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -89,14 +86,14 @@ public class MainActivity extends AppCompatActivity {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            Toast.makeText(MainActivity.this, "Failed",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     protected void onStart() {
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account != null) {
+        if (account != null) {
             launchStepCountActivity();
         }
         super.onStart();

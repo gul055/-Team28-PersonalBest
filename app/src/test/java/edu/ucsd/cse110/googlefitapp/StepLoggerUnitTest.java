@@ -45,3 +45,4 @@ public class StepLoggerUnitTest {
         assertFalse(stepLogger.readOnDaily());
     }
 }
+

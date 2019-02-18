@@ -7,7 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import edu.ucsd.cse110.googlefitapp.Goals.Goal;
+import edu.ucsd.cse110.googlefitapp.Goals.SetGoal;
 import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
+import edu.ucsd.cse110.googlefitapp.Constants;
+import edu.ucsd.cse110.googlefitapp.R;
 
 public class SetGoalActivity extends AppCompatActivity {
 

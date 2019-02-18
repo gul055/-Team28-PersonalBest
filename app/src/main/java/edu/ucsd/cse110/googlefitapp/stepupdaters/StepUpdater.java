@@ -63,4 +63,8 @@ public class StepUpdater {
         Log.d("KEY_BUILT_STEPUPDATER", key + " " + steps);
         SharedPreferencesUtil.saveInt(c.getApplicationContext(), key, (int) steps);
     }
+
+    public void addTotalSteps(long additionalStep){
+
+    }
 }
