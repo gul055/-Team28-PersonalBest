@@ -25,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
+import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
 import edu.ucsd.cse110.googlefitapp.StepCountActivity;
 
 public class GoogleFitAdapter implements FitnessService {
@@ -109,16 +109,6 @@ public class GoogleFitAdapter implements FitnessService {
                                                 ? 0
                                                 : dataSet.getDataPoints().get(0).getValue(Field.FIELD_STEPS).asInt();
                                 activity.setStepCount(total);
-                                //TODO: REPLACE WITH FUNCTION, SAME WITH GETWEEKLY.
-
-                                Calendar cal = Calendar.getInstance();
-                                String year = String.valueOf(cal.get(Calendar.YEAR));
-                                String day = String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-                                String month = String.valueOf(cal.get(Calendar.MONTH) + 1);
-                                String dateStr = year + "-" + month + "-" + day;
-                                String key = dateStr + "total_steps";
-                                Log.d("KEY_BUILT", key);
-                                SharedPreferencesUtil.saveInt(activity.getApplicationContext(), key, (int) total);
                                 Log.d(TAG, "Total steps: " + total);
                             }
                         })

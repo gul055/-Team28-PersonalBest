@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp.Utils;
+package edu.ucsd.cse110.googlefitapp.utils;
 
 import java.util.Calendar;
 

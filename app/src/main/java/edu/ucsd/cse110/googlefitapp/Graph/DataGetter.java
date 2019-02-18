@@ -2,8 +2,7 @@ package edu.ucsd.cse110.googlefitapp.Graph;
 
 import android.content.Context;
 import android.util.Log;
-
-import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
+import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
 
 public class DataGetter {
 

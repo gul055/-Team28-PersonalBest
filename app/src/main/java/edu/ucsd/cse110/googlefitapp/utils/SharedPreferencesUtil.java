@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp.Utils;
+package edu.ucsd.cse110.googlefitapp.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -33,20 +33,20 @@ public class SharedPreferencesUtil {
     public static long loadLong(Context c, String name) {
         // TODO: Remove the hardcoded string
         SharedPreferences sharedPreferences = c.getSharedPreferences("step_count", Context.MODE_PRIVATE);
-        long i = sharedPreferences.getLong(name, 0);
+        long i = sharedPreferences.getLong(name, -1);
         return i;
     }
 
     public static void saveInt(Context c, String name, int value) {
         SharedPreferences sharedPreferences = c.getSharedPreferences("step_count", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(name, value);
+        editor.putInt(name, value);
         editor.apply();
     }
 
     public static int loadInt(Context c, String name) {
         SharedPreferences sharedPreferences = c.getSharedPreferences("step_count", Context.MODE_PRIVATE);
-        int i = sharedPreferences.getInt(name, 0);
+        int i = sharedPreferences.getInt(name, -1);
         return i;
     }
 

@@ -8,22 +8,28 @@ public final class Constants {
     public static final String NO_GOAL = "No goal inputted!";
     public static final String START_WALK = "Start Walk/Run";
     public static final String STOP_WALK = "Stop Walk/Run";
-    public static final String STARTSTEPS_TAG = "startSteps";
     public static final String DAILY_STEPS_TAG = "daily_steps";
     public static final String TOTAL_STEPS_TAG = "total_steps";
-    public static final String LAST_UPDATE_TAG = "last_update";
     public static final String GOAL_MET_TAG = "goal_met";
     public static final String DAILY_STEP_KEY = "daily_step";
     public static final String ON_WALK_TAG = "on_walk";
-    public static final int PRESET_INCREMENT = 500;
     public static final String HEIGHT_PREF = "height_data";
     public static final String HEIGHT = "height";
     public static final String WALKRUN_PREF = "walkrun_data";
     public static final String INTENTIONAL = "intentional_steps";
     public static final String NOT_NOW_PRESS = "notNowListener";
+    public static final String ADDITIONAL_STEPS = "additional_steps";
+
+    /*WalkRun SharedPref Tags*/
+    public static final String HEIGHT_TAG = "height";
+    public static final String OK_TAG = "ok";
+    public static final String STARTED_TAG = "started";
+    public static final String STARTSTEPS_TAG = "startSteps";
+    public static final String STARTTIME_TAG = "startTime";
+    public static final String ENDTIME_TAG = "endTime";
+    public static final String ENDSTEPS_TAG = "endSteps";
     public static final int FIRST_MEET_GOAL = 1;
     public static final int MULTIPLY_MEET_GOAL = 2;
-    public static final String CURRENT_GOAL = "current_goal";
 
     // Specific requestor code for setting goal
     public static final int GOAL_ACTIVITY_CODE = 1;
@@ -37,9 +43,9 @@ public final class Constants {
     public static final boolean WITH_YEAR = true;
 
     // Step increment
-    public static final int STEP_INCREMENT = 500;
+    public static final int PRESET_INCREMENT = 500;
 
-    //Default step size
+    //Default goal size
     public static final int DEFAULT_GOAL = 5000;
 
     // Graph constant

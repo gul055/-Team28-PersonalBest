@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp.Graph;
+package edu.ucsd.cse110.googlefitapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +13,9 @@ import com.github.mikephil.charting.data.BarData;
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.LockedCalendar;
 import edu.ucsd.cse110.googlefitapp.Constants;
+import edu.ucsd.cse110.googlefitapp.Graph.DataGetter;
+import edu.ucsd.cse110.googlefitapp.Graph.DataHandler;
+import edu.ucsd.cse110.googlefitapp.Graph.DateAxisValueFormatter;
 import edu.ucsd.cse110.googlefitapp.R;
 
 public class GraphActivity extends AppCompatActivity {
@@ -38,7 +41,7 @@ public class GraphActivity extends AppCompatActivity {
         BarChart chart = findViewById(R.id.chart);
 
         DataGetter getter = new DataGetter(getApplicationContext());
-        float[][] stepDataArray = getter.get2DArrayData(weekString, Constants.DAILY_STEP_KEY, Constants.TOTAL_STEPS_TAG);
+        float[][] stepDataArray = getter.get2DArrayData(weekString, Constants.INTENTIONAL, Constants.TOTAL_STEPS_TAG);
         float[] goalArray = getter.getArrayData(weekString, Constants.GOAL);
 
         // This is using fake data right now

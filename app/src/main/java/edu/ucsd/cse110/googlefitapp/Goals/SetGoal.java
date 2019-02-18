@@ -2,10 +2,8 @@ package edu.ucsd.cse110.googlefitapp.Goals;
 
 import android.content.Context;
 import android.util.Log;
-
+import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
 import edu.ucsd.cse110.googlefitapp.Constants;
-import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
-
 public class SetGoal implements Goal {
     Context context;
 
@@ -27,6 +25,8 @@ public class SetGoal implements Goal {
             SharedPreferencesUtil.saveLong(context, Constants.DAILY_STEPS_TAG, 0);
 
             Log.d("SUCCESSFUL GOAL UPDATE", String.valueOf(goalCandidate));
+            SharedPreferencesUtil.saveLong(context, Constants.GOAL, goalCandidate);
+            Log.d("GOAL", "New goal set: " + goalCandidate);
             return true;
         } else {
             Log.d("GOAL", "Did not set goal");
