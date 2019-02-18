@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 
 import androidx.test.InstrumentationRegistry;
-import edu.ucsd.cse110.googlefitapp.utils.SharedPreferencesUtil;
+import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
