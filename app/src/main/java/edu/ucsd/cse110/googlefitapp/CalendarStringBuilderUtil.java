@@ -1,7 +1,6 @@
-package edu.ucsd.cse110.googlefitapp.Utils;
+package edu.ucsd.cse110.googlefitapp;
 
 import java.util.Calendar;
-import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 
 public class CalendarStringBuilderUtil {
     public static String stringBuilderMillis(long milliseconds, String endTag) {
@@ -15,7 +14,12 @@ public class CalendarStringBuilderUtil {
         return key;
     }
 
-    public static String stringBuilderCalendar(AbstractCalendar calendar, String endTag) {
-        return calendar.getYearMonthDay() + endTag;
+    public static String stringBuilderCalendar(Calendar calendar, String endTag) {
+        String year = String.valueOf(calendar.get(Calendar.YEAR));
+        String day = String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        String month = String.valueOf(calendar.get(Calendar.MONTH) + 1);
+        String date = year + "-" + month + "-" + day;
+        String key = date + endTag;
+        return key;
     }
 }

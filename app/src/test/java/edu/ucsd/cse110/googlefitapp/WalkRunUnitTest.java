@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 
 import androidx.test.InstrumentationRegistry;
+import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
@@ -363,16 +364,22 @@ public class WalkRunUnitTest {
 
         public void startWalkRun(int initSteps, LocalDateTime s) throws Exception {
             //every start must be met with an end
-            if (!sharedPref.getBoolean("started", false)) {
-                SharedPreferences.Editor editor = sharedPref.edit();
+            boolean isStarted = SharedPreferencesUtil.loadBoolean(context, Constants.STARTED_TAG);
+            if (!isStarted) {
+                //haredPreferences.Editor editor = sharedPref.edit();
 
                 //initial step count must be valid
                 if (initSteps >= 0) {
+                    SharedPreferencesUtil.saveInt(context, Constants.STARTSTEPS_TAG, initSteps);
+                    SharedPreferencesUtil.saveLong(context, Constants.STARTTIME_TAG, Duration.between(refTime, s).getSeconds());
+                    SharedPreferencesUtil.saveBoolean(context, Constants.STARTED_TAG, true);
+                    SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, false);
+                    /*
                     editor.putInt("startSteps", initSteps);
                     editor.putLong("startTime", Duration.between(refTime, s).getSeconds());
                     editor.putBoolean("started", true);
                     editor.putBoolean("ok", false);
-                    editor.apply();
+                    editor.apply();*/
                 } else {
                     throw new Exception("Invalid: negative initial step count");
                 }
@@ -385,29 +392,32 @@ public class WalkRunUnitTest {
         @RequiresApi(api = Build.VERSION_CODES.O)
         public void endWalkRun(int finalSteps, LocalDateTime e) throws Exception {
             //can only end WalkRun that has already started
-            if (sharedPref.getBoolean("started", false)) {
+            boolean isStarted = SharedPreferencesUtil.loadBoolean(context, Constants.STARTED_TAG);
+            if (isStarted) {
                 if (finalSteps < 0) {
                     throw new Exception("Invalid: negative final step count");
                 }
                 //cannot decrease the amount of steps taken on a walk
-                if (finalSteps >= sharedPref.getInt("startSteps", Integer.MAX_VALUE)) {
+                int startSteps = SharedPreferencesUtil.loadInt(context, Constants.STARTSTEPS_TAG);
+                if(startSteps == -1)
+                    startSteps = Integer.MAX_VALUE;
+                if (finalSteps >= startSteps) {
 
-                    long start = sharedPref.getLong("startTime", 0);
-                    long end = Duration.between(refTime,e).getSeconds();
+                    long start = SharedPreferencesUtil.loadLong(context, Constants.STARTTIME_TAG);
+                    long end = Duration.between(refTime, e).getSeconds();
 
                     //cannot end walk at a time before it is started
                     if (end - start < 0) {
                         throw new Exception("Invalid: End time < start time");
                     }
                     else {
-                        SharedPreferences.Editor editor = sharedPref.edit();
+                        //SharedPreferences.Editor editor = sharedPref.edit();
 
                         //update the WalkRun
-                        editor.putInt("endSteps", finalSteps);
-                        editor.putLong("endTime", end);
-                        editor.putBoolean("ok", true);
-
-                        editor.apply();
+                        SharedPreferencesUtil.saveInt(context, Constants.ENDSTEPS_TAG, finalSteps);
+                        SharedPreferencesUtil.saveLong(context, Constants.ENDTIME_TAG, end);
+                        SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, true);
+                        //editor.apply();
 
                         reset();
                     }
@@ -420,25 +430,26 @@ public class WalkRunUnitTest {
         }
 
         public String checkProgress(int pSteps, LocalDateTime ptime) throws Exception {
-            if (sharedPref.getBoolean("started", false)) {
-                if (!sharedPref.getBoolean("ok", false)) {
-                    SharedPreferences.Editor editor = sharedPref.edit();
+            boolean isStarted = SharedPreferencesUtil.loadBoolean(context, Constants.STARTED_TAG);
+            boolean isOk = SharedPreferencesUtil.loadBoolean(context, Constants.OK_TAG);
+            if (isStarted) {
+                if (!isOk) {
+                    //SharedPreferences.Editor editor = sharedPref.edit();
 
-                    //temporarily make it ok to get stats
-                    editor.putBoolean("ok", true);
+                    SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, true);
                     long end = Duration.between(refTime, ptime).getSeconds();
 
                     //update WalkRun prefs with the progress time and steps
-                    editor.putLong("endTime", end);
-                    editor.putInt("endSteps", pSteps);
-                    editor.apply();
+                    SharedPreferencesUtil.saveLong(context, Constants.ENDTIME_TAG, end);
+                    SharedPreferencesUtil.saveInt(context, Constants.ENDSTEPS_TAG, pSteps);
 
+                    //int endSteps = SharedPreferencesUtil.loadInt(context, Constants.ENDSTEPS_TAG);
                     String progress = getStats();
 
                     //WalkRun is still incomplete
-                    editor.putBoolean("ok", false);
-                    editor.putBoolean("started", true);
-                    editor.apply();
+
+                    SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, false);
+                    SharedPreferencesUtil.saveBoolean(context, Constants.STARTED_TAG, true);
 
                     //Progress return string with stats
                     return progress;

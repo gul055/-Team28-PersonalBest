@@ -13,7 +13,6 @@ import org.robolectric.RuntimeEnvironment;
 
 import edu.ucsd.cse110.googlefitapp.Goals.Goal;
 import edu.ucsd.cse110.googlefitapp.Goals.SetGoal;
-import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
 import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
 import static org.junit.Assert.assertEquals;
@@ -48,12 +47,6 @@ public class SetGoalUnitTest {
     public void testInvalidInput() {
         boolean result = setGoal.set(0);
         assertFalse(result);
-    }
-
-    @Test
-    public void testValidInputUI() {
-        goalField.setText("1000");
-
     }
 
 

@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp.Goals;
+package edu.ucsd.cse110.googlefitapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import edu.ucsd.cse110.googlefitapp.Constants;
-import edu.ucsd.cse110.googlefitapp.R;
-import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
+import edu.ucsd.cse110.googlefitapp.Goals.Goal;
+import edu.ucsd.cse110.googlefitapp.Goals.SetGoal;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepUpdater;
+import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
 public class promptGoal extends AppCompatActivity {
 
