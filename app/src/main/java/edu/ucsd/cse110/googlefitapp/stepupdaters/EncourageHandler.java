@@ -35,7 +35,7 @@ public class EncourageHandler {
         MainEncourageGiven = false;
         SubEncourageGiven = false;
         PreviousEncourageGiven = false;
-        prevSteps = Long.MAX_VALUE;
+        prevSteps = 0;
         calendar = Calendar.getInstance();
         debug = false;
     }
