@@ -21,6 +21,12 @@
         <activity android:name=".Graph.GraphActivity"></activity>
         <activity android:name=".HeightPrompt"></activity>
         <activity android:name=".Goals.promptGoal"></activity>
+        <activity android:name=".Chat.ChatActivity"></activity>
+        <service android:name=".Chat.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
