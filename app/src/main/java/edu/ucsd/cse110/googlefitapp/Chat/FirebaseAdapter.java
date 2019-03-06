@@ -14,7 +14,7 @@ import java.util.Map;
 public class FirebaseAdapter implements GenericBase {
 
     String COLLECTION_KEY = "chats";
-    String DOCUMENT_KEY = "chat1";
+    String DOCUMENT_KEY = "chat2";
     String MESSAGES_KEY = "messages";
     String FROM_KEY = "from";
     String TEXT_KEY = "text";

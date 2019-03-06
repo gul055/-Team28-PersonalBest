@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -40,20 +41,21 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         SharedPreferences sharedpreferences = getSharedPreferences("FirebaseLabApp", Context.MODE_PRIVATE);
 
-        FirebaseApp.initializeApp(getApplicationContext());
-
         from = sharedpreferences.getString(FROM_KEY, null);
 
+        FirebaseApp.initializeApp(this);
+
         chat = new CollectionsReferenceFactory().create();
+
+        initMessageUpdateListener();
 
         base = new FirebaseAdapter(this, chat);
 
         base.subscribeToNotificationsTopic();
 
-        initMessageUpdateListener();
-
         findViewById(R.id.btn_send).setOnClickListener(view -> {
             EditText messageView = findViewById(R.id.text_message);
+            Log.d("SendingMessage", messageView.getText().toString());
             base.sendMessage(messageView.getText().toString());
             messageView.setText("");
         });
