@@ -31,4 +31,6 @@
     <string name="friend_list_title">Your Friends</string>
     <string name="enter_email">enter friend\'s email</string>
     <string name="add_friend">Add</string>
+    <string name="friends">Friends</string>
+    <string name="add_friend_title">Add A Friend</string>
 </resources>

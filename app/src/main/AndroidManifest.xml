@@ -21,7 +21,9 @@
         <activity android:name=".Graph.GraphActivity" />
         <activity android:name=".Height.HeightPrompt" />
         <activity android:name=".Goals.promptGoal" />
-        <activity android:name=".FriendViewActivity"></activity>
+        <activity android:name=".FriendViewActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
     </application>
 
 </manifest>
