@@ -14,6 +14,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ucsd.cse110.googlefitapp.Friends.FriendUpdater;
+import edu.ucsd.cse110.googlefitapp.Friends.MyFriendList;
+
 public class FriendViewActivity extends AppCompatActivity {
     ScrollView friendView;
     Button friend;
@@ -21,32 +24,37 @@ public class FriendViewActivity extends AppCompatActivity {
     EditText emailText;
     View.OnClickListener clickOnFriend;
     LinearLayout friendContainer;
-    FriendList myFriends;
+
+    MyFriendList myFriends;
+    FriendUpdater friendUpdater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_view);
 
+        // set up elements
         friendView = this.findViewById(R.id.friendView);
         friendContainer = friendView.findViewById(R.id.friendContainer);
         emailText = this.findViewById(R.id.emailEditText);
         addFriendBtn = this.findViewById(R.id.addFriendButton);
 
-        myFriends = new FriendList();
+        // friend list subject and listener
+        myFriends = new MyFriendList(this.getApplicationContext());
+        friendUpdater = new FriendUpdater(this.getApplicationContext(), friendContainer);
+        myFriends.register(friendUpdater);
 
+
+        // add friend's email to friend list
         addFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = emailText.getText().toString();
-                Log.d(Constants.FRIEND, "add friend email: " + email);
+                Log.d(Constants.FRIEND_TAG, "add friend email: " + email);
                 myFriends.addFriend(email);
 
                 emailText.setText("");
                 emailText.onEditorAction(EditorInfo.IME_ACTION_DONE);
-
-                //do stuff with email address
-                showFriends(myFriends.getFriendList());
             }
         });
 
@@ -60,12 +68,12 @@ public class FriendViewActivity extends AppCompatActivity {
     }
 
     public void showFriends(List<String> friendList) {
-        Log.d(Constants.FRIEND, "Show friends");
+        Log.d(Constants.FRIEND_TAG, "Show friends");
 
         //iterate through my friend list
         for(String email:friendList) {
 
-            Log.d(Constants.FRIEND, "Creating a button for " + email);
+            Log.d(Constants.FRIEND_TAG, "Creating a button for " + email);
 
             // Create the Friend button element
             friend = new Button(this);
@@ -73,7 +81,7 @@ public class FriendViewActivity extends AppCompatActivity {
             friend.setText(email);
             friend.setOnClickListener(clickOnFriend);
 
-            Log.d(Constants.FRIEND, "Adding " + email + "'s button");
+            Log.d(Constants.FRIEND_TAG, "Adding " + email + "'s button");
 
             // Put button in the LinearLayout
             friendContainer.addView(friend);
@@ -88,12 +96,12 @@ public class FriendViewActivity extends AppCompatActivity {
         }
 
         public void addFriend(String email) {
-            Log.d(Constants.FRIEND, "add email to list: " + email);
+            Log.d(Constants.FRIEND_TAG, "add email to list: " + email);
             friendList.add(email);
         }
 
         public List<String> getFriendList() {
-            Log.d(Constants.FRIEND, "returning friend list");
+            Log.d(Constants.FRIEND_TAG, "returning friend list");
             return friendList;
         }
     }
