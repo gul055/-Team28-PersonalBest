@@ -1,6 +1,8 @@
 package edu.ucsd.cse110.googlefitapp;
 
 public final class Constants {
+    // Log tags
+    public static final String FRIEND = "FRIEND";
     public static final int MINIMUM_VALID_GOAL = 100;
     public static final String GOAL = "goal";
     public static final String SET_SUCCESS = "New goal set!";

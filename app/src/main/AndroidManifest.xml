@@ -18,9 +18,10 @@
         </activity>
         <activity android:name=".StepCountActivity" />
         <activity android:name=".Goals.SetGoalActivity" />
-        <activity android:name=".Graph.GraphActivity"></activity>
-        <activity android:name=".Height.HeightPrompt"></activity>
-        <activity android:name=".Goals.promptGoal"></activity>
+        <activity android:name=".Graph.GraphActivity" />
+        <activity android:name=".Height.HeightPrompt" />
+        <activity android:name=".Goals.promptGoal" />
+        <activity android:name=".FriendViewActivity"></activity>
     </application>
 
 </manifest>

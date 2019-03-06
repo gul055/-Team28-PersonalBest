@@ -22,7 +22,7 @@ public class CalendarTest {
 
     @Test
     public void testGetCurrentDate(){
-        assertEquals("2019-2-14", calendar.getYearMonthDay());
+        assertEquals("2019-2-19", calendar.getYearMonthDay());
     }
 
     @Test
