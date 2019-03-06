@@ -18,4 +18,5 @@ public interface ISubject<ObserverT> {
 
     // note that using a generic interface like this is DRY, but precludes
     // adding type specific methods as we talked in discussion.
+
 }

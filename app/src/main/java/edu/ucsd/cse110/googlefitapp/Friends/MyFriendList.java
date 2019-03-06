@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observer;
 import java.util.Set;
@@ -26,16 +27,26 @@ public class MyFriendList implements IFriendList, ISubject<IFriendObserver> {
 
     @Override
     public void addFriend(String email) {
-        /*Set<String> friendSet = friendPref.getStringSet("friends", null);
+        Set<String> friendSet = friendPref.getStringSet("friends", new HashSet<String>());
 
         Log.d(Constants.FRIEND_TAG, "add friend to sharedPref: " + email);
 
         friendSet.add(email);
-        friendPref.edit().putStringSet("friends", friendSet).apply();*/
+        friendPref.edit().putStringSet("friends", friendSet).apply();
 
         Log.d(Constants.FRIEND_TAG, "notifying observers of change");
         for(IFriendObserver observer: observers) {
             observer.onStateChange(email);
+        }
+    }
+
+    public void loadFriends() {
+        Set<String> friendSet = friendPref.getStringSet("friends", new HashSet<String>());
+
+        for(String email: friendSet) {
+            for (IFriendObserver observer : observers) {
+                observer.onStateChange(email);
+            }
         }
     }
 
@@ -44,7 +55,6 @@ public class MyFriendList implements IFriendList, ISubject<IFriendObserver> {
         Set<String> set = friendPref.getStringSet("friends", null);
         return (List<String>) set;
     }
-
 
     @Override
     public void register(IFriendObserver observer) {
