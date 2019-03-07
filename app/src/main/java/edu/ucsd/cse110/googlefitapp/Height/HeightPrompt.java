@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp;
+package edu.ucsd.cse110.googlefitapp.Height;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import edu.ucsd.cse110.googlefitapp.R;
+import edu.ucsd.cse110.googlefitapp.StepCountActivity;
 
 
 public class HeightPrompt extends AppCompatActivity {

@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import edu.ucsd.cse110.googlefitapp.Constants;
+import edu.ucsd.cse110.googlefitapp.Goals.Goal;
+import edu.ucsd.cse110.googlefitapp.Goals.SetGoal;
 import edu.ucsd.cse110.googlefitapp.R;
 import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 

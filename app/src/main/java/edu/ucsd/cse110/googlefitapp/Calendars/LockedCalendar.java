@@ -10,6 +10,6 @@ public class LockedCalendar extends AbstractCalendar {
     public LockedCalendar() {
         super();
         super.calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
-        Log.d("FIRST DAY OF THE WEEK", super.get(Calendar.DAY_OF_WEEK) + "");
+        Log.d("FIRST DAY OF THE WEEK", super.get(Calendar.DAY_OF_MONTH) + "");
     }
 }
