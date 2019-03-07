@@ -13,6 +13,8 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 
+import edu.ucsd.cse110.googlefitapp.chatmessage.ChatActivity;
+
 import static org.robolectric.shadows.ShadowInstrumentation.getInstrumentation;
 
 @RunWith(RobolectricTestRunner.class)
@@ -27,6 +29,6 @@ public class NotificationTestWithoutMockito {
     @Test
     public void subscribeToCorrectTopic() {
         Intent intent = TestUtils.getMainActivityIntent(TestUtils.getChatMessageService(new ArrayList<>()), TestUtils.getNotificationService("chat1"));
-        MainActivity activity = Robolectric.buildActivity(MainActivity.class, intent).create().get();
+        ChatActivity activity = Robolectric.buildActivity(ChatActivity.class, intent).create().get();
     }
 }
