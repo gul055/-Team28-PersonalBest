@@ -28,4 +28,5 @@
     <string name="cong">Congratulations!</string>
     <string name="cong_text_one">You have met your goal</string>
     <string name="cong_text_two">Would you like a new goal?</string>
+    <string name="chat">Chat</string>
 </resources>
