@@ -24,9 +24,6 @@
         <activity android:name=".FriendViewActivity"
             android:windowSoftInputMode="adjustPan">
         </activity>
-        <activity android:name=".Graph.GraphActivity"></activity>
-        <activity android:name=".Height.HeightPrompt"></activity>
-        <activity android:name=".Goals.promptGoal"></activity>
         <activity android:name=".chatmessage.ChatActivity"></activity>
     </application>
 
