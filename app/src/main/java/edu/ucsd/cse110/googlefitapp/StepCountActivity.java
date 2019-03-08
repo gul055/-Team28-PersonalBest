@@ -23,6 +23,7 @@ import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
+import edu.ucsd.cse110.googlefitapp.chatmessage.ChatActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.promptGoal;
 import edu.ucsd.cse110.googlefitapp.Graph.GraphActivity;
@@ -50,7 +51,7 @@ public class StepCountActivity extends AppCompatActivity {
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
     private static final String TAG = "StepCountActivity";
     SharedPreferences heightSharedPref, walkRunSharedPref;
-    Button startStopBtn, setGoalBtn, mockSteps, setTime, weeklySnapshot, goToFriends;
+    Button startStopBtn, setGoalBtn, mockSteps, setTime, weeklySnapshot, goToFriends, chatButton;
     WalkRun myWalkRun;
     private AbstractCalendar calendar;
     private FitnessService fitnessService;
@@ -62,6 +63,15 @@ public class StepCountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_step_count);
 
         stepProgress = new MockStepUpdater(getApplicationContext());
+
+        chatButton = findViewById(R.id.chat_button);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StepCountActivity.this, ChatActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // request height for first sign in
 
@@ -89,7 +99,6 @@ public class StepCountActivity extends AppCompatActivity {
         mockSteps = findViewById(R.id.mock_steps);
         setTime = findViewById(R.id.set_time);
         weeklySnapshot = findViewById(R.id.weekly_snapshot);
-        goToFriends = findViewById(R.id.goToFriendsBtn);
 
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.O)
