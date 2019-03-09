@@ -50,11 +50,5 @@ public class SetGoalUnitTest {
         assertFalse(result);
     }
 
-    @Test
-    public void testValidInputUI() {
-        goalField.setText("1000");
-
-    }
-
 
 }

@@ -1,7 +1,6 @@
 package edu.ucsd.cse110.googlefitapp.Utils;
 
 import java.util.Calendar;
-
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 
 public class CalendarStringBuilderUtil {

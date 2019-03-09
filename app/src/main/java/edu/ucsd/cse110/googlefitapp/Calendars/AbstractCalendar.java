@@ -51,7 +51,7 @@ public abstract class AbstractCalendar {
         }
 
         // Revert date upon ending
-        calendar.add(Calendar.DATE, -Constants.WEEK_SIZE + 1);
+        calendar.add(Calendar.DATE, -Constants.WEEK_SIZE);
 
         return week;
     }

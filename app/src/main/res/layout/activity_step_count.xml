@@ -28,10 +28,10 @@
         android:text="@string/set_new_goal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <TextView
         android:id="@+id/textSteps"
@@ -67,12 +67,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.273"
         android:text="@string/step_placeholder" />
-
-    <Button
-        android:id="@+id/setGoal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/set_goal" />
 
     <Button
         android:id="@+id/mock_steps"
@@ -125,6 +119,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/goToFriendsBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/friends"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setGoalBtn"
+        app:layout_constraintVertical_bias="0.107" />
 
     <Button
         android:id="@+id/chat_button"

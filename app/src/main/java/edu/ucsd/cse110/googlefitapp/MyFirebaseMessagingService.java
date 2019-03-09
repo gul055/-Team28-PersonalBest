@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp.Chat;
+package edu.ucsd.cse110.googlefitapp;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
