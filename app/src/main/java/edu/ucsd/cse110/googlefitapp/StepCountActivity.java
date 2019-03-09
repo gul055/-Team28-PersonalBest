@@ -225,6 +225,7 @@ public class StepCountActivity extends AppCompatActivity {
             }
         });
 
+        goToFriends = findViewById(R.id.goToFriendsBtn);
         goToFriends.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
