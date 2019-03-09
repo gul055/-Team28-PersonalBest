@@ -18,6 +18,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.FirebaseApp;
+
 import java.time.LocalDateTime;
 import java.util.Calendar;
 
@@ -61,8 +65,14 @@ public class StepCountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
+        FirebaseApp.initializeApp(this);
+        /*GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
+            String personEmail = acct.getEmail();
+            Toast.makeText(this, personEmail, Toast.LENGTH_LONG).show();
+        }*/
 
-        stepProgress = new MockStepUpdater(getApplicationContext());
+            stepProgress = new MockStepUpdater(getApplicationContext());
 
         chatButton = findViewById(R.id.chat_button);
         chatButton.setOnClickListener(new View.OnClickListener() {
