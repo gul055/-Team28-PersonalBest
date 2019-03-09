@@ -32,7 +32,7 @@ public class FirebaseFriendList implements IFriendList {
         //Let B be the user A is adding
         //find B's document
         //find A's document
-        //Check if A is in B's pending list
+        //Check if B is in A's pending list
         //if so, move A into B's friend list
         //put B in A's friend list
         //if not, check if B is already in A's friend list -> do nothing
@@ -45,7 +45,7 @@ public class FirebaseFriendList implements IFriendList {
         //find current user's document and other user's document
         for(QueryDocumentSnapshot doc : userData.getResult()) {
             Map<String, Object> curr = doc.getData();
-            Object currEmail = curr.get("user");
+            String currEmail = (String) curr.get("user");
 
             if(currEmail == myEmail) {
                 currentUser = curr;
@@ -55,8 +55,34 @@ public class FirebaseFriendList implements IFriendList {
             }
         }
 
+        //if users are not found, don't do anything
         if(currentUser.size() == 0 || otherUser.size() == 0) {
             Log.d(Constants.FRIEND_TAG, "user does not exist");
+            return;
+        }
+
+        //get users' lists
+        List<String> otherPending = (List<String>) otherUser.get("pending");
+        List<String> otherFriends = (List<String>) otherUser.get("friends");
+        List<String> myPending = (List<String>) currentUser.get("pending");
+        List<String> myFriends = (List<String>) currentUser.get("friends");
+
+        //users are already friends with each other
+        if(otherFriends.contains(myEmail) && myFriends.contains(email)) {
+            Log.d(Constants.FRIEND_TAG, "already friends with this user")
+            return;
+        }
+        //if other user is in current user's pending list, they become friends
+        else if(myPending.contains(email)) {
+            Log.d(Constants.FRIEND_TAG, "becoming friends");
+            myPending.remove(email);
+            myFriends.add(email);
+            otherFriends.add(myEmail);
+        }
+        //put this user in other user's pending friends
+        else {
+            Log.d(Constants.FRIEND_TAG, "putting user in pending");
+            otherPending.add(myEmail);
         }
     }
 
