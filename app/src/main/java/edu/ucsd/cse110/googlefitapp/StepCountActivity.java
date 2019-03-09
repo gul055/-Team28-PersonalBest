@@ -99,6 +99,7 @@ public class StepCountActivity extends AppCompatActivity {
         mockSteps = findViewById(R.id.mock_steps);
         setTime = findViewById(R.id.set_time);
         weeklySnapshot = findViewById(R.id.weekly_snapshot);
+        goToFriends = findViewById(R.id.goToFriendsBtn);
 
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.O)
