@@ -1,7 +1,7 @@
 package edu.ucsd.cse110.googlefitapp;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,11 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
+import edu.ucsd.cse110.googlefitapp.Friends.FirebaseFriendList;
 import edu.ucsd.cse110.googlefitapp.Friends.FriendUpdater;
-import edu.ucsd.cse110.googlefitapp.Friends.MyFriendList;
+import edu.ucsd.cse110.googlefitapp.Friends.IFriendList;
+import edu.ucsd.cse110.googlefitapp.Friends.IFriendObserver;
 
 public class FriendViewActivity extends AppCompatActivity {
     ScrollView friendView;
@@ -24,8 +26,9 @@ public class FriendViewActivity extends AppCompatActivity {
     EditText emailText;
     View.OnClickListener clickOnFriend;
     LinearLayout friendContainer;
+    String myEmail;
 
-    MyFriendList myFriends;
+    FirebaseFriendList myFriends;
     FriendUpdater friendUpdater;
 
     @Override
@@ -39,8 +42,14 @@ public class FriendViewActivity extends AppCompatActivity {
         emailText = this.findViewById(R.id.emailEditText);
         addFriendBtn = this.findViewById(R.id.addFriendButton);
 
+        //get user email
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
+            myEmail = acct.getEmail();
+        }
+
         // friend list subject and listener
-        myFriends = new MyFriendList(this.getApplicationContext());
+        myFriends = new FirebaseFriendList(this.getApplicationContext(), myEmail);
         friendUpdater = new FriendUpdater(this.getApplicationContext(), friendContainer);
         myFriends.register(friendUpdater);
 
@@ -54,10 +63,10 @@ public class FriendViewActivity extends AppCompatActivity {
                 String email = emailText.getText().toString();
                 Log.d(Constants.FRIEND_TAG, "add friend email: " + email);
                 myFriends.addFriend(email);
-
                 emailText.setText("");
                 emailText.onEditorAction(EditorInfo.IME_ACTION_DONE);
             }
         });
     }
+
 }
