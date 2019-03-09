@@ -7,7 +7,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -63,11 +62,11 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
             Map<String, Object> curr = doc.getData();
             String currEmail = (String) curr.get("user");
 
-            if(currEmail == myEmail) {
+            if(currEmail.equals(myEmail)) {
                 currId = doc.getId();
                 currentUser = curr;
             }
-            else if(currEmail == email) {
+            else if(currEmail.equals(email)) {
                 otherId = doc.getId();
                 otherUser = curr;
             }
@@ -143,7 +142,7 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
             Map<String, Object> curr = doc.getData();
             String currEmail = (String) curr.get("user");
 
-            if(currEmail == myEmail) {
+            if(currEmail.equals(myEmail)) {
                 currentUser = curr;
             }
         }
