@@ -11,6 +11,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
+import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
 import edu.ucsd.cse110.googlefitapp.Calendars.LockedCalendar;
 import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.Graph.DataGetter;
@@ -35,8 +36,10 @@ public class GraphActivity extends AppCompatActivity {
             }
         });
 
-        AbstractCalendar calendar = new LockedCalendar();
-        String[] weekString = calendar.getWeek(Constants.WITH_YEAR);
+        //AbstractCalendar calendar = new LockedCalendar();
+        AbstractCalendar calendar = new CalendarAdapter();
+        //String[] weekString = calendar.getWeek(Constants.WITH_YEAR);
+        String[] weekString = calendar.getLast7Days(Constants.WITH_YEAR);
 
         BarChart chart = findViewById(R.id.chart);
 
