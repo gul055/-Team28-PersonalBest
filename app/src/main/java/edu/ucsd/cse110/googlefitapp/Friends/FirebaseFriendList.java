@@ -27,7 +27,6 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
     CollectionReference db;
     String myEmail;
     private Collection<IFriendObserver> observers;
-    String result = "";
     Context context;
 
     public FirebaseFriendList(Context context, String email) {
@@ -56,6 +55,9 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
         db.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                //for resulting toast message
+                String result = "";
+
                 //user as hashmap object
                 Map<String, Object> currentUser = new HashMap<>();
                 Map<String, Object> otherUser = new HashMap<>();
