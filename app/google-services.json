@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1094347304154",
+    "firebase_url": "https://team28-personalbest-a58ea.firebaseio.com",
+    "project_id": "team28-personalbest-a58ea",
+    "storage_bucket": "team28-personalbest-a58ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094347304154:android:b5b6cc05ef515f2d",
+        "android_client_info": {
+          "package_name": "edu.ucsd.cse110.googlefitapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094347304154-9e3clnfsjdtr1s53pmgb65d1jn358m86.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.ucsd.cse110.googlefitapp",
+            "certificate_hash": "7ec29c89b98d950fa77a791190ffb14fb58f031c"
+          }
+        },
+        {
+          "client_id": "1094347304154-8ou0n2lhe398pc60mqtrf0p8tr8cqvre.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs4VlJYfyhZgm46LKUrO53gzvaX0TEIhY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094347304154-8ou0n2lhe398pc60mqtrf0p8tr8cqvre.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

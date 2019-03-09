@@ -9,14 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="edu.ucsd.cse110.googlefitapp.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="edu.ucsd.cse110.googlefitapp.StepCountActivity"></activity>
+        <activity android:name=".StepCountActivity" />
+        <activity android:name=".Goals.SetGoalActivity" />
+        <activity android:name=".Graph.GraphActivity" />
+        <activity android:name=".Height.HeightPrompt" />
+        <activity android:name=".Goals.promptGoal" />
+        <activity android:name=".FriendViewActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity android:name=".chatmessage.ChatActivity"></activity>
     </application>
 
 </manifest>
