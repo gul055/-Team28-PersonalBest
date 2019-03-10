@@ -65,4 +65,7 @@ public final class Constants {
     public static final String INCIDENTAL_STEP = "Incidental Steps";
     public static final String GOAL_LABEL = "Daily Goals";
     public static final float GRANULARITY = 1f;
+
+    // Email constant
+    public static final String EXAMPLE_EMAIL = "arrestrose@gmail.com";
 }
