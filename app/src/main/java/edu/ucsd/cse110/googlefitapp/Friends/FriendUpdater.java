@@ -29,7 +29,7 @@ public class FriendUpdater implements IFriendObserver {
 
     @Override
     public void onStateChange(String email) {
-        Log.d(Constants.FRIEND_TAG, "Creating a button for " + email);
+        Log.d(Constants.FRIEND_UPDATER_TAG, "Creating a button for " + email);
 
         // Create the Friend button element
         Button friend = new Button(context);
@@ -37,7 +37,7 @@ public class FriendUpdater implements IFriendObserver {
         friend.setText(email);
         friend.setOnClickListener(clickOnFriend);
 
-        Log.d(Constants.FRIEND_TAG, "Adding " + email + "'s button");
+        Log.d(Constants.FRIEND_UPDATER_TAG, "Adding " + email + "'s button");
 
         // Put button in the LinearLayout
         friendContainer.addView(friend);
