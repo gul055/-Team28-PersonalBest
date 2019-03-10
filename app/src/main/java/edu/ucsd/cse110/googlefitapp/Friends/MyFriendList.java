@@ -40,6 +40,7 @@ public class MyFriendList implements IFriendList, ISubject<IFriendObserver> {
         }
     }
 
+    @Override
     public void loadFriends() {
         Set<String> friendSet = friendPref.getStringSet("friends", new HashSet<String>());
 
@@ -50,7 +51,6 @@ public class MyFriendList implements IFriendList, ISubject<IFriendObserver> {
         }
     }
 
-    @Override
     public List<String> getFriendList() {
         Set<String> set = friendPref.getStringSet("friends", null);
         return (List<String>) set;
