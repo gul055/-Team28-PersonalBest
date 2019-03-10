@@ -15,7 +15,7 @@ public class DateAxisValueFormatter implements IAxisValueFormatter {
 
     public DateAxisValueFormatter(AbstractCalendar calendar) {
         this.calendar = calendar;
-        days = calendar.getWeek(Constants.WITHOUT_YEAR);
+        days = calendar.getLast7Days(Constants.WITHOUT_YEAR);
         Log.d("DAYS OF THE WEEK", days[0]);
     }
 
