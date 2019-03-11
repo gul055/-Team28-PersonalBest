@@ -63,4 +63,7 @@ public final class Constants {
 
     // Email constant
     public static final String EXAMPLE_EMAIL = "arrestrose@gmail.com";
+
+    // FirebaseFirestore constant
+    public static final String STEPDATA = "stepdata";
 }
