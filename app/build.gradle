@@ -42,22 +42,11 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
     implementation 'com.google.android.gms:play-services-fitness:16.0.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
-<<<<<<< HEAD
-    // Robert added this dependecncy
-    implementation 'com.android.support:design:27.1.1'
-    //
-=======
     implementation 'com.google.firebase:firebase-firestore:18.0.1'
     implementation 'com.google.firebase:firebase-messaging:17.4.0'
->>>>>>> 3a8543d6c41602f42990575a6003046bab226255
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.robolectric:robolectric:4.1'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
-<<<<<<< HEAD
-    implementation 'com.google.firebase:firebase-firestore:17.0.1:15.0.0'
 }
-=======
-}
->>>>>>> 3a8543d6c41602f42990575a6003046bab226255

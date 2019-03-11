@@ -17,12 +17,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".StepCountActivity" />
-<<<<<<< HEAD
-        <activity android:name=".HeightPrompt"/>
-        <activity android:name=".SetGoalActivity" />
-        <activity android:name=".GraphActivity"></activity>
-        <activity android:name=".promptGoal"></activity>
-=======
         <activity android:name=".Goals.SetGoalActivity" />
         <activity android:name=".Graph.GraphActivity"></activity>
         <activity android:name=".HeightPrompt"></activity>
@@ -33,7 +27,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
->>>>>>> 3a8543d6c41602f42990575a6003046bab226255
     </application>
 
 </manifest>
