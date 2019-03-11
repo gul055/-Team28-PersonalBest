@@ -53,6 +53,8 @@ public class FriendTest {
         activity = Robolectric.buildActivity(StepCountActivity.class).create().get();
         Context context = getInstrumentation().getTargetContext();
 
+        FirebaseFirestore.getInstance();
+
         db = FirebaseFirestore.getInstance()
                 .collection(Constants.FRIEND_COLLECTION_KEY);
 
