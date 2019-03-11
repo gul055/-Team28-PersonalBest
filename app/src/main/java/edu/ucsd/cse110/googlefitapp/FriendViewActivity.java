@@ -16,9 +16,14 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import edu.ucsd.cse110.googlefitapp.Friends.FirebaseFriendList;
+import edu.ucsd.cse110.googlefitapp.Friends.FriendListContainer;
 import edu.ucsd.cse110.googlefitapp.Friends.FriendUpdater;
+import edu.ucsd.cse110.googlefitapp.Friends.IFriendList;
 
 public class FriendViewActivity extends AppCompatActivity {
+
+    public static final String FRIENDLIST_EXTRA = "FRIEND_SERVICE";
+
     ScrollView friendView;
     Button addFriendBtn;
     EditText emailText;
@@ -27,6 +32,8 @@ public class FriendViewActivity extends AppCompatActivity {
 
     FirebaseFriendList myFriends;
     FriendUpdater friendUpdater;
+
+    String stringExtra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +55,12 @@ public class FriendViewActivity extends AppCompatActivity {
             myEmail = acct.getEmail();
         }
 
+        stringExtra = getIntent().getStringExtra(FRIENDLIST_EXTRA);
         // friend list subject and listener
-        myFriends = new FirebaseFriendList(this.getApplicationContext(), myEmail);
+        myFriends = FriendListContainer.getInstance().get(stringExtra);
+        if(myFriends == null) {
+            myFriends = new FirebaseFriendList(this.getApplicationContext(), myEmail);
+        }
         friendUpdater = new FriendUpdater(this.getApplicationContext(), friendContainer);
         myFriends.register(friendUpdater);
 

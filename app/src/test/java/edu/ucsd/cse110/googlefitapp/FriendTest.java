@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.ucsd.cse110.googlefitapp.Friends.FirebaseFriendList;
+import edu.ucsd.cse110.googlefitapp.Friends.FriendListContainer;
 import edu.ucsd.cse110.googlefitapp.Friends.IFriendList;
 import edu.ucsd.cse110.googlefitapp.Friends.IFriendObserver;
 import edu.ucsd.cse110.googlefitapp.chatmessage.ChatActivity;
@@ -47,17 +48,22 @@ import static org.robolectric.shadows.ShadowInstrumentation.getInstrumentation;
 
 @RunWith(RobolectricTestRunner.class)
 public class FriendTest {
-    String user1 = "user1";
-    String user2 = "user2";
     CollectionReference db;
-    Context context;
     FriendViewActivity activity;
     EditText emailInput;
     Button addButton;
+    FirebaseFriendList mockFriendList;
+
 
     @Before
     public void setUp() throws Exception {
-        activity = Robolectric.buildActivity(FriendViewActivity.class).create().get();
+        Intent intent = new Intent();
+        mockFriendList = Mockito.mock(FirebaseFriendList.class);
+        String testKey = "friend test key";
+        FriendListContainer.getInstance().put(testKey, () -> mockFriendList);
+        intent.putExtra(FriendViewActivity.FRIENDLIST_EXTRA, testKey);
+
+        activity = Robolectric.buildActivity(FriendViewActivity.class, intent).create().get();
         Context context = getInstrumentation().getTargetContext();
 
         db = FirebaseFirestore.getInstance()
@@ -71,10 +77,10 @@ public class FriendTest {
 
     @Test
     public void testAdd() {
-        FirebaseFriendList mockFriendList = Mockito.mock(FirebaseFriendList.class);
 
         String email = "user@example.com";
-        mockFriendList.addFriend(email);
+        emailInput.setText(email);
+        addButton.performClick();
 
         Mockito.verify(mockFriendList, Mockito.atLeastOnce()).addFriend(email);
     }
