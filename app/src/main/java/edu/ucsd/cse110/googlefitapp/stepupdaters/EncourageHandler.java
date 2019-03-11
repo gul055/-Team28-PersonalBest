@@ -7,6 +7,9 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
+import edu.ucsd.cse110.googlefitapp.Friends.IFriendObserver;
+import edu.ucsd.cse110.googlefitapp.Friends.MyFriendList;
+
 import static edu.ucsd.cse110.googlefitapp.Constants.MAIN;
 import static edu.ucsd.cse110.googlefitapp.Constants.MINIMUM_SUB_GOAL;
 import static edu.ucsd.cse110.googlefitapp.Constants.PREV_MSG_TIME_LIMIT;
@@ -23,10 +26,10 @@ public class EncourageHandler {
     private static StepUpdater stepUpdater;
     private static EncourageFactory encourageFactory;
     private static long prevSteps;
-    public static Calendar calendar;
     public static boolean debug;
+    private static Calendar calendar;
 
-    public EncourageHandler(Context context, StepUpdater stepUpdater) {
+    public EncourageHandler(Context context, StepUpdater stepUpdater, MyFriendList friendsList) {
         this.context = context;
         this.stepUpdater = stepUpdater;
         encourageFactory = new EncourageFactory();
@@ -36,6 +39,7 @@ public class EncourageHandler {
         SubEncourageGiven = false;
         PreviousEncourageGiven = false;
         prevSteps = 0;
+        this.friendsList = friendsList;
         calendar = Calendar.getInstance();
         debug = false;
     }
@@ -45,32 +49,12 @@ public class EncourageHandler {
         return stepUpdater.getTotalSteps();
     }
 
-    public EncourageMsg getPastEncouragement() {
-        return pastEncouragement;
-    }
-
     public EncourageMsg getCurrEncouragement() {
         return currEncouragement;
     }
 
-    public boolean isPreviousEncourageGiven() {
-        return PreviousEncourageGiven;
-    }
-
-    public boolean isSubEncourageGiven() {
-        return SubEncourageGiven;
-    }
-
     public boolean isMainEncourageGiven() {
         return MainEncourageGiven;
-    }
-
-    public void setPrevSteps(long steps) {
-        prevSteps = steps;
-    }
-
-    public long getPrevSteps() {
-        return prevSteps;
     }
 
     public void setHour(int hour) {
@@ -80,6 +64,13 @@ public class EncourageHandler {
     public void setDebug(boolean state) {
         debug = state;
     }
+
+
+    /**
+     * onStateChange() - updates the noFriends field to determine if automatic encouragment will be
+     *                   given
+     */
+
 
     /**
      * prevMsgTimeLimit() - determines if a previous sub-goal message should be displayed based on
@@ -143,6 +134,7 @@ public class EncourageHandler {
                     "for date:" +
                     currEncouragement.getDate().toString());
         }
+
         giveEncouragement();
     }
 
@@ -177,26 +169,12 @@ public class EncourageHandler {
      * 3. Displays as most 1 Sub goal met if on the same day
      */
     public void giveEncouragement() {
-        if (pastEncouragement != null) {
-            if (!PreviousEncourageGiven && pastEncouragement != null && beforePrevTimeLimit()) {
-                Toast.makeText(context, pastEncouragement.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("PAST_ENCOURAGEMENT", "Previous day encouragement given");
-                pastEncouragement = null;
-                PreviousEncourageGiven = true;
-            }
-        }
         if (currEncouragement != null) {
             if (!MainEncourageGiven && currEncouragement.getClass() == MainEncourageMsg.class) {
                 Toast.makeText(context, currEncouragement.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("MAIN_ENCOURAGEMENT", "Main goal encouragement given");
                 currEncouragement = null;
                 MainEncourageGiven = true;
-            } else if (!SubEncourageGiven && currEncouragement.getClass() == SubEncourageMsg.class
-                    && afterSubTimeLimit()) {
-                Toast.makeText(context, currEncouragement.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("SUB_ENCOURAGEMENT", "Subgoal encouragement given");
-                currEncouragement = null;
-                SubEncourageGiven = true;
             }
         }
     }
