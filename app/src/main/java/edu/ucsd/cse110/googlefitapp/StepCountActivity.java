@@ -65,8 +65,8 @@ public class StepCountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
-        FirebaseApp.initializeApp(this);
-        /*GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        /*FirebaseApp.initializeApp(this);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             String personEmail = acct.getEmail();
             Toast.makeText(this, personEmail, Toast.LENGTH_LONG).show();
