@@ -55,7 +55,13 @@ public class StepCountActivity extends AppCompatActivity {
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
     private static final String TAG = "StepCountActivity";
     SharedPreferences heightSharedPref, walkRunSharedPref;
-    Button startStopBtn, setGoalBtn, mockSteps, setTime, weeklySnapshot, goToFriends, chatButton, testFriendsBtn;
+    Button startStopBtn;
+    Button setGoalBtn;
+    Button mockSteps;
+    Button setTime;
+    Button weeklySnapshot;
+    Button goToFriends;
+    Button chatButton;
     WalkRun myWalkRun;
     private AbstractCalendar calendar;
     private FitnessService fitnessService;
@@ -241,15 +247,6 @@ public class StepCountActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), FriendViewActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        testFriendsBtn = findViewById(R.id.testFriendsBtn);
-        testFriendsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), FriendTestActivity.class);
                 startActivity(intent);
             }
         });
