@@ -72,7 +72,7 @@ public class StepCountActivity extends AppCompatActivity {
             Toast.makeText(this, personEmail, Toast.LENGTH_LONG).show();
         }*/
 
-            stepProgress = new MockStepUpdater(getApplicationContext());
+        stepProgress = new MockStepUpdater(getApplicationContext());
 
         chatButton = findViewById(R.id.chat_button);
         chatButton.setOnClickListener(new View.OnClickListener() {
@@ -98,10 +98,10 @@ public class StepCountActivity extends AppCompatActivity {
         textGoal = findViewById(R.id.textGoal);
         final String fitnessServiceKey = getIntent().getStringExtra(FITNESS_SERVICE_KEY);
         fitnessService = FitnessServiceFactory.create(fitnessServiceKey, this);
+        fitnessService.setup();
         stepLogger = new StepLogger(this);
         calendar = new CalendarAdapter();
 
-        fitnessService.setup();
 
         // Create all buttons
         startStopBtn = (Button) findViewById(R.id.startStopBtn);

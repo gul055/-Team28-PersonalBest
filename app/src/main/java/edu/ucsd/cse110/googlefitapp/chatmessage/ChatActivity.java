@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.CollectionReference;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -47,12 +48,26 @@ public class ChatActivity extends AppCompatActivity {
         from = sharedpreferences.getString(FROM_KEY, null);
 
         String stringExtra = getIntent().getStringExtra(CHAT_MESSAGE_SERVICE_EXTRA);
-        chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
 
-        initMessageUpdateListener();
+        //ALL FUNCTIONS THAT USE DATABASE MUST BE CALLED IN ONCALLBACK
+        //This is because grabbing data is asynchronous!
+        FirebaseFirestoreAdapter
+                .setInstance(new CollectionCallback() {
+                    @Override
+                    public void onCallback(CollectionReference collection) {
+                        if(collection != null) {
+                            FirebaseFirestoreAdapter.setSingeleton(new FirebaseFirestoreAdapter(collection));
+                            chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
+                        }
+                        else{
+                            chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
+                        }
+                        initMessageUpdateListener();
+                        subscribeToNotificationsTopic();
+                    }
+                });
 
         findViewById(R.id.btn_send).setOnClickListener(view -> sendMessage());
-        subscribeToNotificationsTopic();
 
         EditText nameView = findViewById(R.id.user_name);
         nameView.setText(from);
@@ -91,6 +106,13 @@ public class ChatActivity extends AppCompatActivity {
         }).addOnFailureListener(error -> {
             Log.e(TAG, error.getLocalizedMessage());
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        //So singeleton may be reused.
+        super.onDestroy();
+        FirebaseFirestoreAdapter.setSingeleton(null);
     }
 
     private void initMessageUpdateListener() {
