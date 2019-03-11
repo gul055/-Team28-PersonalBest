@@ -1,6 +1,7 @@
 package edu.ucsd.cse110.googlefitapp.chatmessage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,7 @@ public class ChatActivity extends AppCompatActivity {
     ChatMessageService chat;
     String from;
 
+    //TODO: Get given email to work with text
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,31 +47,29 @@ public class ChatActivity extends AppCompatActivity {
 
         SharedPreferences sharedpreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
-        from = sharedpreferences.getString(FROM_KEY, null);
+        Intent intent = getIntent();
 
+        from = intent.getExtras().getString("yourID");
+
+        String yourID = from.replace(".", ",");
+        String toID = intent.getExtras().getString("friendID").replace(".", ",");
         String stringExtra = getIntent().getStringExtra(CHAT_MESSAGE_SERVICE_EXTRA);
 
+        Log.d("YOURID COMMA", yourID);
+        Log.d("THEIRID COMMA", toID);
         //ALL FUNCTIONS THAT USE DATABASE MUST BE CALLED IN ONCALLBACK
         //This is because grabbing data is asynchronous!
-        FirebaseFirestoreAdapter
-                .setInstance(new CollectionCallback() {
-                    @Override
-                    public void onCallback(CollectionReference collection) {
-                        if(collection != null) {
-                            FirebaseFirestoreAdapter.setSingeleton(new FirebaseFirestoreAdapter(collection));
-                            chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
-                        }
-                        else{
-                            chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
-                        }
-                        initMessageUpdateListener();
-                        subscribeToNotificationsTopic();
-                    }
-                });
+        FirebaseFirestoreAdapter.checkInstance(new Callback() {
+            @Override
+            public void onCallback() {
+                grabData(yourID, toID, stringExtra);
+            }
+        },
+        yourID, toID);
 
         findViewById(R.id.btn_send).setOnClickListener(view -> sendMessage());
 
-        EditText nameView = findViewById(R.id.user_name);
+        TextView nameView = findViewById(R.id.user_name);
         nameView.setText(from);
         nameView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,11 +88,30 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    private void grabData(String yourID, String toID, String stringExtra) {
+        FirebaseFirestoreAdapter
+                .setInstance(new CollectionCallback() {
+                    @Override
+                    public void onCallback(CollectionReference collection) {
+                        if(collection != null) {
+                            FirebaseFirestoreAdapter.setSingeleton(new FirebaseFirestoreAdapter(collection));
+                            chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
+                        }
+                        else{
+                            chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
+                        }
+                        initMessageUpdateListener();
+                        subscribeToNotificationsTopic();
+                    }},
+                        yourID,
+                        toID);
+    }
+
     private void sendMessage() {
-        if (from == null || from.isEmpty()) {
+        /*if (from == null || from.isEmpty()) {
             Toast.makeText(this, "Enter your name", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         EditText messageView = findViewById(R.id.text_message);
 

@@ -9,20 +9,22 @@ import android.widget.LinearLayout;
 
 import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.FriendMessagesViewActivity;
-import edu.ucsd.cse110.googlefitapp.chatmessage.ChatActivity;
+import edu.ucsd.cse110.googlefitapp.Utils.GoogleUserUtil;
 
 public class FriendMessageUpdater implements IFriendObserver {
     LinearLayout friendContainer;
     FriendMessagesViewActivity activity;
+    Context context;
     View.OnClickListener clickOnFriend;
 
-    public FriendMessageUpdater(FriendMessagesViewActivity activity, LinearLayout layout){
+    public FriendMessageUpdater(Context context, FriendMessagesViewActivity activity, LinearLayout layout){
+        this.context = context;
         friendContainer = layout;
         clickOnFriend = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Button b = (Button) view;
-                activity.launchChatActivity(b.getText(), );
+                activity.launchChatActivity(b.getText().toString(), GoogleUserUtil.getEmail(activity));
             }
         };
     }
@@ -31,7 +33,7 @@ public class FriendMessageUpdater implements IFriendObserver {
         Log.d(Constants.FRIEND_TAG, "Creating a button for " + email);
 
         // Create the Friend button element
-        Button friend = new Button(activity);
+        Button friend = new Button(context);
         friend.setTag(email);
         friend.setText(email);
         friend.setOnClickListener(clickOnFriend);

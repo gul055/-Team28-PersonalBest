@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
@@ -14,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -34,6 +36,7 @@ public class FirebaseFirestoreAdapter implements ChatMessageService {
     private static final String TIMESTAMP_KEY = "timestamp";
     private static final String FROM_KEY = "from";
     private static final String TEXT_KEY = "text";
+    private static final String FRIENDPAIR = "friendPair";
 
     private CollectionReference chat;
 
@@ -51,19 +54,50 @@ public class FirebaseFirestoreAdapter implements ChatMessageService {
         return singeleton;
     }
 
+    //TODO: CALLBACK HERE
+    public static void checkInstance(Callback callback, String yourID, String friendID){
+        FirebaseFirestore fb = FirebaseFirestore.getInstance();
+        Log.d("YOUR ID PAIR", FRIENDPAIR + "." + yourID);
+        Log.d("YOUR FRIEND PAIR", FRIENDPAIR + "." + friendID);
+        Task<QuerySnapshot> task = fb.collection(COLLECTION_KEY)
+                .whereEqualTo(FRIENDPAIR + "." + yourID, true)
+                .whereEqualTo(FRIENDPAIR + "." + friendID, true)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        QuerySnapshot snap = task.getResult();
+                        List<DocumentSnapshot> list = snap.getDocuments();
+                        Log.d("LIST SIZE", String.valueOf(list.size()));
+                        if(list.size() == 0){
+                            Log.d("LIST DOES NOT EXIST", String.valueOf(false));
+                            Map<String, Object> friendMap = new HashMap<>();
+                            friendMap.put(yourID, true);
+                            friendMap.put(friendID, true);
+                            Map<String, Object> friendPair = new HashMap<>();
+                            friendPair.put("friendPair", friendMap);
+                            Log.d("NEWDATA", "Created new data for " + yourID + " " + friendID);
+                            fb.collection(COLLECTION_KEY).document().set(friendPair);
+                        }
+                        else{
+                            Log.d("LIST DOES EXIST", String.valueOf(true));
+                        }
+                        callback.onCallback();
+                    }
+                });
+    }
+
     //TODO: Change so it uses the correct keys :)
     public static void setInstance(CollectionCallback callback, String yourID, String friendID) {
         if (singeleton == null) {
             //TODO: Grab user ID and friendID on button click.
-            String friendPair = "friendPair";
-            //String yourID = "goodbye";
-            //String friendID = "hello";
+            //TODO: Also need to add case for when it doesnt exist.
             Log.d("BEFOREQUER", "query");
             FirebaseFirestore fb = FirebaseFirestore.getInstance();
 
             Task<QuerySnapshot> task = fb.collection(COLLECTION_KEY)
-                    .whereEqualTo(friendPair + "." + yourID, true)
-                    .whereEqualTo(friendPair + "." + friendID, true)
+                    .whereEqualTo(FRIENDPAIR + "." + yourID, true)
+                    .whereEqualTo(FRIENDPAIR + "." + friendID, true)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -81,7 +115,6 @@ public class FirebaseFirestoreAdapter implements ChatMessageService {
             Log.d("NOTNULL", "Singeleton was not null!");
             callback.onCallback(null);
         }
-        /*return singeleton;*/
     }
 
     @Override

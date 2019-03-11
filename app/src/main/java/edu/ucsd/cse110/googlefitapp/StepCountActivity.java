@@ -78,7 +78,7 @@ public class StepCountActivity extends AppCompatActivity {
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StepCountActivity.this, ChatActivity.class);
+                Intent intent = new Intent(getApplicationContext(), FriendMessagesViewActivity.class);
                 startActivity(intent);
             }
         });

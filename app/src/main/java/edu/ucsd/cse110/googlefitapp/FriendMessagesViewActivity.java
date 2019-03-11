@@ -22,10 +22,6 @@ import edu.ucsd.cse110.googlefitapp.chatmessage.ChatActivity;
 
 public class FriendMessagesViewActivity extends AppCompatActivity {
     ScrollView friendView;
-    Button friend;
-    Button addFriendBtn;
-    EditText emailText;
-    View.OnClickListener clickOnFriend;
     LinearLayout friendContainer;
     String myEmail;
 
@@ -35,11 +31,11 @@ public class FriendMessagesViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friend_view);
+        setContentView(R.layout.activity_friend_message_view);
 
         // set up elements
-        friendView = this.findViewById(R.id.friendView);
-        friendContainer = friendView.findViewById(R.id.friendContainer);
+        friendView = this.findViewById(R.id.friendView2);
+        friendContainer = friendView.findViewById(R.id.friendContainer2);
 
         //get user email
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
@@ -49,7 +45,7 @@ public class FriendMessagesViewActivity extends AppCompatActivity {
 
         // friend list subject and listener
         myFriends = new FirebaseFriendList(this.getApplicationContext(), myEmail);
-        friendUpdater = new FriendMessageUpdater(this.getApplicationContext(), friendContainer);
+        friendUpdater = new FriendMessageUpdater(this.getApplication(), FriendMessagesViewActivity.this, friendContainer);
         myFriends.register(friendUpdater);
 
         // Load friends
@@ -58,7 +54,7 @@ public class FriendMessagesViewActivity extends AppCompatActivity {
         // add friend's email to friend list
     }
 
-    public void launchChatActivity(String yourID, String friendID){
+    public void launchChatActivity(String friendID, String yourID){
         Intent intent = new Intent(this, ChatActivity.class);
         intent.putExtra("yourID", yourID);
         intent.putExtra("friendID", friendID);

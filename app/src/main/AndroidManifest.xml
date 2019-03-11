@@ -25,6 +25,7 @@
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity android:name=".chatmessage.ChatActivity"></activity>
+        <activity android:name=".FriendMessagesViewActivity"></activity>
     </application>
 
 </manifest>
