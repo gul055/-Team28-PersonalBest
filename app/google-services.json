@@ -1,42 +1,20 @@
 {
   "project_info": {
-<<<<<<< HEAD
-    "project_number": "21049369804",
-    "firebase_url": "https://lab8-f5241.firebaseio.com",
-    "project_id": "lab8-f5241",
-    "storage_bucket": "lab8-f5241.appspot.com"
-=======
     "project_number": "1094347304154",
     "firebase_url": "https://team28-personalbest-a58ea.firebaseio.com",
     "project_id": "team28-personalbest-a58ea",
     "storage_bucket": "team28-personalbest-a58ea.appspot.com"
->>>>>>> 0837ad998215b2396d167f9cf37cf8ee22d496a8
   },
   "client": [
     {
       "client_info": {
-<<<<<<< HEAD
-        "mobilesdk_app_id": "1:21049369804:android:b5b6cc05ef515f2d",
-=======
         "mobilesdk_app_id": "1:1094347304154:android:b5b6cc05ef515f2d",
->>>>>>> 0837ad998215b2396d167f9cf37cf8ee22d496a8
         "android_client_info": {
           "package_name": "edu.ucsd.cse110.googlefitapp"
         }
       },
       "oauth_client": [
         {
-<<<<<<< HEAD
-          "client_id": "21049369804-tgr79ngi8aoco9m3oj6sue0ak87ino1b.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "edu.ucsd.cse110.googlefitapp",
-            "certificate_hash": "9047e155f81897d5ee0aeb3808fdbaf9967c5bb2"
-          }
-        },
-        {
-          "client_id": "21049369804-ah3ehkcnh7b4q6ip58f55qvli3t9jl0r.apps.googleusercontent.com",
-=======
           "client_id": "1094347304154-9e3clnfsjdtr1s53pmgb65d1jn358m86.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -46,17 +24,12 @@
         },
         {
           "client_id": "1094347304154-8ou0n2lhe398pc60mqtrf0p8tr8cqvre.apps.googleusercontent.com",
->>>>>>> 0837ad998215b2396d167f9cf37cf8ee22d496a8
           "client_type": 3
         }
       ],
       "api_key": [
         {
-<<<<<<< HEAD
-          "current_key": "AIzaSyDvkNs9u2lIctZl2xwYhmSWPlvfu4zxS8o"
-=======
           "current_key": "AIzaSyAs4VlJYfyhZgm46LKUrO53gzvaX0TEIhY"
->>>>>>> 0837ad998215b2396d167f9cf37cf8ee22d496a8
         }
       ],
       "services": {
@@ -67,11 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-<<<<<<< HEAD
-              "client_id": "21049369804-ah3ehkcnh7b4q6ip58f55qvli3t9jl0r.apps.googleusercontent.com",
-=======
               "client_id": "1094347304154-8ou0n2lhe398pc60mqtrf0p8tr8cqvre.apps.googleusercontent.com",
->>>>>>> 0837ad998215b2396d167f9cf37cf8ee22d496a8
               "client_type": 3
             }
           ]
