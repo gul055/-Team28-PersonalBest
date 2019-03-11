@@ -55,7 +55,13 @@ public class StepCountActivity extends AppCompatActivity {
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
     private static final String TAG = "StepCountActivity";
     SharedPreferences heightSharedPref, walkRunSharedPref;
-    Button startStopBtn, setGoalBtn, mockSteps, setTime, weeklySnapshot, goToFriends, chatButton;
+    Button startStopBtn;
+    Button setGoalBtn;
+    Button mockSteps;
+    Button setTime;
+    Button weeklySnapshot;
+    Button goToFriends;
+    Button chatButton;
     WalkRun myWalkRun;
     private AbstractCalendar calendar;
     private FitnessService fitnessService;
@@ -65,8 +71,8 @@ public class StepCountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
-        FirebaseApp.initializeApp(this);
-        /*GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        /*FirebaseApp.initializeApp(this);
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             String personEmail = acct.getEmail();
             Toast.makeText(this, personEmail, Toast.LENGTH_LONG).show();
