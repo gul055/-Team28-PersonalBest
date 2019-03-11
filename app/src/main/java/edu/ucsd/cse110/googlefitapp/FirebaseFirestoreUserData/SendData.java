@@ -27,7 +27,6 @@ public class SendData {
         Map<String, Object> singleDataMap = new HashMap<>();
         singleDataMap.put(tag, data);
 
-        DataService adapter = StepDataAdapter.getInstance(context);
         adapter.addData(singleDataMap);
     }
 

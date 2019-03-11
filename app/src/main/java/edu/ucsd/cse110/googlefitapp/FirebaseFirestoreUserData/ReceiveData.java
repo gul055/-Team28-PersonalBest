@@ -7,8 +7,8 @@ public class ReceiveData {
     Context context;
     DataService adapter;
 
-    public ReceiveData(Context c){
+    public ReceiveData(Context c, String email){
         context = c;
-        adapter = StepDataAdapter.getInstance(c);
+        adapter = StepDataAdapter.getInstance(email);
     }
 }
