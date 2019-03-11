@@ -1,6 +1,13 @@
 package edu.ucsd.cse110.googlefitapp;
 
 public final class Constants {
+    // Log tags
+    public static final String FRIEND_TAG = "FRIEND";
+    public static final String ON_WALK_TAG = "on_walk";
+    public static final String DAILY_STEPS_TAG = "daily_steps";
+    public static final String TOTAL_STEPS_TAG = "total_steps";
+    public static final String GOAL_MET_TAG = "goal_met";
+
     public static final int MINIMUM_VALID_GOAL = 100;
     public static final int MINIMUM_SUB_GOAL = 500;
     public static final String GOAL = "goal";
@@ -9,6 +16,7 @@ public final class Constants {
     public static final String NO_GOAL = "No goal inputted!";
     public static final String START_WALK = "Start Walk/Run";
     public static final String STOP_WALK = "Stop Walk/Run";
+<<<<<<< HEAD
     public static final String MAIN_ENCOURAGEMENT = "Congratulations, you reached your daily step Goal!";
     public static final String SUB_ENCOURAGEMENT1 = "You've increased your daily steps by over ";
     public static final String SUB_ENCOURAGEMENT2 = " steps. Keep up the good work!";
@@ -20,14 +28,16 @@ public final class Constants {
     public static final String DAILY_STEPS_TAG = "daily_steps";
     public static final String TOTAL_STEPS_TAG = "total_steps";
     public static final String GOAL_MET_TAG = "goal_met";
+=======
+>>>>>>> 0837ad998215b2396d167f9cf37cf8ee22d496a8
     public static final String DAILY_STEP_KEY = "daily_step";
-    public static final String ON_WALK_TAG = "on_walk";
     public static final String HEIGHT_PREF = "height_data";
     public static final String HEIGHT = "height";
     public static final String WALKRUN_PREF = "walkrun_data";
     public static final String INTENTIONAL = "intentional_steps";
     public static final String NOT_NOW_PRESS = "notNowListener";
     public static final String ADDITIONAL_STEPS = "additional_steps";
+    public static final String FRIEND_PREF = "friend_list";
 
     /*WalkRun SharedPref Tags*/
     public static final String HEIGHT_TAG = "height";
@@ -64,4 +74,7 @@ public final class Constants {
     public static final String INCIDENTAL_STEP = "Incidental Steps";
     public static final String GOAL_LABEL = "Daily Goals";
     public static final float GRANULARITY = 1f;
+
+    // Email constant
+    public static final String EXAMPLE_EMAIL = "arrestrose@gmail.com";
 }

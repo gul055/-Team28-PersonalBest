@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.FirebaseApp;
 
 import java.time.LocalDateTime;
@@ -25,12 +27,21 @@ import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
+<<<<<<< HEAD
 import edu.ucsd.cse110.googlefitapp.Chat.ChatActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.promptGoal;
 import edu.ucsd.cse110.googlefitapp.Graph.GraphActivity;
 import edu.ucsd.cse110.googlefitapp.Utils.CalendarStringBuilderUtil;
 import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
+=======
+import edu.ucsd.cse110.googlefitapp.chatmessage.ChatActivity;
+import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
+import edu.ucsd.cse110.googlefitapp.Goals.promptGoal;
+import edu.ucsd.cse110.googlefitapp.Graph.GraphActivity;
+import edu.ucsd.cse110.googlefitapp.Height.HeightLogger;
+import edu.ucsd.cse110.googlefitapp.Height.HeightPrompt;
+>>>>>>> 0837ad998215b2396d167f9cf37cf8ee22d496a8
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.EncourageHandler;
@@ -54,7 +65,7 @@ public class StepCountActivity extends AppCompatActivity {
     public static final String FITNESS_SERVICE_KEY = "FITNESS_SERVICE_KEY";
     private static final String TAG = "StepCountActivity";
     SharedPreferences heightSharedPref, walkRunSharedPref;
-    Button startStopBtn, setGoalBtn, mockSteps, setTime, weeklySnapshot, chatButton;
+    Button startStopBtn, setGoalBtn, mockSteps, setTime, weeklySnapshot, goToFriends, chatButton;
     WalkRun myWalkRun;
     private AbstractCalendar calendar;
     private EncourageHandler encourageHandler;
@@ -65,10 +76,20 @@ public class StepCountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_count);
+        FirebaseApp.initializeApp(this);
+        /*GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        if (acct != null) {
+            String personEmail = acct.getEmail();
+            Toast.makeText(this, personEmail, Toast.LENGTH_LONG).show();
+        }*/
 
+<<<<<<< HEAD
         stepProgress = new StepUpdater(getApplicationContext());
         encourageHandler = new EncourageHandler(getApplicationContext(), stepProgress);
         stepProgress = new MockStepUpdater(getApplicationContext());
+=======
+            stepProgress = new MockStepUpdater(getApplicationContext());
+>>>>>>> 0837ad998215b2396d167f9cf37cf8ee22d496a8
 
         chatButton = findViewById(R.id.chat_button);
         chatButton.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +126,7 @@ public class StepCountActivity extends AppCompatActivity {
         mockSteps = findViewById(R.id.mock_steps);
         setTime = findViewById(R.id.set_time);
         weeklySnapshot = findViewById(R.id.weekly_snapshot);
+        goToFriends = findViewById(R.id.goToFriendsBtn);
 
         startStopBtn.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.O)
@@ -228,7 +250,14 @@ public class StepCountActivity extends AppCompatActivity {
             public void onClick(View view) {
                 AsyncTaskRunner runner = new AsyncTaskRunner();
                 runner.execute();
-                Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+            }
+        });
+
+        goToFriends = findViewById(R.id.goToFriendsBtn);
+        goToFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), FriendViewActivity.class);
                 startActivity(intent);
             }
         });
@@ -240,6 +269,7 @@ public class StepCountActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+<<<<<<< HEAD
 
         encourageHandler.update();
 
@@ -271,8 +301,29 @@ public class StepCountActivity extends AppCompatActivity {
         /*Set the steps for stepUpdater*/
         stepProgress.setTotalSteps(SharedPreferencesUtil.loadLong(this, Constants.TOTAL_STEPS_TAG));
 
+=======
 
-        String goalTag = CalendarStringBuilderUtil.stringBuilderCalendar(calendar, "goal");
+        if (heightLogger.readHeight() == 0) {
+            Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
+            startActivity(intent);
+            return;
+        }
+
+        long height = heightSharedPref.getLong(HEIGHT, 0);
+        fitnessService.updateStepCount();
+        long goalSet = SharedPreferencesUtil.loadLong(this, Constants.GOAL);
+
+        /*Set goal*/
+        //TODO: SRP this pls
+        if (goalSet == -1) {
+            stepProgress.setDailyGoal(Constants.DEFAULT_GOAL);
+            SharedPreferencesUtil.saveLong(this, Constants.GOAL, Constants.DEFAULT_GOAL);
+        } else {
+            stepProgress.setDailyGoal(goalSet);
+        }
+>>>>>>> 0837ad998215b2396d167f9cf37cf8ee22d496a8
+
+        String goalTag = CalendarStringBuilderUtil.stringBuilderCalendar(calendar, Constants.GOAL);
         Log.d("GOAL_KEY", goalTag);
         SharedPreferencesUtil.saveLong(this, goalTag, stepProgress.getDailyGoal());
 
@@ -310,8 +361,8 @@ public class StepCountActivity extends AppCompatActivity {
     public void setStepCount(long stepCount) {
         Log.d("STEPCOUNT", String.valueOf(stepCount));
         SharedPreferencesUtil.saveLong(this, Constants.DAILY_STEP_KEY, stepCount);
-        stepProgress.setTotalSteps(stepCount);
-        textSteps.setText(String.valueOf(stepCount));
+        stepProgress.setTotalSteps(stepCount, calendar);
+        textSteps.setText(String.valueOf(stepProgress.getTotalSteps()));
         Log.d("LOAD_UTILDAILYSTEP", String.valueOf(SharedPreferencesUtil.loadLong(this, Constants.DAILY_STEP_KEY)));
         displayStepData();
         updateGoal();
@@ -359,19 +410,13 @@ public class StepCountActivity extends AppCompatActivity {
     public void updateGoal() {
         boolean isStarted = SharedPreferencesUtil.loadBoolean(this, STARTED_TAG);
         if (isStarted) {
-            int startSteps = SharedPreferencesUtil.loadInt(this, STARTSTEPS_TAG);
-            Log.d("PROGRESS_STARTSTEPS", String.valueOf(startSteps));
             Log.d("STEPPROGRESS TOTALSTEPS", String.valueOf(stepProgress.getTotalSteps()));
 
-            stepProgress.setGoalSteps(stepProgress.getTotalSteps() - (long) startSteps);
-            long currentProgress = stepProgress.getGoalProgress();
-            if (currentProgress <= 0) {
+            if (stepProgress.getTotalSteps() >= stepProgress.getDailyGoal()) {
                 //Ends the run!
                 long timesGoalMet = SharedPreferencesUtil.loadLong(this, Constants.GOAL_MET_TAG);
                 SharedPreferencesUtil.saveLong(this, Constants.GOAL_MET_TAG, timesGoalMet + 1);
                 startStopBtn.performClick();
-            } else {
-                textGoal.setText(String.valueOf(currentProgress));
             }
             Log.d("GOAL_ON_RESUME", String.valueOf(stepProgress.getDailyGoal()));
             Log.d("GOAL_PROGRESS", String.valueOf(stepProgress.getGoalProgress()));

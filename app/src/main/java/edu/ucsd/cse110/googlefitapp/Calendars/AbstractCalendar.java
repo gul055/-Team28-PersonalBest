@@ -51,7 +51,30 @@ public abstract class AbstractCalendar {
         }
 
         // Revert date upon ending
-        calendar.add(Calendar.DATE, -Constants.WEEK_SIZE + 1);
+        calendar.add(Calendar.DATE, -Constants.WEEK_SIZE);
+
+        return week;
+    }
+
+    // Gets the current day and previous 6 days
+    public String[] getLast7Days(boolean withYear) {
+
+        calendar.add(Calendar.DATE, -Constants.WEEK_SIZE);
+
+        String[] week = new String[Constants.WEEK_SIZE];
+
+        for (int day = 0; day < Constants.WEEK_SIZE; day++) {
+            if (withYear) {
+                week[day] = getYearMonthDay();
+                Log.d("Generating date:", week[day]);
+            } else {
+                week[day] = getMonthDay();
+                Log.d("Generating date:", week[day]);
+            }
+
+            // Increment date
+            calendar.add(Calendar.DATE, 1);
+        }
 
         return week;
     }
