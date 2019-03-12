@@ -71,4 +71,12 @@ public final class Constants {
 
     // FirebaseFirestore constant
     public static final String STEPDATA = "stepdata";
+
+    // Chat Constants
+    public static final String COLLECTION_KEY = "chats";
+    public static final String MESSAGES_KEY = "messages";
+    public static final String TIMESTAMP_KEY = "timestamp";
+    public static final String FROM_KEY = "from";
+    public static final String TEXT_KEY = "text";
+    public static final String FRIENDPAIR = "friendPair";
 }

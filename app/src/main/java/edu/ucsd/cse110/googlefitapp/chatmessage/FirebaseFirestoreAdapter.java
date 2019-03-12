@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import static edu.ucsd.cse110.googlefitapp.Constants.*;
 import static edu.ucsd.cse110.googlefitapp.chatmessage.ChatCollectionStorage.getCollection;
 import static edu.ucsd.cse110.googlefitapp.chatmessage.ChatCollectionStorage.setCollection;
 
@@ -29,14 +30,6 @@ public class FirebaseFirestoreAdapter implements ChatMessageService {
     private static FirebaseFirestoreAdapter singeleton;
 
     private static final String TAG = FirebaseFirestoreAdapter.class.getSimpleName();
-
-    private static final String COLLECTION_KEY = "chats";
-    private static final String DOCUMENT_KEY = "chat4";
-    private static final String MESSAGES_KEY = "messages";
-    private static final String TIMESTAMP_KEY = "timestamp";
-    private static final String FROM_KEY = "from";
-    private static final String TEXT_KEY = "text";
-    private static final String FRIENDPAIR = "friendPair";
 
     private CollectionReference chat;
 

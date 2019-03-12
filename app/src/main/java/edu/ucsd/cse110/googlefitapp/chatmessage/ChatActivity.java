@@ -19,12 +19,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.R;
 import edu.ucsd.cse110.googlefitapp.notification.FirebaseCloudMessagingAdapter;
 import edu.ucsd.cse110.googlefitapp.notification.NotificationService;
 import edu.ucsd.cse110.googlefitapp.notification.NotificationServiceFactory;
 
+import static edu.ucsd.cse110.googlefitapp.Constants.FROM_KEY;
+import static edu.ucsd.cse110.googlefitapp.Constants.TEXT_KEY;
+import static edu.ucsd.cse110.googlefitapp.Constants.TIMESTAMP_KEY;
+
 public class ChatActivity extends AppCompatActivity {
+    /*These are used for something else, don't put in Constants file!*/
     public static final String SHARED_PREFERENCES_NAME = "FirebaseLabApp";
     public static final String CHAT_MESSAGE_SERVICE_EXTRA = "CHAT_MESSAGE_SERVICE";
     public static final String NOTIFICATION_SERVICE_EXTRA = "NOTIFICATION_SERVICE";
@@ -32,9 +38,6 @@ public class ChatActivity extends AppCompatActivity {
     String TAG = ChatActivity.class.getSimpleName();
 
     String DOCUMENT_KEY = "chat1";
-    String FROM_KEY = "from";
-    String TEXT_KEY = "text";
-    String TIMESTAMP_KEY = "timestamp";
 
     ChatMessageService chat;
     String from;
