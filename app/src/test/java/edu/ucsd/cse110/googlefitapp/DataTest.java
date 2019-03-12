@@ -42,7 +42,7 @@ public class DataTest {
     @Before
     public void setUp() throws Exception {
         context = getInstrumentation().getTargetContext();
-        FirebaseApp.initializeApp(context);
+        //FirebaseApp.initializeApp(context);
         gUtil = mock(GoogleUserUtil.class);
     }
 
