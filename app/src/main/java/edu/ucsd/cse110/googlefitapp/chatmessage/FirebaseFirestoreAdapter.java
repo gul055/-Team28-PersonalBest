@@ -56,35 +56,36 @@ public class FirebaseFirestoreAdapter implements ChatMessageService {
 
     //TODO: CALLBACK HERE
     public static void checkInstance(Callback callback, String yourID, String friendID){
-        FirebaseFirestore fb = FirebaseFirestore.getInstance();
-        Log.d("YOUR ID PAIR", FRIENDPAIR + "." + yourID);
-        Log.d("YOUR FRIEND PAIR", FRIENDPAIR + "." + friendID);
-        Task<QuerySnapshot> task = fb.collection(COLLECTION_KEY)
-                .whereEqualTo(FRIENDPAIR + "." + yourID, true)
-                .whereEqualTo(FRIENDPAIR + "." + friendID, true)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        QuerySnapshot snap = task.getResult();
-                        List<DocumentSnapshot> list = snap.getDocuments();
-                        Log.d("LIST SIZE", String.valueOf(list.size()));
-                        if(list.size() == 0){
-                            Log.d("LIST DOES NOT EXIST", String.valueOf(false));
-                            Map<String, Object> friendMap = new HashMap<>();
-                            friendMap.put(yourID, true);
-                            friendMap.put(friendID, true);
-                            Map<String, Object> friendPair = new HashMap<>();
-                            friendPair.put("friendPair", friendMap);
-                            Log.d("NEWDATA", "Created new data for " + yourID + " " + friendID);
-                            fb.collection(COLLECTION_KEY).document().set(friendPair);
+        if(singeleton == null) {
+            FirebaseFirestore fb = FirebaseFirestore.getInstance();
+            Log.d("YOUR ID PAIR", FRIENDPAIR + "." + yourID);
+            Log.d("YOUR FRIEND PAIR", FRIENDPAIR + "." + friendID);
+            Task<QuerySnapshot> task = fb.collection(COLLECTION_KEY)
+                    .whereEqualTo(FRIENDPAIR + "." + yourID, true)
+                    .whereEqualTo(FRIENDPAIR + "." + friendID, true)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            QuerySnapshot snap = task.getResult();
+                            List<DocumentSnapshot> list = snap.getDocuments();
+                            Log.d("LIST SIZE", String.valueOf(list.size()));
+                            if (list.size() == 0) {
+                                Log.d("LIST DOES NOT EXIST", String.valueOf(false));
+                                Map<String, Object> friendMap = new HashMap<>();
+                                friendMap.put(yourID, true);
+                                friendMap.put(friendID, true);
+                                Map<String, Object> friendPair = new HashMap<>();
+                                friendPair.put("friendPair", friendMap);
+                                Log.d("NEWDATA", "Created new data for " + yourID + " " + friendID);
+                                fb.collection(COLLECTION_KEY).document().set(friendPair);
+                            } else {
+                                Log.d("LIST DOES EXIST", String.valueOf(true));
+                            }
+                            callback.onCallback();
                         }
-                        else{
-                            Log.d("LIST DOES EXIST", String.valueOf(true));
-                        }
-                        callback.onCallback();
-                    }
-                });
+                    });
+        }
     }
 
     //TODO: Change so it uses the correct keys :)

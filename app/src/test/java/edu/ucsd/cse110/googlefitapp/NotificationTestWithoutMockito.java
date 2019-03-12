@@ -28,7 +28,7 @@ public class NotificationTestWithoutMockito {
 
     @Test
     public void subscribeToCorrectTopic() {
-        Intent intent = TestUtils.getMainActivityIntent(TestUtils.getChatMessageService(new ArrayList<>()), TestUtils.getNotificationService("chat1"));
+        Intent intent = TestUtils.getChatActivityIntent(TestUtils.getChatMessageService(new ArrayList<>()), TestUtils.getNotificationService("chat1"));
         ChatActivity activity = Robolectric.buildActivity(ChatActivity.class, intent).create().get();
     }
 }

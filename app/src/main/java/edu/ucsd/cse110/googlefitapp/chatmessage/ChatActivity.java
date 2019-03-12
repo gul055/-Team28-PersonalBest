@@ -59,13 +59,21 @@ public class ChatActivity extends AppCompatActivity {
         Log.d("THEIRID COMMA", toID);
         //ALL FUNCTIONS THAT USE DATABASE MUST BE CALLED IN ONCALLBACK
         //This is because grabbing data is asynchronous!
-        FirebaseFirestoreAdapter.checkInstance(new Callback() {
-            @Override
-            public void onCallback() {
-                grabData(yourID, toID, stringExtra);
-            }
-        },
-        yourID, toID);
+
+        //Check if a chat was already put into the intent.
+        chat = ChatMessageServiceFactory.getInstance().get(stringExtra);
+        if(chat == null){
+            FirebaseFirestoreAdapter.checkInstance(new Callback() {
+                @Override
+                 public void onCallback() {
+                     grabData(yourID, toID, stringExtra);
+                 }
+               },
+             yourID, toID);
+        }
+        else {
+            firebaseFunctionsUpdater();
+        }
 
         findViewById(R.id.btn_send).setOnClickListener(view -> sendMessage());
 
@@ -88,6 +96,11 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    private void firebaseFunctionsUpdater() {
+        initMessageUpdateListener();
+        subscribeToNotificationsTopic();
+    }
+
     private void grabData(String yourID, String toID, String stringExtra) {
         FirebaseFirestoreAdapter
                 .setInstance(new CollectionCallback() {
@@ -100,8 +113,7 @@ public class ChatActivity extends AppCompatActivity {
                         else{
                             chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
                         }
-                        initMessageUpdateListener();
-                        subscribeToNotificationsTopic();
+                        firebaseFunctionsUpdater();
                     }},
                         yourID,
                         toID);
