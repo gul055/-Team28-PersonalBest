@@ -62,4 +62,17 @@ public class SharedPreferencesUtil {
         boolean bool = sharedPreferences.getBoolean(name, false);
         return bool;
     }
+
+    public static void saveEmailLong(Context c, String email, String name, long value) {
+        SharedPreferences sharedPreferences = c.getSharedPreferences(email, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(name, value);
+        editor.apply();
+    }
+
+    public static long loadEmailLong(Context c, String email, String name) {
+        SharedPreferences sharedPreferences = c.getSharedPreferences(email, Context.MODE_PRIVATE);
+        long i = sharedPreferences.getLong(name, -1);
+        return i;
+    }
 }

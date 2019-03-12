@@ -1,12 +1,17 @@
 package edu.ucsd.cse110.googlefitapp;
 
 public final class Constants {
+    //database reference keys
+    public static final String FRIEND_COLLECTION_KEY = "friends";
+
     // Log tags
     public static final String FRIEND_TAG = "FRIEND";
     public static final String ON_WALK_TAG = "on_walk";
     public static final String DAILY_STEPS_TAG = "daily_steps";
     public static final String TOTAL_STEPS_TAG = "total_steps";
     public static final String GOAL_MET_TAG = "goal_met";
+    public static final String FRIEND_UPDATER_TAG = "FRIENDUPDATER";
+    public static final String FRIEND_TEST_TAG = "FRIENDTEST";
 
     public static final int MINIMUM_VALID_GOAL = 100;
     public static final String GOAL = "goal";
@@ -63,4 +68,7 @@ public final class Constants {
 
     // Email constant
     public static final String EXAMPLE_EMAIL = "arrestrose@gmail.com";
+
+    // FirebaseFirestore constant
+    public static final String STEPDATA = "stepdata";
 }
