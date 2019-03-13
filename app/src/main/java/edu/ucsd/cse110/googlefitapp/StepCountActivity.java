@@ -27,6 +27,8 @@ import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
+import edu.ucsd.cse110.googlefitapp.Friends.FirebaseFriendList;
+import edu.ucsd.cse110.googlefitapp.Friends.MyFriendList;
 import edu.ucsd.cse110.googlefitapp.chatmessage.ChatActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.promptGoal;
@@ -81,7 +83,20 @@ public class StepCountActivity extends AppCompatActivity {
         }*/
 
         stepProgress = new StepUpdater(getApplicationContext());
-        encourageHandler = new EncourageHandler(getApplicationContext(), stepProgress, calendar);
+
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
+        String acctEmail;
+        while(acct == null) {
+            acct =  GoogleSignIn.getLastSignedInAccount(getActivity());
+            acctEmail = acct.getEmail();
+        }
+
+        FirebaseFriendList firebaseFriendList = new FirebaseFriendList(getApplicationContext(),acctEmail);
+
+        MyFriendList myFriendList = new MyFriendList(getApplicationContext());
+
+        encourageHandler = new EncourageHandler(getApplicationContext(), stepProgress,
+                                                        myfriendsList, firebaseFriendList);
         stepProgress = new MockStepUpdater(getApplicationContext());
 
         chatButton = findViewById(R.id.chat_button);
