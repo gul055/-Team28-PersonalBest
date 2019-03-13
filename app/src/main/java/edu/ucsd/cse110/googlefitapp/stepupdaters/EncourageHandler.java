@@ -28,8 +28,9 @@ public class EncourageHandler {
     private static long prevSteps;
     public static boolean debug;
     private static Calendar calendar;
+    private static MyFriendList friendsList;
 
-    public EncourageHandler(Context context, StepUpdater stepUpdater,) {
+    public EncourageHandler(Context context, StepUpdater stepUpdater, MyFriendList friendsList) {
         this.context = context;
         this.stepUpdater = stepUpdater;
         encourageFactory = new EncourageFactory();
