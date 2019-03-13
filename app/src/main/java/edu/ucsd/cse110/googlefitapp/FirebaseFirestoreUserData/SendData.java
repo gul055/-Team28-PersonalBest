@@ -11,23 +11,34 @@ import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 public class SendData {
 
     Context context;
+    DataService adapter;
     String email;
+    SharedPreferencesUtil sharedPref;
 
-    public SendData(Context c){
+    public SendData(Context c, GoogleUserUtil gUtil, SharedPreferencesUtil sharedPref){
         context = c;
-        email = GoogleUserUtil.getEmail(c);
+        email = gUtil.getEmail(c);
+        adapter = StepDataAdapter.getInstance(email);
+        this.sharedPref = sharedPref;
+    }
+
+    public SendData(Context c, GoogleUserUtil gUtil, SharedPreferencesUtil sharedPref, DataService adapter){
+        context = c;
+        email = gUtil.getEmail(c);
+        this.adapter = adapter;
+        this.sharedPref = sharedPref;
     }
 
     // Given the key for SharedPreferences, sends user's step data to Firebase in the form of a long
     public void SendLong(String tag){
 
         // Retrieve the corresponding data from SharedPreferences
-        Long data = SharedPreferencesUtil.loadLong(context, tag);
+        Long data = sharedPref.loadLongByEmail(context, email, tag);
 
-        Map<String, Long> singleDataMap = new HashMap<>();
+        Map<String, Object> singleDataMap = new HashMap<>();
         singleDataMap.put(tag, data);
 
-
+        adapter.addData(singleDataMap);
     }
 
 }
