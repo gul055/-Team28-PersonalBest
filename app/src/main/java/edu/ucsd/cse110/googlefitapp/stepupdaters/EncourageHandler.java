@@ -29,10 +29,10 @@ public class EncourageHandler {
     private static long prevSteps;
     public static boolean debug;
     private static Calendar calendar;
-    private static IFriendObserver myFriendList;
+    private static MyFriendList myFriendList;
     private static FirebaseFriendList firebaseFriendList;
 
-    public EncourageHandler(Context context, StepUpdater stepUpdater, IFriendObserver myFriendList,
+    public EncourageHandler(Context context, StepUpdater stepUpdater, MyFriendList myFriendList,
                             FirebaseFriendList firebaseFriendList) {
         this.context = context;
         this.stepUpdater = stepUpdater;
@@ -45,7 +45,7 @@ public class EncourageHandler {
         prevSteps = 0;
         this.myFriendList = myFriendList;
         this.firebaseFriendList = firebaseFriendList;
-        firebaseFriendList.register(myFriendList);
+        firebaseFriendList.register((IFriendObserver) myFriendList);
         firebaseFriendList.loadFriends();
         calendar = Calendar.getInstance();
         debug = false;
@@ -176,7 +176,7 @@ public class EncourageHandler {
      * 3. Displays as most 1 Sub goal met if on the same day
      */
     public void giveEncouragement() {
-        if (currEncouragement != null) {
+        if (currEncouragement != null && myFriendList.getFriendList() != null) {
             if (!MainEncourageGiven && currEncouragement.getClass() == MainEncourageMsg.class) {
                 Toast.makeText(context, currEncouragement.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("MAIN_ENCOURAGEMENT", "Main goal encouragement given");
