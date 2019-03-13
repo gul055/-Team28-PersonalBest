@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.R;
 import edu.ucsd.cse110.googlefitapp.StepCountActivity;
 
@@ -38,9 +39,9 @@ public class HeightPrompt extends AppCompatActivity {
     public HeightLogger heightLog;
     private static final String TAG = "HeightpromptActivityFirebaseInitialization";
 
-    CollectionReference db;
+    FirebaseFirestore db;
 
-    String COLLECTION_KEY = "friends";
+    String STEPDATA_COLLECTION_KEY = "stepdata";
     String personEmail = "";
 
     @Override
@@ -80,10 +81,9 @@ public class HeightPrompt extends AppCompatActivity {
         });
 
         //initialize user's data
-        db = FirebaseFirestore.getInstance()
-                .collection(COLLECTION_KEY);
+        db = FirebaseFirestore.getInstance();
 
-        DocumentReference docRef = db.document(personEmail);
+        DocumentReference docRef = db.collection(Constants.FRIEND_COLLECTION_KEY).document(personEmail);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
