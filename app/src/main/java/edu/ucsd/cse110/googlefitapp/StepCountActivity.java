@@ -76,7 +76,7 @@ public class StepCountActivity extends AppCompatActivity {
 
 
         stepProgress = new StepUpdater(getApplicationContext());
-        encourageHandler = new EncourageHandler(getApplicationContext(), stepProgress);
+        encourageHandler = new EncourageHandler(getApplicationContext(), stepProgress, calendar);
         stepProgress = new MockStepUpdater(getApplicationContext());
         stepProgress = new MockStepUpdater(getApplicationContext());
 

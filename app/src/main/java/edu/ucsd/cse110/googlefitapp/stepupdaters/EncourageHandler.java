@@ -29,7 +29,7 @@ public class EncourageHandler {
     public static boolean debug;
     private static Calendar calendar;
 
-    public EncourageHandler(Context context, StepUpdater stepUpdater, MyFriendList friendsList) {
+    public EncourageHandler(Context context, StepUpdater stepUpdater,) {
         this.context = context;
         this.stepUpdater = stepUpdater;
         encourageFactory = new EncourageFactory();
