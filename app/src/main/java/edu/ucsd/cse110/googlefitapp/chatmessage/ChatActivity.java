@@ -1,6 +1,7 @@
 package edu.ucsd.cse110.googlefitapp.chatmessage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,17 +13,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.CollectionReference;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.R;
 import edu.ucsd.cse110.googlefitapp.notification.FirebaseCloudMessagingAdapter;
 import edu.ucsd.cse110.googlefitapp.notification.NotificationService;
 import edu.ucsd.cse110.googlefitapp.notification.NotificationServiceFactory;
 
+import static edu.ucsd.cse110.googlefitapp.Constants.FROM_KEY;
+import static edu.ucsd.cse110.googlefitapp.Constants.TEXT_KEY;
+import static edu.ucsd.cse110.googlefitapp.Constants.TIMESTAMP_KEY;
+
 public class ChatActivity extends AppCompatActivity {
+    /*These are used for something else, don't put in Constants file!*/
     public static final String SHARED_PREFERENCES_NAME = "FirebaseLabApp";
     public static final String CHAT_MESSAGE_SERVICE_EXTRA = "CHAT_MESSAGE_SERVICE";
     public static final String NOTIFICATION_SERVICE_EXTRA = "NOTIFICATION_SERVICE";
@@ -30,13 +38,11 @@ public class ChatActivity extends AppCompatActivity {
     String TAG = ChatActivity.class.getSimpleName();
 
     String DOCUMENT_KEY = "chat1";
-    String FROM_KEY = "from";
-    String TEXT_KEY = "text";
-    String TIMESTAMP_KEY = "timestamp";
 
     ChatMessageService chat;
     String from;
 
+    //TODO: Get given email to work with text
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,17 +50,37 @@ public class ChatActivity extends AppCompatActivity {
 
         SharedPreferences sharedpreferences = getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
 
-        from = sharedpreferences.getString(FROM_KEY, null);
+        Intent intent = getIntent();
 
+        from = intent.getExtras().getString("yourID");
+
+        String yourID = from.replace(".", ",");
+        String toID = intent.getExtras().getString("friendID").replace(".", ",");
         String stringExtra = getIntent().getStringExtra(CHAT_MESSAGE_SERVICE_EXTRA);
-        chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
 
-        initMessageUpdateListener();
+        Log.d("YOURID COMMA", yourID);
+        Log.d("THEIRID COMMA", toID);
+        //ALL FUNCTIONS THAT USE DATABASE MUST BE CALLED IN ONCALLBACK
+        //This is because grabbing data is asynchronous!
+
+        //Check if a chat was already put into the intent.
+        chat = ChatMessageServiceFactory.getInstance().get(stringExtra);
+        if(chat == null){
+            FirebaseFirestoreAdapter.checkInstance(new Callback() {
+                @Override
+                 public void onCallback() {
+                     grabData(yourID, toID, stringExtra);
+                 }
+               },
+             yourID, toID);
+        }
+        else {
+            firebaseFunctionsUpdater();
+        }
 
         findViewById(R.id.btn_send).setOnClickListener(view -> sendMessage());
-        subscribeToNotificationsTopic();
 
-        EditText nameView = findViewById(R.id.user_name);
+        TextView nameView = findViewById(R.id.user_name);
         nameView.setText(from);
         nameView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -73,11 +99,34 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
+    private void firebaseFunctionsUpdater() {
+        initMessageUpdateListener();
+        subscribeToNotificationsTopic();
+    }
+
+    private void grabData(String yourID, String toID, String stringExtra) {
+        FirebaseFirestoreAdapter
+                .setInstance(new CollectionCallback() {
+                    @Override
+                    public void onCallback(CollectionReference collection) {
+                        if(collection != null) {
+                            FirebaseFirestoreAdapter.setSingeleton(new FirebaseFirestoreAdapter(collection));
+                            chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
+                        }
+                        else{
+                            chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
+                        }
+                        firebaseFunctionsUpdater();
+                    }},
+                        yourID,
+                        toID);
+    }
+
     private void sendMessage() {
-        if (from == null || from.isEmpty()) {
+        /*if (from == null || from.isEmpty()) {
             Toast.makeText(this, "Enter your name", Toast.LENGTH_SHORT).show();
             return;
-        }
+        }*/
 
         EditText messageView = findViewById(R.id.text_message);
 
@@ -91,6 +140,13 @@ public class ChatActivity extends AppCompatActivity {
         }).addOnFailureListener(error -> {
             Log.e(TAG, error.getLocalizedMessage());
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        //So singeleton may be reused.
+        super.onDestroy();
+        FirebaseFirestoreAdapter.setSingeleton(null);
     }
 
     private void initMessageUpdateListener() {
