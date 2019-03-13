@@ -102,7 +102,7 @@ public class HeightPrompt extends AppCompatActivity {
                         users.put("pending", pending);
                         users.put("user", user);
 
-                        db.document(personEmail).set(users)
+                        db.collection(Constants.FRIEND_COLLECTION_KEY).document(personEmail).set(users)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
