@@ -24,7 +24,7 @@ public class FriendMessageUpdater implements IFriendObserver {
             @Override
             public void onClick(View view) {
                 Button b = (Button) view;
-                activity.launchChatActivity(b.getText().toString(), GoogleUserUtil.getEmail(activity));
+                activity.launchChatActivity(b.getText().toString());
             }
         };
     }
