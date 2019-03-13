@@ -23,7 +23,6 @@ import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.observer.ISubject;
 
 public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver> {
-    final String FRIEND_COLLECTION_KEY = "friends";
     CollectionReference db;
     String myEmail;
     private Collection<IFriendObserver> observers;
@@ -31,7 +30,7 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
 
     public FirebaseFriendList(Context context, String email) {
         db = FirebaseFirestore.getInstance()
-                .collection(FRIEND_COLLECTION_KEY);
+                .collection(Constants.FRIEND_COLLECTION_KEY);
 
         myEmail = email;
 
