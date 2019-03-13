@@ -37,7 +37,7 @@ public class ChatMessageTestWithoutMockito {
         m.add(new ChatMessage("User1", "How are you doing?"));
         m.add(new ChatMessage("User2", "Good, how are you?"));
 
-        Intent intent = TestUtils.getMainActivityIntent(TestUtils.getChatMessageService(m), TestUtils.getNotificationService("chat1"));
+        Intent intent = TestUtils.getChatActivityIntent(TestUtils.getChatMessageService(m), TestUtils.getNotificationService("chat1"));
         ChatActivity activity = Robolectric.buildActivity(ChatActivity.class, intent).create().get();
 
         TextView chat = activity.findViewById(R.id.chat);

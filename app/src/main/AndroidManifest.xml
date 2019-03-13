@@ -22,10 +22,11 @@
         <activity android:name=".Graph.GraphActivity" />
         <activity android:name=".Height.HeightPrompt" />
         <activity android:name=".Goals.promptGoal" />
-        <activity
-            android:name=".FriendViewActivity"
-            android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".chatmessage.ChatActivity" />
+        <activity android:name=".FriendViewActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity android:name=".chatmessage.ChatActivity"></activity>
+        <activity android:name=".FriendMessagesViewActivity"></activity>
     </application>
 
 </manifest>
