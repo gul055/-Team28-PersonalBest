@@ -74,12 +74,6 @@ public class EncourageHandler {
 
 
     /**
-     * onStateChange() - updates the noFriends field to determine if automatic encouragment will be
-     *                   given
-     */
-
-
-    /**
      * prevMsgTimeLimit() - determines if a previous sub-goal message should be displayed based on
      * the current time : < PREV_MSG_TIME_LIMIT = 12 = 12pm
      */
@@ -171,12 +165,13 @@ public class EncourageHandler {
     /**
      * giveEncouragement() - creates Toasts in the given
      * context according to the following rules and resets afterwards:
-     * 1. Displays at most 1 Main or Sub goal if met on any previous day
-     * 2. Displays at most 1 Main goal met if on the same day
-     * 3. Displays as most 1 Sub goal met if on the same day
+     *  1. this encouragement is current for this day
+     *  2. this user has at least one friend
+     *  3. this is a MainEncouragement message type
+     *  4. this is the only encouragement message that has been give today
      */
     public void giveEncouragement() {
-        if (currEncouragement != null && myFriendList.getFriendList() != null) {
+        if (currEncouragement != null && myFriendList.getFriendList().size() != 0) {
             if (!MainEncourageGiven && currEncouragement.getClass() == MainEncourageMsg.class) {
                 Toast.makeText(context, currEncouragement.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("MAIN_ENCOURAGEMENT", "Main goal encouragement given");
