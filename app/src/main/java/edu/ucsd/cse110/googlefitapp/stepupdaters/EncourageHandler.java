@@ -7,6 +7,7 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.Date;
 
+import edu.ucsd.cse110.googlefitapp.Friends.FirebaseFriendList;
 import edu.ucsd.cse110.googlefitapp.Friends.IFriendObserver;
 import edu.ucsd.cse110.googlefitapp.Friends.MyFriendList;
 
@@ -28,9 +29,11 @@ public class EncourageHandler {
     private static long prevSteps;
     public static boolean debug;
     private static Calendar calendar;
-    private static MyFriendList friendsList;
+    private static IFriendObserver myFriendList;
+    private static FirebaseFriendList firebaseFriendList;
 
-    public EncourageHandler(Context context, StepUpdater stepUpdater, MyFriendList friendsList) {
+    public EncourageHandler(Context context, StepUpdater stepUpdater, IFriendObserver myFriendList,
+                            FirebaseFriendList firebaseFriendList) {
         this.context = context;
         this.stepUpdater = stepUpdater;
         encourageFactory = new EncourageFactory();
@@ -40,7 +43,10 @@ public class EncourageHandler {
         SubEncourageGiven = false;
         PreviousEncourageGiven = false;
         prevSteps = 0;
-        this.friendsList = friendsList;
+        this.myFriendList = myFriendList;
+        this.firebaseFriendList = firebaseFriendList;
+        firebaseFriendList.register(myFriendList);
+        firebaseFriendList.loadFriends();
         calendar = Calendar.getInstance();
         debug = false;
     }
