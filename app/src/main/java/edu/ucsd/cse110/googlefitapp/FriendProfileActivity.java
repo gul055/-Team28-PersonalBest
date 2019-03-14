@@ -3,9 +3,9 @@ package edu.ucsd.cse110.googlefitapp;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -49,7 +49,7 @@ public class FriendProfileActivity extends AppCompatActivity {
         });
     }
 
-    public void launchChatActivity(String friendID){
+    public void launchChatActivity(String friendID) {
         Intent intent = new Intent(this, ChatActivity.class);
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         intent.putExtra("yourID", acct.getEmail());
@@ -79,8 +79,8 @@ public class FriendProfileActivity extends AppCompatActivity {
             Log.d("INASYNC", "In task");
             AbstractCalendar calendar = new CalendarAdapter();
             ReceiveData receiver = new ReceiveData(getApplicationContext(), friend, new SharedPreferencesUtil());
-            String [] days = calendar.getLastXDays(Constants.WITHOUT_YEAR, 28);
-            for(String day: days){
+            String[] days = calendar.getLastXDays(Constants.WITHOUT_YEAR, 28);
+            for (String day : days) {
                 receiver.receiveLong(day + Constants.GOAL);
                 receiver.receiveLong(day + Constants.INTENTIONAL);
                 receiver.receiveLong(day + Constants.TOTAL_STEPS_TAG);
