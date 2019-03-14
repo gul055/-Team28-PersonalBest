@@ -28,25 +28,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
+import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
+import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.R;
 import edu.ucsd.cse110.googlefitapp.StepCountActivity;
+
+import static edu.ucsd.cse110.googlefitapp.Utils.CalendarStringBuilderUtil.stringBuilderCalendar;
 
 
 public class HeightPrompt extends AppCompatActivity {
 
     private String fitnessServiceKey = "GOOGLE_FIT";
     public HeightLogger heightLog;
+    private AbstractCalendar calendar;
     private static final String TAG = "HeightpromptActivityFirebaseInitialization";
 
-    CollectionReference db;
+    FirebaseFirestore db;
 
-    String COLLECTION_KEY = "friends";
+    String FRIEND_COLLECTION_KEY = "friends";
+    String STEP_DATA_COLLECTION_KEY = "stepdata";
     String personEmail = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_height_prompt);
+
+        calendar = new CalendarAdapter();
 
 
         FirebaseApp.initializeApp(this);
@@ -80,10 +89,9 @@ public class HeightPrompt extends AppCompatActivity {
         });
 
         //initialize user's data
-        db = FirebaseFirestore.getInstance()
-                .collection(COLLECTION_KEY);
+        db = FirebaseFirestore.getInstance();
 
-        DocumentReference docRef = db.document(personEmail);
+        DocumentReference docRef = db.collection(FRIEND_COLLECTION_KEY).document(personEmail);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -93,6 +101,7 @@ public class HeightPrompt extends AppCompatActivity {
                         Toast.makeText(HeightPrompt.this, "welcome back", Toast.LENGTH_SHORT).show();
                     } else {
                         Map<String, Object> users = new HashMap<>();
+                        Map<String, Object> usersStepData = new HashMap<>();
 
                         List<String> friends = new ArrayList<>();
                         List<String> pending = new ArrayList<>();
@@ -102,11 +111,24 @@ public class HeightPrompt extends AppCompatActivity {
                         users.put("pending", pending);
                         users.put("user", user);
 
-                        db.document(personEmail).set(users)
+                        usersStepData.put(stringBuilderCalendar(calendar, Constants.GOAL), 0);
+                        usersStepData.put(stringBuilderCalendar(calendar, Constants.INTENTIONAL), 0);
+                        usersStepData.put(stringBuilderCalendar(calendar, Constants.TOTAL_STEPS_TAG), 0);
+
+
+                        db.collection(FRIEND_COLLECTION_KEY).document(personEmail).set(users)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(HeightPrompt.this, "initialize completed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(HeightPrompt.this, "initialize 1 completed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+                        db.collection(STEP_DATA_COLLECTION_KEY).document(personEmail).set(usersStepData)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(HeightPrompt.this, "initialize 2 completed", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }

@@ -18,6 +18,7 @@ public class StepDataAdapter implements DataService {
     DocumentSnapshot snapshot;
 
     public StepDataAdapter(DocumentReference ref) {
+        Log.d("StepDataAdapter", "Creating adapter");
         this.ref = ref;
         if (snapshot == null) {
             getDocumentSnapshot();
@@ -25,6 +26,7 @@ public class StepDataAdapter implements DataService {
     }
 
     public static DataService getInstance(String email) {
+        Log.d("StepDataAdapter", "Creating instance of adapter");
         if (singleton == null) {
             DocumentReference collection = FirebaseFirestore.getInstance()
                     .collection(Constants.STEPDATA)
