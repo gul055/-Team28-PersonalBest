@@ -41,7 +41,7 @@ public class ChatMessageMockitoTest {
         when(chat.orderBy(anyString(), any())).thenReturn(q);
         ChatMessageService messageService = new FirebaseFirestoreAdapter(chat);
 
-        Intent intent = TestUtils.getMainActivityIntent(messageService, mock(NotificationService.class));
+        Intent intent = TestUtils.getChatActivityIntent(messageService, mock(NotificationService.class));
         ChatActivity activity = Robolectric.buildActivity(ChatActivity.class, intent).create().get();
 
 //        do verification on CollectionReference mock: https://stackoverflow.com/questions/9841623/mockito-how-to-verify-method-was-called-on-an-object-created-within-a-method

@@ -34,7 +34,7 @@ public class NotificationMockitoTest {
     public void subscribeToCorrectTopic() {
         NotificationService notificationService = mock(NotificationService.class);
 
-        Intent intent = TestUtils.getMainActivityIntent(mock(ChatMessageService.class), notificationService);
+        Intent intent = TestUtils.getChatActivityIntent(mock(ChatMessageService.class), notificationService);
         ChatActivity activity = Robolectric.buildActivity(ChatActivity.class, intent).create().get();
 
         verify(notificationService).subscribeToNotificationsTopic(eq("chat1"), any());

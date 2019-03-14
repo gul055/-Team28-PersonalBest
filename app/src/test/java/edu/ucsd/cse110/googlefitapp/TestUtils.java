@@ -116,16 +116,18 @@ public class TestUtils {
         };
     }
 
-    public static Intent getMainActivityIntent(ChatMessageService chatMessageService, NotificationService notificationService) {
+    public static Intent getChatActivityIntent(ChatMessageService chatMessageService, NotificationService notificationService) {
         String testChatMessageServiceKey = "test chat service";
         ChatMessageServiceFactory.getInstance().put(testChatMessageServiceKey, () -> chatMessageService);
 
         String testNotificationServiceKey = "test notification service";
         NotificationServiceFactory.getInstance().put(testNotificationServiceKey, () -> notificationService);
 
-        Intent intent = new Intent(RuntimeEnvironment.application, MainActivity.class);
+        Intent intent = new Intent(RuntimeEnvironment.application, ChatActivity.class);
         intent.putExtra(ChatActivity.CHAT_MESSAGE_SERVICE_EXTRA, testChatMessageServiceKey);
         intent.putExtra(ChatActivity.NOTIFICATION_SERVICE_EXTRA, testNotificationServiceKey);
+        intent.putExtra("yourID", "yourID");
+        intent.putExtra("friendID", "friendID");
 
         return intent;
     }
