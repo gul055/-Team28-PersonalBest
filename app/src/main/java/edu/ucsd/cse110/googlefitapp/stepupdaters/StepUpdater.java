@@ -60,7 +60,7 @@ public class StepUpdater {
     public void writeSteps(long steps, AbstractCalendar calendar) {
         String key = CalendarStringBuilderUtil.stringBuilderCalendar(calendar, Constants.TOTAL_STEPS_TAG);
         Log.d("KEY_BUILT_STEPUPDATER", key + " " + steps);
-        SharedPreferencesUtil.saveInt(c.getApplicationContext(), key, (int) steps);
+        SharedPreferencesUtil.saveLong(c.getApplicationContext(), key, (int) steps);
     }
 
     public void addTotalSteps(long additionalStep) {
