@@ -25,6 +25,7 @@ import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
+import edu.ucsd.cse110.googlefitapp.FirebaseFirestoreUserData.FakeUserData;
 import edu.ucsd.cse110.googlefitapp.FirebaseFirestoreUserData.SendData;
 import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.promptGoal;
@@ -78,6 +79,11 @@ public class StepCountActivity extends AppCompatActivity {
         }*/
 
         stepProgress = new MockStepUpdater(getApplicationContext());
+
+        Button fakeButton = findViewById(R.id.fake);
+        fakeButton.setOnClickListener(v ->
+        {new FakeUserData().sendData();
+        });
 
         chatButton = findViewById(R.id.chat_button);
         chatButton.setOnClickListener(new View.OnClickListener() {

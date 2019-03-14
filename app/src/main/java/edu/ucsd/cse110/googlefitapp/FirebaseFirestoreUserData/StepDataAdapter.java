@@ -16,6 +16,7 @@ public class StepDataAdapter implements DataService {
     public static StepDataAdapter singleton;
     DocumentReference ref;
     DocumentSnapshot snapshot;
+    String email;
 
     public StepDataAdapter(DocumentReference ref) {
         Log.d("StepDataAdapter", "Creating adapter");
@@ -26,18 +27,20 @@ public class StepDataAdapter implements DataService {
     }
 
     public static DataService getInstance(String email) {
-        Log.d("StepDataAdapter", "Creating instance of adapter");
+        Log.d("StepDataAdapter", "Creating instance of adapter for email " + email);
         if (singleton == null) {
             DocumentReference collection = FirebaseFirestore.getInstance()
                     .collection(Constants.STEPDATA)
                     .document(email);
             singleton = new StepDataAdapter(collection);
+            singleton.email = email;
         }
         return singleton;
     }
 
     @Override
     public Task<?> addData(Map<String, Object> data) {
+        Log.d("addData", "Adding a table to email " + email);
         return ref.update(data);
     }
 
