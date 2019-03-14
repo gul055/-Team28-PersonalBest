@@ -27,6 +27,7 @@ import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
+import edu.ucsd.cse110.googlefitapp.Utils.GoogleUserUtil;
 import edu.ucsd.cse110.googlefitapp.chatmessage.ChatActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.promptGoal;
@@ -411,6 +412,7 @@ public class StepCountActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void voids) {
             Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+            intent.putExtra(Constants.GRAPH_USER, new GoogleUserUtil().getEmail(getApplicationContext()));
             startActivity(intent);
         }
     }

@@ -79,12 +79,19 @@ public class FriendProfileActivity extends AppCompatActivity {
             Log.d("INASYNC", "In task");
             AbstractCalendar calendar = new CalendarAdapter();
             ReceiveData receiver = new ReceiveData(getApplicationContext(), friend, new SharedPreferencesUtil());
+            String [] days = calendar.getLastXDays(Constants.WITHOUT_YEAR, 28);
+            for(String day: days){
+                receiver.receiveLong(day + Constants.GOAL);
+                receiver.receiveLong(day + Constants.INTENTIONAL);
+                receiver.receiveLong(day + Constants.TOTAL_STEPS_TAG);
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void voids) {
             Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+            intent.putExtra(Constants.GRAPH_USER, friend);
             startActivity(intent);
         }
     }
