@@ -100,4 +100,12 @@ public abstract class AbstractCalendar {
 
         return days;
     }
+
+    public void rewindOneWeek(){
+        calendar.add(Calendar.DATE, -Constants.WEEK_SIZE);
+    }
+
+    public void addOneWeek(){
+        calendar.add(Calendar.DATE, Constants.WEEK_SIZE);
+    }
 }
