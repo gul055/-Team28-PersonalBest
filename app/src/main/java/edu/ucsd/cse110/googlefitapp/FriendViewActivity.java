@@ -18,7 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import edu.ucsd.cse110.googlefitapp.Friends.FirebaseFriendList;
 import edu.ucsd.cse110.googlefitapp.Friends.FriendListContainer;
 import edu.ucsd.cse110.googlefitapp.Friends.FriendUpdater;
-import edu.ucsd.cse110.googlefitapp.Friends.IFriendList;
 
 public class FriendViewActivity extends AppCompatActivity {
 
@@ -58,7 +57,7 @@ public class FriendViewActivity extends AppCompatActivity {
         stringExtra = getIntent().getStringExtra(FRIENDLIST_EXTRA);
         // friend list subject and listener
         myFriends = FriendListContainer.getInstance().get(stringExtra);
-        if(myFriends == null) {
+        if (myFriends == null) {
             myFriends = new FirebaseFriendList(this.getApplicationContext(), myEmail);
         }
         friendUpdater = new FriendUpdater(this.getApplicationContext(), friendContainer);

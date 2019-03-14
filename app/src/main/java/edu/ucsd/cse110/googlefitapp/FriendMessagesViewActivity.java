@@ -3,11 +3,6 @@ package edu.ucsd.cse110.googlefitapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
@@ -16,9 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 
 import edu.ucsd.cse110.googlefitapp.Friends.FirebaseFriendList;
 import edu.ucsd.cse110.googlefitapp.Friends.FriendMessageUpdater;
-import edu.ucsd.cse110.googlefitapp.Friends.FriendUpdater;
 import edu.ucsd.cse110.googlefitapp.Friends.IFriendObserver;
-import edu.ucsd.cse110.googlefitapp.Utils.GoogleUserUtil;
 import edu.ucsd.cse110.googlefitapp.chatmessage.ChatActivity;
 
 public class FriendMessagesViewActivity extends AppCompatActivity {
@@ -55,7 +48,7 @@ public class FriendMessagesViewActivity extends AppCompatActivity {
         // add friend's email to friend list
     }
 
-    public void launchChatActivity(String friendID){
+    public void launchChatActivity(String friendID) {
         Intent intent = new Intent(this, ChatActivity.class);
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         intent.putExtra("yourID", acct.getEmail());

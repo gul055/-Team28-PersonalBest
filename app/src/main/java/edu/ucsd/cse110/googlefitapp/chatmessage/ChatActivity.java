@@ -12,14 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.R;
 import edu.ucsd.cse110.googlefitapp.notification.FirebaseCloudMessagingAdapter;
 import edu.ucsd.cse110.googlefitapp.notification.NotificationService;
@@ -65,16 +63,15 @@ public class ChatActivity extends AppCompatActivity {
 
         //Check if a chat was already put into the intent.
         chat = ChatMessageServiceFactory.getInstance().get(stringExtra);
-        if(chat == null){
+        if (chat == null) {
             FirebaseFirestoreAdapter.checkInstance(new Callback() {
-                @Override
-                 public void onCallback() {
-                     grabData(yourID, toID, stringExtra);
-                 }
-               },
-             yourID, toID);
-        }
-        else {
+                                                       @Override
+                                                       public void onCallback() {
+                                                           grabData(yourID, toID, stringExtra);
+                                                       }
+                                                   },
+                    yourID, toID);
+        } else {
             firebaseFunctionsUpdater();
         }
 
@@ -107,17 +104,17 @@ public class ChatActivity extends AppCompatActivity {
     private void grabData(String yourID, String toID, String stringExtra) {
         FirebaseFirestoreAdapter
                 .setInstance(new CollectionCallback() {
-                    @Override
-                    public void onCallback(CollectionReference collection) {
-                        if(collection != null) {
-                            FirebaseFirestoreAdapter.setSingeleton(new FirebaseFirestoreAdapter(collection));
-                            chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
-                        }
-                        else{
-                            chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
-                        }
-                        firebaseFunctionsUpdater();
-                    }},
+                                 @Override
+                                 public void onCallback(CollectionReference collection) {
+                                     if (collection != null) {
+                                         FirebaseFirestoreAdapter.setSingeleton(new FirebaseFirestoreAdapter(collection));
+                                         chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
+                                     } else {
+                                         chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
+                                     }
+                                     firebaseFunctionsUpdater();
+                                 }
+                             },
                         yourID,
                         toID);
     }
