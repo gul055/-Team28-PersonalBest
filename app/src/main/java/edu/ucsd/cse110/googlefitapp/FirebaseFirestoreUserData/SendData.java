@@ -20,6 +20,7 @@ public class SendData {
         email = gUtil.getEmail(c);
         adapter = StepDataAdapter.getInstance(email);
         this.sharedPref = sharedPref;
+        // new SendData(c, new GoogleUserUtil(), new SharedPreferencesUtil());
     }
 
     public SendData(Context c, GoogleUserUtil gUtil, SharedPreferencesUtil sharedPref, DataService adapter){
