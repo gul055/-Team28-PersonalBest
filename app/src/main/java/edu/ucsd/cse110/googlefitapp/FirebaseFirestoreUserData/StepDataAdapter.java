@@ -25,7 +25,7 @@ public class StepDataAdapter implements DataService {
     }
 
     public static DataService getInstance(String email) {
-        if (singleton != null) {
+        if (singleton == null) {
             DocumentReference collection = FirebaseFirestore.getInstance()
                     .collection(Constants.STEPDATA)
                     .document(email);
