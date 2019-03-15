@@ -175,7 +175,7 @@ public class ChatActivity extends AppCompatActivity {
                 msg = "Subscribe to notifications failed";
             }
             Log.d(TAG, msg);
-            Toast.makeText(ChatActivity.this, msg, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ChatActivity.this, msg, Toast.LENGTH_SHORT).show();
         });
     }
 
