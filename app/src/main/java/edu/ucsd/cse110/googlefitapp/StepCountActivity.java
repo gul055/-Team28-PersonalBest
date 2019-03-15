@@ -21,15 +21,19 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
+import edu.ucsd.cse110.googlefitapp.Friends.EncouragementFriendList;
 import edu.ucsd.cse110.googlefitapp.Friends.FirebaseFriendList;
+import edu.ucsd.cse110.googlefitapp.Friends.FriendList;
 import edu.ucsd.cse110.googlefitapp.Friends.IFriendObserver;
 import edu.ucsd.cse110.googlefitapp.Friends.MyFriendList;
+import edu.ucsd.cse110.googlefitapp.chatmessage.Callback;
 import edu.ucsd.cse110.googlefitapp.chatmessage.ChatActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.promptGoal;
@@ -38,6 +42,7 @@ import edu.ucsd.cse110.googlefitapp.Height.HeightLogger;
 import edu.ucsd.cse110.googlefitapp.Height.HeightPrompt;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessService;
 import edu.ucsd.cse110.googlefitapp.fitness.FitnessServiceFactory;
+import edu.ucsd.cse110.googlefitapp.stepupdaters.EncourageFactory;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.EncourageHandler;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.MockStepUpdater;
 import edu.ucsd.cse110.googlefitapp.stepupdaters.StepLogger;
@@ -71,6 +76,8 @@ public class StepCountActivity extends AppCompatActivity {
     private EncourageHandler encourageHandler;
     private FitnessService fitnessService;
     private TextView textSteps, textGoal;
+    EncouragementFriendList firebaseFriendList;
+    IFriendObserver myFriendList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,22 +90,14 @@ public class StepCountActivity extends AppCompatActivity {
             Toast.makeText(this, personEmail, Toast.LENGTH_LONG).show();
         }*/
 
+        FirebaseApp.initializeApp(getApplicationContext());
+        FirebaseFirestore.getInstance();
+
         stepProgress = new StepUpdater(getApplicationContext());
 
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        String acctEmail = null;
-        while(acct == null) {
-            acct =  GoogleSignIn.getLastSignedInAccount(this);
-            acctEmail = acct.getEmail();
-        }
+        enableEncouragement();
 
-        FirebaseFriendList firebaseFriendList = new FirebaseFriendList(getApplicationContext(),acctEmail);
-
-        MyFriendList myFriendList = new MyFriendList(getApplicationContext());
-
-        encourageHandler = new EncourageHandler(getApplicationContext(), stepProgress,
-                 myFriendList, firebaseFriendList);
-        stepProgress = new MockStepUpdater(getApplicationContext());
+        //stepProgress = new MockStepUpdater(getApplicationContext());
 
         chatButton = findViewById(R.id.chat_button);
         chatButton.setOnClickListener(new View.OnClickListener() {
@@ -274,11 +273,48 @@ public class StepCountActivity extends AppCompatActivity {
         fitnessService.setup();
     }
 
+    private void enableEncouragement() {
+        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
+        String acctEmail = acct.getEmail();
+
+        Log.d("STEPEMAIL", String.valueOf(acctEmail == null));
+        Log.d("USEREMAIL", acctEmail);
+
+        myFriendList = new FriendList();
+        firebaseFriendList = new EncouragementFriendList(getApplicationContext(), acctEmail);
+
+        firebaseFriendList.register(myFriendList);
+
+        firebaseFriendList.loadFriends(new Callback() {
+            @Override
+            public void onCallback() {
+                Log.d("STEPFRIENDSIZE", String.valueOf(((FriendList) myFriendList).getSize()));
+                Log.d("FRIENDARRAY", String.valueOf(myFriendList.getFriends().size()));
+
+                encourageHandler = new EncourageHandler(getApplicationContext(), stepProgress,
+                        myFriendList, firebaseFriendList);
+                resumeEncouragement();
+            }
+        });
+    }
+
+    private void resumeEncouragement(){
+        firebaseFriendList.loadFriends(new Callback() {
+            @Override
+            public void onCallback() {
+                Log.d("STEPFRIENDSIZE", String.valueOf(((FriendList) myFriendList).getSize()));
+                Log.d("FRIENDARRAY", String.valueOf(myFriendList.getFriends().size()));
+
+                encourageHandler.update();
+            }
+        });
+    }
+
     @TargetApi(Build.VERSION_CODES.O)
     @Override
     protected void onResume() {
         super.onResume();
-        encourageHandler.update();
+        resumeEncouragement();
 
         if (heightLogger.readHeight() == 0) {
             Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);

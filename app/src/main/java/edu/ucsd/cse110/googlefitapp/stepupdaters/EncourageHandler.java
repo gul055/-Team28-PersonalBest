@@ -29,10 +29,10 @@ public class EncourageHandler {
     private static long prevSteps;
     public static boolean debug;
     private static Calendar calendar;
-    private static MyFriendList myFriendList;
-    private static FirebaseFriendList firebaseFriendList;
+    private IFriendObserver myFriendList;
+    private FirebaseFriendList firebaseFriendList;
 
-    public EncourageHandler(Context context, StepUpdater stepUpdater, MyFriendList myFriendList,
+    public EncourageHandler(Context context, StepUpdater stepUpdater, IFriendObserver myFriendList,
                             FirebaseFriendList firebaseFriendList) {
         this.context = context;
         this.stepUpdater = stepUpdater;
@@ -45,8 +45,7 @@ public class EncourageHandler {
         prevSteps = 0;
         this.myFriendList = myFriendList;
         this.firebaseFriendList = firebaseFriendList;
-        firebaseFriendList.register((IFriendObserver) myFriendList);
-        firebaseFriendList.loadFriends();
+        Log.d("ENCOURAGEFRIENDS", String.valueOf(firebaseFriendList.getFriendList().size()));
         calendar = Calendar.getInstance();
         debug = false;
     }
@@ -126,6 +125,7 @@ public class EncourageHandler {
                     "for date:" +
                     currEncouragement.getDate().toString());
         }
+        /*
         // If the sub goal was just met or improved -> Create/update a SubEncourageMsg and set as currEncouragement
         else if (stepUpdater.getTotalSteps() >= prevSteps + MINIMUM_SUB_GOAL &&
                 currEncouragement == null || currEncouragement.getClass() != MainEncourageMsg.class) {
@@ -135,7 +135,7 @@ public class EncourageHandler {
                     "for date:" +
                     currEncouragement.getDate().toString());
         }
-
+*/
         giveEncouragement();
     }
 
@@ -171,8 +171,10 @@ public class EncourageHandler {
      *  4. this is the only encouragement message that has been give today
      */
     public void giveEncouragement() {
-        if (currEncouragement != null && myFriendList.getFriendList().size() != 0) {
-            if (!MainEncourageGiven && currEncouragement.getClass() == MainEncourageMsg.class) {
+        Log.d("giveEncouragement", "null:" + (currEncouragement != null) + " friendsCount: " + firebaseFriendList.getFriendList().size());
+        if (currEncouragement != null && myFriendList.getFriends().size() == 0) {
+            Log.d("ENCOURAGEMENT_NON-NULL+FRIENDS", "encouragement is non-null and friends are good");
+            if (currEncouragement.getClass() == MainEncourageMsg.class) {
                 Toast.makeText(context, currEncouragement.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("MAIN_ENCOURAGEMENT", "Main goal encouragement given");
                 currEncouragement = null;

@@ -25,8 +25,9 @@ import edu.ucsd.cse110.googlefitapp.observer.ISubject;
 public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver> {
     CollectionReference db;
     String myEmail;
-    private Collection<IFriendObserver> observers;
+    protected Collection<IFriendObserver> observers;
     Context context;
+    List<String> friendList = new ArrayList<>();
 
     public FirebaseFriendList(Context context, String email) {
         db = FirebaseFirestore.getInstance()
@@ -104,6 +105,7 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
 
                     result = "Added " + email;
                     Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+                    friendList.add(email);
 
                     //notify listeners
                     for(IFriendObserver observer : observers) {
@@ -173,13 +175,26 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
                 List<String> myFriends = (List<String>) currentUser.get("friends");
 
                 //notify observers of each friend
-                for(String email : myFriends) {
-                    for (IFriendObserver observer : observers) {
-                        observer.onStateChange(email);
+                if(myFriends != null) {
+                    for (String email : myFriends) {
+                        Log.d(Constants.FRIEND_TAG, email);
+                        friendList.add(email);
+                        for (IFriendObserver observer : observers) {
+                            observer.onStateChange(email);
+                        }
                     }
                 }
             }
         });
+    }
+
+    private void addFriendToList(String email) {
+        Log.d(Constants.FRIEND_TAG, "add " + email + " to Friend List");
+        friendList.add(email);
+    }
+
+    public List<String> getFriendList() {
+        return friendList;
     }
 
     @Override

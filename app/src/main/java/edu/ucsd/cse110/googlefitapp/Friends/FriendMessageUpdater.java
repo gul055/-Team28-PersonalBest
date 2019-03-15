@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.FriendMessagesViewActivity;
 import edu.ucsd.cse110.googlefitapp.Utils.GoogleUserUtil;
@@ -16,6 +19,7 @@ public class FriendMessageUpdater implements IFriendObserver {
     FriendMessagesViewActivity activity;
     Context context;
     View.OnClickListener clickOnFriend;
+    List<String> friends = new ArrayList<>();
 
     public FriendMessageUpdater(Context context, FriendMessagesViewActivity activity, LinearLayout layout){
         this.context = context;
@@ -37,10 +41,16 @@ public class FriendMessageUpdater implements IFriendObserver {
         friend.setTag(email);
         friend.setText(email);
         friend.setOnClickListener(clickOnFriend);
+        friends.add(email);
 
         Log.d(Constants.FRIEND_TAG, "Adding " + email + "'s button");
 
         // Put button in the LinearLayout
         friendContainer.addView(friend);
+    }
+
+    @Override
+    public List<String> getFriends() {
+        return friends;
     }
 }
