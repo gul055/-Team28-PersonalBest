@@ -26,12 +26,32 @@ public class StepDataAdapter implements DataService {
         }
     }
 
+    public StepDataAdapter(String email) {
+        Log.d("StepDataAdapter", "Creating adapter");
+        DocumentReference collection = FirebaseFirestore.getInstance()
+                .collection(Constants.STEPDATA)
+                .document(email);
+        if (collection == null) {
+            FirebaseFirestore.getInstance().collection(Constants.STEPDATA).document(email).set(null);
+            collection = FirebaseFirestore.getInstance().collection(Constants.STEPDATA).document(email);
+        }
+        this.ref = collection;
+        if (snapshot == null) {
+            getDocumentSnapshot();
+        }
+        this.email = email;
+    }
+
     public static DataService getInstance(String email) {
         Log.d("StepDataAdapter", "Creating instance of adapter for email " + email);
         if (singleton == null) {
             DocumentReference collection = FirebaseFirestore.getInstance()
                     .collection(Constants.STEPDATA)
                     .document(email);
+            if (collection == null) {
+                FirebaseFirestore.getInstance().collection(Constants.STEPDATA).document(email).set(null);
+                collection = FirebaseFirestore.getInstance().collection(Constants.STEPDATA).document(email);
+            }
             singleton = new StepDataAdapter(collection);
             singleton.email = email;
         }

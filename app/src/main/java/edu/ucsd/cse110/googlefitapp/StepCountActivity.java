@@ -80,10 +80,13 @@ public class StepCountActivity extends AppCompatActivity {
 
         stepProgress = new MockStepUpdater(getApplicationContext());
 
+        /*
         Button fakeButton = findViewById(R.id.fake);
         fakeButton.setOnClickListener(v ->
-        {new FakeUserData().sendData();
+        {
+            new FakeUserData().sendData();
         });
+        */
 
         chatButton = findViewById(R.id.chat_button);
         chatButton.setOnClickListener(new View.OnClickListener() {
