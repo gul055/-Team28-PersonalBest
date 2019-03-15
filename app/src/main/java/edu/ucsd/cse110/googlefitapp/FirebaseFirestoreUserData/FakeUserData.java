@@ -12,7 +12,6 @@ import edu.ucsd.cse110.googlefitapp.Constants;
 public class FakeUserData {
 
     String[] emails = {"arrestrose@gmail.com", "deagretal@gmail.com", "gul055@ucsd.edu", "kdolay@ucsd.edu", "rjyoung@ucsd.edu"};
-    String[] tags = {Constants.TOTAL_STEPS_TAG, Constants.INTENTIONAL, Constants.GOAL};
 
     public void sendData() {
         for (String email: emails) {
@@ -20,7 +19,7 @@ public class FakeUserData {
             int goal = 5000;
 
             DataService service = new StepDataAdapter(email);
-            AbstractCalendar calendar = new MockCalendar(2019, 3, 18);
+            AbstractCalendar calendar = new MockCalendar(2019, 3, 16);
             Map<String, Object> table = new HashMap<>();
 
             String[] days = calendar.getLastXDays(Constants.WITH_YEAR, 28);
@@ -35,7 +34,7 @@ public class FakeUserData {
                 double increaseChance = Math.random();
 
                 // 10% chance of increasing goal by 500
-                if (increaseChance < .1) {
+                if (increaseChance < .2) {
                     goal += 500;
                 }
 
