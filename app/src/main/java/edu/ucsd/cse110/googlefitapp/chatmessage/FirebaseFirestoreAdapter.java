@@ -101,12 +101,13 @@ public class FirebaseFirestoreAdapter implements ChatMessageService {
                             DocumentSnapshot docSnap = list.get(0);
                             DocumentReference docRef = docSnap.getReference();
                             CollectionReference collRef = docRef.collection(MESSAGES_KEY);
-                            callback.onCallback(collRef);
+                            String documentID = docRef.getId();
+                            callback.onCallback(collRef, documentID);
                         }
                     });
         } else {
             Log.d("NOTNULL", "Singeleton was not null!");
-            callback.onCallback(null);
+            callback.onCallback(null, "");
         }
     }
 
