@@ -66,7 +66,7 @@ public class StepDataAdapter implements DataService {
 
     @Override
     public Long getLong(String tag) {
-        Long result = snapshot.getLong(tag);
+        Long result = (Long) snapshot.get(tag);
         return result != null ? result : 0L;
     }
 

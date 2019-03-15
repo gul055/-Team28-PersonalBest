@@ -2,6 +2,7 @@ package edu.ucsd.cse110.googlefitapp.Graph;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -25,6 +26,8 @@ public class GraphActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+
+        Log.i("GraphActivity", "Entering graph");
 
         userEmail = getIntent().getStringExtra(Constants.GRAPH_USER);
 
@@ -51,6 +54,9 @@ public class GraphActivity extends AppCompatActivity {
     }
 
     public void refreshGraph() {
+
+        Log.i("GraphActivity", "Building graph");
+
         String[] weekString = calendar.getLast7Days(Constants.WITH_YEAR);
         DataGetter getter = new DataGetter(getApplicationContext());
         float[][] stepDataArray = getter.get2DArrayData(weekString, userEmail, Constants.INTENTIONAL, Constants.TOTAL_STEPS_TAG);
