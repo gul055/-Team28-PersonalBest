@@ -89,8 +89,6 @@ public class StepCountActivity extends AppCompatActivity {
         });
         */
 
-        new FakeUserData().sendData();
-
         chatButton = findViewById(R.id.chat_button);
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override
