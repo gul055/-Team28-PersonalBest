@@ -2,6 +2,7 @@ package edu.ucsd.cse110.googlefitapp.Graph;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -17,24 +18,46 @@ import edu.ucsd.cse110.googlefitapp.R;
 public class GraphActivity extends AppCompatActivity {
 
     // https://github.com/PhilJay/MPAndroidChart/wiki/Getting-Started
+    BarChart chart;
+    AbstractCalendar calendar;
+    String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
 
-        String userEmail = getIntent().getStringExtra(Constants.GRAPH_USER);
+        Log.i("GraphActivity", "Entering graph");
+
+        userEmail = getIntent().getStringExtra(Constants.GRAPH_USER);
 
         Button back = findViewById(R.id.back);
         back.setOnClickListener(view -> finish());
 
         //AbstractCalendar calendar = new LockedCalendar();
-        AbstractCalendar calendar = new CalendarAdapter();
+        calendar = new CalendarAdapter();
+        chart = findViewById(R.id.chart);
+
         //String[] weekString = calendar.getWeek(Constants.WITH_YEAR);
+        refreshGraph();
+
+        Button last7 = findViewById(R.id.last7);
+        Button next7 = findViewById(R.id.next7);
+        last7.setOnClickListener(v -> {
+            calendar.rewindOneWeek();
+            refreshGraph();
+        });
+        next7.setOnClickListener(v -> {
+            calendar.addOneWeek();
+            refreshGraph();
+        });
+    }
+
+    public void refreshGraph() {
+
+        Log.i("GraphActivity", "Building graph");
+
         String[] weekString = calendar.getLast7Days(Constants.WITH_YEAR);
-
-        BarChart chart = findViewById(R.id.chart);
-
         DataGetter getter = new DataGetter(getApplicationContext());
         float[][] stepDataArray = getter.get2DArrayData(weekString, userEmail, Constants.INTENTIONAL, Constants.TOTAL_STEPS_TAG);
         float[] goalArray = getter.getArrayData(weekString, userEmail, Constants.GOAL);

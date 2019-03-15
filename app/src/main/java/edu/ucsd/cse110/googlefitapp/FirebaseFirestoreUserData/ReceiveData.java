@@ -1,6 +1,7 @@
 package edu.ucsd.cse110.googlefitapp.FirebaseFirestoreUserData;
 
 import android.content.Context;
+import android.util.Log;
 
 import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
@@ -29,6 +30,8 @@ public class ReceiveData {
     // Returns the Long itself for potential use
     public Long receiveLong(String tag) {
         Long result = adapter.getLong(tag);
+        Log.d("Tag being used to receive", tag);
+        Log.d("Result of receive", result + "");
         sharedPref.saveLongByEmail(context, email, tag, result);
         return result;
     }
