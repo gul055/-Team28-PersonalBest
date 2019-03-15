@@ -7,7 +7,6 @@ buildscript {
         jcenter()
     }
     dependencies {
-
         classpath 'com.android.tools.build:gradle:3.3.2'
 
         //DONT CHANGE I SWEAR EVERYTHING ONLY WORKS WITH 4.0.0
