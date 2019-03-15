@@ -1,7 +1,6 @@
 package edu.ucsd.cse110.googlefitapp.Friends;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +8,6 @@ import android.widget.LinearLayout;
 
 import edu.ucsd.cse110.googlefitapp.Constants;
 import edu.ucsd.cse110.googlefitapp.FriendMessagesViewActivity;
-import edu.ucsd.cse110.googlefitapp.Utils.GoogleUserUtil;
 
 public class FriendMessageUpdater implements IFriendObserver {
     LinearLayout friendContainer;
@@ -17,7 +15,7 @@ public class FriendMessageUpdater implements IFriendObserver {
     Context context;
     View.OnClickListener clickOnFriend;
 
-    public FriendMessageUpdater(Context context, FriendMessagesViewActivity activity, LinearLayout layout){
+    public FriendMessageUpdater(Context context, FriendMessagesViewActivity activity, LinearLayout layout) {
         this.context = context;
         friendContainer = layout;
         clickOnFriend = new View.OnClickListener() {
@@ -28,6 +26,7 @@ public class FriendMessageUpdater implements IFriendObserver {
             }
         };
     }
+
     @Override
     public void onStateChange(String email) {
         Log.d(Constants.FRIEND_TAG, "Creating a button for " + email);

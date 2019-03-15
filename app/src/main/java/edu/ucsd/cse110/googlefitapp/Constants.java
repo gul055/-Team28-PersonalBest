@@ -8,13 +8,13 @@ public final class Constants {
     public static final String FRIEND_TAG = "FRIEND";
     public static final String ON_WALK_TAG = "on_walk";
     public static final String DAILY_STEPS_TAG = "daily_steps";
-    public static final String TOTAL_STEPS_TAG = "total_steps";
+    public static final String TOTAL_STEPS_TAG = "total_steps"; //1
     public static final String GOAL_MET_TAG = "goal_met";
     public static final String FRIEND_UPDATER_TAG = "FRIENDUPDATER";
     public static final String FRIEND_TEST_TAG = "FRIENDTEST";
 
     public static final int MINIMUM_VALID_GOAL = 100;
-    public static final String GOAL = "goal";
+    public static final String GOAL = "goal"; //3
     public static final String SET_SUCCESS = "New goal set!";
     public static final String SET_FAIL = "Invalid goal. Please try again.";
     public static final String NO_GOAL = "No goal inputted!";
@@ -24,7 +24,7 @@ public final class Constants {
     public static final String HEIGHT_PREF = "height_data";
     public static final String HEIGHT = "height";
     public static final String WALKRUN_PREF = "walkrun_data";
-    public static final String INTENTIONAL = "intentional_steps";
+    public static final String INTENTIONAL = "intentional_steps"; //2
     public static final String NOT_NOW_PRESS = "notNowListener";
     public static final String ADDITIONAL_STEPS = "additional_steps";
     public static final String FRIEND_PREF = "friend_list";
@@ -65,6 +65,7 @@ public final class Constants {
     public static final String INCIDENTAL_STEP = "Incidental Steps";
     public static final String GOAL_LABEL = "Daily Goals";
     public static final float GRANULARITY = 1f;
+    public static final String GRAPH_USER = "graphuser";
 
     // Email constant
     public static final String EXAMPLE_EMAIL = "arrestrose@gmail.com";

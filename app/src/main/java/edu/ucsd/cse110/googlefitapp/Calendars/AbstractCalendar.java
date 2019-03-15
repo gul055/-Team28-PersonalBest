@@ -78,4 +78,26 @@ public abstract class AbstractCalendar {
 
         return week;
     }
+
+    public String[] getLastXDays(boolean withYear, int x) {
+
+        calendar.add(Calendar.DATE, -x);
+
+        String[] days = new String[x];
+
+        for (int day = 0; day < x; day++) {
+            if (withYear) {
+                days[day] = getYearMonthDay();
+                Log.d("Generating date:", days[day]);
+            } else {
+                days[day] = getMonthDay();
+                Log.d("Generating date:", days[day]);
+            }
+
+            // Increment date
+            calendar.add(Calendar.DATE, 1);
+        }
+
+        return days;
+    }
 }

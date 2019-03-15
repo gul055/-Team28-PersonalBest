@@ -24,7 +24,7 @@ public class FriendUpdater implements IFriendObserver {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Clicked on button: " + view.getTag(), Toast.LENGTH_SHORT).show();
-                String friend  = view.getTag().toString();
+                String friend = view.getTag().toString();
 
                 Intent intent = new Intent(context, FriendProfileActivity.class);
                 intent.putExtra("friend", friend);
