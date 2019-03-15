@@ -43,8 +43,9 @@ public class FriendProfileActivity extends AppCompatActivity {
         });
 
         Button viewFriend = findViewById(R.id.viewfriendactivity);
-        b.setOnClickListener(v -> {
+        viewFriend.setOnClickListener(v -> {
             AsyncTaskRunner runner = new AsyncTaskRunner(friend);
+            Log.d("FriendProfileActivity", "Finished gathering data");
             runner.execute();
         });
     }
@@ -79,7 +80,7 @@ public class FriendProfileActivity extends AppCompatActivity {
             Log.d("INASYNC", "In task");
             AbstractCalendar calendar = new CalendarAdapter();
             ReceiveData receiver = new ReceiveData(getApplicationContext(), friend, new SharedPreferencesUtil());
-            String[] days = calendar.getLastXDays(Constants.WITHOUT_YEAR, 28);
+            String[] days = calendar.getLastXDays(Constants.WITH_YEAR, 28);
             for (String day : days) {
                 receiver.receiveLong(day + Constants.GOAL);
                 receiver.receiveLong(day + Constants.INTENTIONAL);

@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp;
+/*package edu.ucsd.cse110.googlefitapp;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,10 +14,4 @@ public class SetStepCountUnitTest {
         stepCountActivity = new StepCountActivity();
         stepProgress = stepCountActivity.stepProgress;
     }
-
-    @Test
-    public void testUpdateStep(){
-        /*Basic test*/
-        
-    }
-}
+}*/

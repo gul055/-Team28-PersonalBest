@@ -25,6 +25,8 @@ import java.util.Calendar;
 
 import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
 import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
+import edu.ucsd.cse110.googlefitapp.FirebaseFirestoreUserData.FakeUserData;
+import edu.ucsd.cse110.googlefitapp.FirebaseFirestoreUserData.ReceiveData;
 import edu.ucsd.cse110.googlefitapp.FirebaseFirestoreUserData.SendData;
 import edu.ucsd.cse110.googlefitapp.Goals.SetGoalActivity;
 import edu.ucsd.cse110.googlefitapp.Goals.promptGoal;
@@ -78,6 +80,14 @@ public class StepCountActivity extends AppCompatActivity {
         }*/
 
         stepProgress = new MockStepUpdater(getApplicationContext());
+
+        /*
+        Button fakeButton = findViewById(R.id.fake);
+        fakeButton.setOnClickListener(v ->
+        {
+            new FakeUserData().sendData();
+        });
+        */
 
         chatButton = findViewById(R.id.chat_button);
         chatButton.setOnClickListener(new View.OnClickListener() {
@@ -416,7 +426,17 @@ public class StepCountActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             Log.d("INASYNC", "In task");
-            fitnessService.getWeeklyData();
+
+            AbstractCalendar calendar = new CalendarAdapter();
+            ReceiveData receiver = new ReceiveData(getApplicationContext(), new GoogleUserUtil().getEmail(getApplicationContext()), new SharedPreferencesUtil());
+            String[] days = calendar.getLastXDays(Constants.WITH_YEAR, 28);
+            for (String day : days) {
+                receiver.receiveLong(day + Constants.GOAL);
+                receiver.receiveLong(day + Constants.INTENTIONAL);
+                receiver.receiveLong(day + Constants.TOTAL_STEPS_TAG);
+            }
+
+            //fitnessService.getWeeklyData();
             return null;
         }
 

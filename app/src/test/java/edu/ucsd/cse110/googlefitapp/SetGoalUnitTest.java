@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp;
+/*package edu.ucsd.cse110.googlefitapp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -51,4 +51,4 @@ public class SetGoalUnitTest {
     }
 
 
-}
+}*/

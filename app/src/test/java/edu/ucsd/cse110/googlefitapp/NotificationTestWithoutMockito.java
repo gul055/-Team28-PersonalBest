@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp;
+/*package edu.ucsd.cse110.googlefitapp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,4 +31,4 @@ public class NotificationTestWithoutMockito {
         Intent intent = TestUtils.getChatActivityIntent(TestUtils.getChatMessageService(new ArrayList<>()), TestUtils.getNotificationService("chat1"));
         ChatActivity activity = Robolectric.buildActivity(ChatActivity.class, intent).create().get();
     }
-}
+}*/
