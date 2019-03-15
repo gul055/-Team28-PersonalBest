@@ -42,4 +42,13 @@ public class SendData {
         adapter.addData(singleDataMap);
     }
 
+    // Given string and long, send to Firebase
+    public void SendLong(String tag, Long value) {
+
+        Map<String, Object> singleDataMap = new HashMap<>();
+        singleDataMap.put(tag, value);
+
+        adapter.addData(singleDataMap);
+    }
+
 }
