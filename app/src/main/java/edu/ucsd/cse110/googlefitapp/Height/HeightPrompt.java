@@ -42,8 +42,6 @@ public class HeightPrompt extends AppCompatActivity {
 
     FirebaseFirestore db;
 
-    String FRIEND_COLLECTION_KEY = "friends";
-    String STEP_DATA_COLLECTION_KEY = "stepdata";
     String personEmail = "";
 
     @Override
@@ -57,8 +55,8 @@ public class HeightPrompt extends AppCompatActivity {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
         if (acct != null) {
             personEmail = acct.getEmail();
-            //Testing
-            Toast.makeText(this, personEmail, Toast.LENGTH_LONG).show();
+            /*Testing
+            Toast.makeText(this, personEmail, Toast.LENGTH_LONG).show();*/
         }
 
         heightLog = new HeightLogger(this);
@@ -86,7 +84,7 @@ public class HeightPrompt extends AppCompatActivity {
         //initialize user's data
         db = FirebaseFirestore.getInstance();
 
-        DocumentReference docRef = db.collection(FRIEND_COLLECTION_KEY).document(personEmail);
+        DocumentReference docRef = db.collection(Constants.FRIEND_COLLECTION_KEY).document(personEmail);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -111,19 +109,19 @@ public class HeightPrompt extends AppCompatActivity {
                         usersStepData.put(stringBuilderCalendar(calendar, Constants.TOTAL_STEPS_TAG), 0);
 
 
-                        db.collection(FRIEND_COLLECTION_KEY).document(personEmail).set(users)
+                        db.collection(Constants.FRIEND_COLLECTION_KEY).document(personEmail).set(users)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(HeightPrompt.this, "initialize 1 completed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(HeightPrompt.this, "initialize FriendList completed", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
-                        db.collection(STEP_DATA_COLLECTION_KEY).document(personEmail).set(usersStepData)
+                        db.collection(Constants.STEP_DATA_COLLECTION_KEY).document(personEmail).set(usersStepData)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(HeightPrompt.this, "initialize 2 completed", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(HeightPrompt.this, "initialize StepData completed", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                     }

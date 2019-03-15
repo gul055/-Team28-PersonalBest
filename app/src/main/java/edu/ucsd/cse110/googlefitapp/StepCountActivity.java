@@ -102,7 +102,7 @@ public class StepCountActivity extends AppCompatActivity {
 
         heightLogger = new HeightLogger(this);
         if (heightLogger.readHeight() == 0) {
-            Toast.makeText(StepCountActivity.this, "Height not set.", Toast.LENGTH_LONG).show();
+            //Toast.makeText(StepCountActivity.this, "Height not set.", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(StepCountActivity.this, HeightPrompt.class);
             startActivity(intent);
             return;
