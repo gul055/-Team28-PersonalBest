@@ -9,3 +9,6 @@
 /build
 /captures
 .externalNativeBuild
+*.apk
+/app/release
+*.jks
