@@ -4,9 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -18,13 +16,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static edu.ucsd.cse110.googlefitapp.Constants.*;
-import static edu.ucsd.cse110.googlefitapp.chatmessage.ChatCollectionStorage.getCollection;
-import static edu.ucsd.cse110.googlefitapp.chatmessage.ChatCollectionStorage.setCollection;
+import static edu.ucsd.cse110.googlefitapp.Constants.COLLECTION_KEY;
+import static edu.ucsd.cse110.googlefitapp.Constants.FRIENDPAIR;
+import static edu.ucsd.cse110.googlefitapp.Constants.FROM_KEY;
+import static edu.ucsd.cse110.googlefitapp.Constants.MESSAGES_KEY;
+import static edu.ucsd.cse110.googlefitapp.Constants.TEXT_KEY;
+import static edu.ucsd.cse110.googlefitapp.Constants.TIMESTAMP_KEY;
 
 public class FirebaseFirestoreAdapter implements ChatMessageService {
     private static FirebaseFirestoreAdapter singeleton;
@@ -37,19 +37,19 @@ public class FirebaseFirestoreAdapter implements ChatMessageService {
         this.chat = chat;
     }
 
-    public static void setSingeleton(FirebaseFirestoreAdapter fb){
-        if(fb == null)
+    public static void setSingeleton(FirebaseFirestoreAdapter fb) {
+        if (fb == null)
             Log.d("SINGELETON NULL", "SET TO NULL");
         singeleton = fb;
     }
 
-    public static ChatMessageService getInstance(){
+    public static ChatMessageService getInstance() {
         return singeleton;
     }
 
     //TODO: CALLBACK HERE
-    public static void checkInstance(Callback callback, String yourID, String friendID){
-        if(singeleton == null) {
+    public static void checkInstance(Callback callback, String yourID, String friendID) {
+        if (singeleton == null) {
             FirebaseFirestore fb = FirebaseFirestore.getInstance();
             Log.d("YOUR ID PAIR", FRIENDPAIR + "." + yourID);
             Log.d("YOUR FRIEND PAIR", FRIENDPAIR + "." + friendID);
@@ -105,8 +105,7 @@ public class FirebaseFirestoreAdapter implements ChatMessageService {
                             callback.onCallback(collRef, documentID);
                         }
                     });
-        }
-        else {
+        } else {
             Log.d("NOTNULL", "Singeleton was not null!");
             callback.onCallback(null, "");
         }

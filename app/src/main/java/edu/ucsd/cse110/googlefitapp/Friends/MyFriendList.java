@@ -2,14 +2,12 @@ package edu.ucsd.cse110.googlefitapp.Friends;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.ArraySet;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Observer;
 import java.util.Set;
 
 import edu.ucsd.cse110.googlefitapp.Constants;
@@ -35,7 +33,7 @@ public class MyFriendList implements IFriendList, ISubject<IFriendObserver> {
         friendPref.edit().putStringSet("friends", friendSet).apply();
 
         Log.d(Constants.FRIEND_TAG, "notifying observers of change");
-        for(IFriendObserver observer: observers) {
+        for (IFriendObserver observer : observers) {
             observer.onStateChange(email);
         }
     }
@@ -44,7 +42,7 @@ public class MyFriendList implements IFriendList, ISubject<IFriendObserver> {
     public void loadFriends() {
         Set<String> friendSet = friendPref.getStringSet("friends", new HashSet<String>());
 
-        for(String email: friendSet) {
+        for (String email : friendSet) {
             for (IFriendObserver observer : observers) {
                 observer.onStateChange(email);
             }

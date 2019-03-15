@@ -62,20 +62,19 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
                 Map<String, Object> otherUser = new HashMap<>();
 
                 //find current user and other user's document
-                for(QueryDocumentSnapshot doc : task.getResult()) {
+                for (QueryDocumentSnapshot doc : task.getResult()) {
                     Map<String, Object> curr = doc.getData();
                     String currEmail = (String) curr.get("user");
 
-                    if(currEmail.equals(myEmail)) {
+                    if (currEmail.equals(myEmail)) {
                         currentUser = curr;
-                    }
-                    else if(currEmail.equals(email)) {
+                    } else if (currEmail.equals(email)) {
                         otherUser = curr;
                     }
                 }
 
                 //if users are not found, don't do anything
-                if(otherUser.size() == 0) {
+                if (otherUser.size() == 0) {
                     Log.d(Constants.FRIEND_TAG, "user does not exist");
                     result = "Could not find user " + email;
                     Toast.makeText(context, result, Toast.LENGTH_LONG).show();
@@ -89,14 +88,14 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
                 List<String> myFriends = (List<String>) currentUser.get("friends");
 
                 //users are already friends with each other
-                if(otherFriends.contains(myEmail) && myFriends.contains(email)) {
+                if (otherFriends.contains(myEmail) && myFriends.contains(email)) {
                     Log.d(Constants.FRIEND_TAG, "already friends with this user");
                     result = "You are already friends with " + email;
                     Toast.makeText(context, result, Toast.LENGTH_LONG).show();
                     return;
                 }
                 //if other user is in current user's pending list, they become friends
-                else if(myPending.contains(email)) {
+                else if (myPending.contains(email)) {
                     Log.d(Constants.FRIEND_TAG, "becoming friends");
                     myPending.remove(email);
                     myFriends.add(email);
@@ -106,19 +105,18 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
                     Toast.makeText(context, result, Toast.LENGTH_LONG).show();
 
                     //notify listeners
-                    for(IFriendObserver observer : observers) {
+                    for (IFriendObserver observer : observers) {
                         observer.onStateChange(email);
                     }
                 }
                 //put this user in other user's pending friends
                 else {
                     Log.d(Constants.FRIEND_TAG, "putting user in pending");
-                    if(!otherPending.contains(myEmail)) {
+                    if (!otherPending.contains(myEmail)) {
                         result = "You will be friends with " + email + " when they add you as a friend.";
                         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
                         otherPending.add(myEmail);
-                    }
-                    else {
+                    } else {
                         result = "Already added! You will be friends with " + email + " when they add you as a friend.";
                         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
 
@@ -160,11 +158,11 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
                 Map<String, Object> currentUser = new HashMap<String, Object>();
 
                 //find current user's document
-                for(QueryDocumentSnapshot doc : task.getResult()) {
+                for (QueryDocumentSnapshot doc : task.getResult()) {
                     Map<String, Object> curr = doc.getData();
                     String currEmail = (String) curr.get("user");
 
-                    if(currEmail.equals(myEmail)) {
+                    if (currEmail.equals(myEmail)) {
                         currentUser = curr;
                     }
                 }
@@ -173,7 +171,7 @@ public class FirebaseFriendList implements IFriendList, ISubject<IFriendObserver
                 List<String> myFriends = (List<String>) currentUser.get("friends");
 
                 //notify observers of each friend
-                for(String email : myFriends) {
+                for (String email : myFriends) {
                     for (IFriendObserver observer : observers) {
                         observer.onStateChange(email);
                     }
