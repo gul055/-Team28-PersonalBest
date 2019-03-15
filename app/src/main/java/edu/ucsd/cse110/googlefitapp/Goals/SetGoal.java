@@ -3,7 +3,11 @@ package edu.ucsd.cse110.googlefitapp.Goals;
 import android.content.Context;
 import android.util.Log;
 
+import edu.ucsd.cse110.googlefitapp.Calendars.AbstractCalendar;
+import edu.ucsd.cse110.googlefitapp.Calendars.CalendarAdapter;
 import edu.ucsd.cse110.googlefitapp.Constants;
+import edu.ucsd.cse110.googlefitapp.FirebaseFirestoreUserData.SendData;
+import edu.ucsd.cse110.googlefitapp.Utils.GoogleUserUtil;
 import edu.ucsd.cse110.googlefitapp.Utils.SharedPreferencesUtil;
 
 public class SetGoal implements Goal {
@@ -29,6 +33,11 @@ public class SetGoal implements Goal {
             Log.d("SUCCESSFUL GOAL UPDATE", String.valueOf(goalCandidate));
             SharedPreferencesUtil.saveLong(context, Constants.GOAL, goalCandidate);
             Log.d("GOAL", "New goal set: " + goalCandidate);
+
+            AbstractCalendar calendar = new CalendarAdapter();
+            SendData send = new SendData(context, new GoogleUserUtil(), new SharedPreferencesUtil());
+            send.SendLong(calendar.getYearMonthDay() + Constants.GOAL, goalCandidate);
+
             return true;
         } else {
             Log.d("GOAL", "Did not set goal");
