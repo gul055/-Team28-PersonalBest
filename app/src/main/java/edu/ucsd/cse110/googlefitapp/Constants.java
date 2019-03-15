@@ -3,6 +3,7 @@ package edu.ucsd.cse110.googlefitapp;
 public final class Constants {
     //database reference keys
     public static final String FRIEND_COLLECTION_KEY = "friends";
+    public static final String STEP_DATA_COLLECTION_KEY = "stepdata";
 
     // Log tags
     public static final String FRIEND_TAG = "FRIEND";
@@ -80,4 +81,7 @@ public final class Constants {
     public static final String FROM_KEY = "from";
     public static final String TEXT_KEY = "text";
     public static final String FRIENDPAIR = "friendPair";
+
+    // Log In Code
+    public static final int RC_SIGN_IN = 9001;
 }

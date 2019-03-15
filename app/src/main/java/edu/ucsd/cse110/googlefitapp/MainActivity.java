@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "Google Sign In Error";
     private String fitnessServiceKey = "GOOGLE_FIT";
 
-    int RC_SIGN_IN = 9001;
     SignInButton signInButton;
     GoogleSignInClient mGoogleSignInClient;
 
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        startActivityForResult(signInIntent, Constants.RC_SIGN_IN);
     }
 
     @Override
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == Constants.RC_SIGN_IN) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
