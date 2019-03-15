@@ -15,8 +15,11 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.ucsd.cse110.googlefitapp.Constants;
@@ -108,7 +111,7 @@ public class ChatActivity extends AppCompatActivity {
         FirebaseFirestoreAdapter
                 .setInstance(new CollectionCallback() {
                     @Override
-                    public void onCallback(CollectionReference collection) {
+                    public void onCallback(CollectionReference collection, String documentID) {
                         if(collection != null) {
                             FirebaseFirestoreAdapter.setSingeleton(new FirebaseFirestoreAdapter(collection));
                             chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
@@ -116,6 +119,7 @@ public class ChatActivity extends AppCompatActivity {
                         else{
                             chat = ChatMessageServiceFactory.getInstance().getOrDefault(stringExtra, FirebaseFirestoreAdapter::getInstance);
                         }
+                        DOCUMENT_KEY = documentID;
                         firebaseFunctionsUpdater();
                     }},
                         yourID,
@@ -171,7 +175,7 @@ public class ChatActivity extends AppCompatActivity {
                 msg = "Subscribe to notifications failed";
             }
             Log.d(TAG, msg);
-            Toast.makeText(ChatActivity.this, msg, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ChatActivity.this, msg, Toast.LENGTH_SHORT).show();
         });
     }
 

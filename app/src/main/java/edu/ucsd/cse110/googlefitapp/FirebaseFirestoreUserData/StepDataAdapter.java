@@ -16,32 +16,57 @@ public class StepDataAdapter implements DataService {
     public static StepDataAdapter singleton;
     DocumentReference ref;
     DocumentSnapshot snapshot;
+    String email;
 
     public StepDataAdapter(DocumentReference ref) {
+        Log.d("StepDataAdapter", "Creating adapter");
         this.ref = ref;
         if (snapshot == null) {
             getDocumentSnapshot();
         }
     }
 
+    public StepDataAdapter(String email) {
+        Log.d("StepDataAdapter", "Creating adapter");
+        DocumentReference collection = FirebaseFirestore.getInstance()
+                .collection(Constants.STEPDATA)
+                .document(email);
+        if (collection == null) {
+            FirebaseFirestore.getInstance().collection(Constants.STEPDATA).document(email).set(null);
+            collection = FirebaseFirestore.getInstance().collection(Constants.STEPDATA).document(email);
+        }
+        this.ref = collection;
+        if (snapshot == null) {
+            getDocumentSnapshot();
+        }
+        this.email = email;
+    }
+
     public static DataService getInstance(String email) {
-        if (singleton != null) {
+        Log.d("StepDataAdapter", "Creating instance of adapter for email " + email);
+        if (singleton == null) {
             DocumentReference collection = FirebaseFirestore.getInstance()
                     .collection(Constants.STEPDATA)
                     .document(email);
+            if (collection == null) {
+                FirebaseFirestore.getInstance().collection(Constants.STEPDATA).document(email).set(null);
+                collection = FirebaseFirestore.getInstance().collection(Constants.STEPDATA).document(email);
+            }
             singleton = new StepDataAdapter(collection);
+            singleton.email = email;
         }
         return singleton;
     }
 
     @Override
     public Task<?> addData(Map<String, Object> data) {
+        Log.d("addData", "Adding a table to email " + email);
         return ref.update(data);
     }
 
     @Override
     public Long getLong(String tag) {
-        Long result = snapshot.getLong(tag);
+        Long result = (Long) snapshot.get(tag);
         return result != null ? result : 0L;
     }
 

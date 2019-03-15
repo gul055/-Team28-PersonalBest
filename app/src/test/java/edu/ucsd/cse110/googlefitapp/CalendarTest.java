@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp;
+/*package edu.ucsd.cse110.googlefitapp;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,11 +20,10 @@ public class CalendarTest {
         calendar = new MockCalendar(2019,2,14);
     }
 
-    /*
     @Test
     public void testGetCurrentDate(){
         assertEquals("2019-2-19", calendar.getYearMonthDay());
-    }*/
+    }
 
     @Test
     public void testGetWeek(){
@@ -34,4 +33,4 @@ public class CalendarTest {
             assertEquals(expected[i], weekString[i]);
         }
     }
-}
+}*/

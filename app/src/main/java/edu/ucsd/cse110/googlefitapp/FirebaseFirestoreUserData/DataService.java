@@ -1,7 +1,6 @@
 package edu.ucsd.cse110.googlefitapp.FirebaseFirestoreUserData;
 
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.Query;
 
 import java.util.Map;
 

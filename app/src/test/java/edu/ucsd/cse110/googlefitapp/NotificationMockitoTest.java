@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp;
+/*package edu.ucsd.cse110.googlefitapp;
 
 import android.content.Context;
 import android.content.Intent;
@@ -39,4 +39,4 @@ public class NotificationMockitoTest {
 
         verify(notificationService).subscribeToNotificationsTopic(eq("chat1"), any());
     }
-}
+}*/
