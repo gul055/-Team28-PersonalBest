@@ -25,6 +25,7 @@ public class DataGetter {
             Log.d("First key being used", key1);
             Log.d("Second key being used", key2);
             Long dataPointX = util.loadLongByEmail(context, email, key1);
+            Log.d("pointX", dataPointX + "");
             dataArray[i][0] = dataPointX.floatValue();
             //dataArray[i][0] = SharedPreferencesUtil.loadLong(context, key1);
             Long dataPointY = util.loadLongByEmail(context, email, key2) - dataPointX;

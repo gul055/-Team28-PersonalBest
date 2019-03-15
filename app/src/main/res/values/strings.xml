@@ -35,4 +35,6 @@
     <string name="add_friend_title">Add A Friend</string>
     <string name="chat">Chat</string>
     <string name="viewfriendactivity">View Friend Activity</string>
+    <string name="next7days">Next 7 Days</string>
+    <string name="last7days">Last 7 Days</string>
 </resources>
