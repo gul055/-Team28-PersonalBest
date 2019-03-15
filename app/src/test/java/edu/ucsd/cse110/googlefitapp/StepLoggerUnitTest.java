@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp;
+/*package edu.ucsd.cse110.googlefitapp;
 
 import android.content.Intent;
 
@@ -44,5 +44,5 @@ public class StepLoggerUnitTest {
         stepLogger.writeOnDaily(false);
         assertFalse(stepLogger.readOnDaily());
     }
-}
+}*/
 

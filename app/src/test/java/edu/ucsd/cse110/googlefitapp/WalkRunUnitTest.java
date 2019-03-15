@@ -1,4 +1,4 @@
-package edu.ucsd.cse110.googlefitapp;
+/*package edu.ucsd.cse110.googlefitapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -374,12 +374,6 @@ public class WalkRunUnitTest {
                     SharedPreferencesUtil.saveLong(context, Constants.STARTTIME_TAG, Duration.between(refTime, s).getSeconds());
                     SharedPreferencesUtil.saveBoolean(context, Constants.STARTED_TAG, true);
                     SharedPreferencesUtil.saveBoolean(context, Constants.OK_TAG, false);
-                    /*
-                    editor.putInt("startSteps", initSteps);
-                    editor.putLong("startTime", Duration.between(refTime, s).getSeconds());
-                    editor.putBoolean("started", true);
-                    editor.putBoolean("ok", false);
-                    editor.apply();*/
                 } else {
                     throw new Exception("Invalid: negative initial step count");
                 }
@@ -388,7 +382,6 @@ public class WalkRunUnitTest {
             }
         }
 
-        /* End the walk/run */
         @RequiresApi(api = Build.VERSION_CODES.O)
         public void endWalkRun(int finalSteps, LocalDateTime e) throws Exception {
             //can only end WalkRun that has already started
@@ -462,4 +455,4 @@ public class WalkRunUnitTest {
         }
 
     }
-}
+}*/
